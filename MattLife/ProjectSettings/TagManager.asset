@@ -13,11 +13,11 @@ TagManager:
   - UI
   - 
   - 
-  - floor
+  - Floor
   - JumpThrough
-  - wall
-  - 
-  - 
+  - Wall
+  - Player
+  - Background
   - 
   - 
   - 
@@ -38,6 +38,15 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: Background
+    uniqueID: 1972377309
+    locked: 0
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Player
+    uniqueID: 4003797583
+    locked: 0
+  - name: Foreground
+    uniqueID: 2294582155
     locked: 0

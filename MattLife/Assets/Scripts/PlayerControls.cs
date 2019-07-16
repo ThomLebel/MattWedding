@@ -16,11 +16,13 @@ public class PlayerControls : MonoBehaviour
 	private float safeSpot = 0.2f;
 
 	[SerializeField]
-	protected bool grounded = false;
+	private bool grounded = false;
 	[SerializeField]
-	protected bool isJumping = false;
+	private bool isJumping = false;
 	[SerializeField]
-	protected bool isFalling = false;
+	private bool isFalling = false;
+	[SerializeField]
+	private bool facingRight = true;
 
 	private Rigidbody2D rb2d;
 	private Collider2D platformCollider;
@@ -35,7 +37,7 @@ public class PlayerControls : MonoBehaviour
 	// Start is called before the first frame update
 	void Start()
     {
-        
+		Debug.Log("We need to add the crouch control");
     }
 
     // Update is called once per frame
@@ -84,10 +86,34 @@ public class PlayerControls : MonoBehaviour
 				isFalling = false;
 			}
 		}
+
+		// If the input is moving the player right and the player is facing left...
+		if (horizontal > 0 && !facingRight)
+		{
+			// ... flip the player.
+			Flip();
+		}
+		// Otherwise if the input is moving the player left and the player is facing right...
+		else if (horizontal < 0 && facingRight)
+		{
+			// ... flip the player.
+			Flip();
+		}
 	}
 
 	private void FixedUpdate()
 	{
 		rb2d.velocity = new Vector2(horizontal * speed * Time.fixedDeltaTime, rb2d.velocity.y);
+	}
+
+	private void Flip()
+	{
+		// Switch the way the player is labelled as facing.
+		facingRight = !facingRight;
+
+		// Multiply the player's x local scale by -1.
+		Vector3 theScale = transform.localScale;
+		theScale.x *= -1;
+		transform.localScale = theScale;
 	}
 }
