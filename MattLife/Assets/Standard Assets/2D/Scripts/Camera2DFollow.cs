@@ -16,13 +16,22 @@ namespace UnityStandardAssets._2D
         private Vector3 m_CurrentVelocity;
         private Vector3 m_LookAheadPos;
 
-        // Use this for initialization
-        private void Start()
+		public bool bounds;
+		public Transform minCameraPos;
+		public Transform maxCameraPos;
+		private float camHorizontalExtend;
+		private float camVerticalExtend;
+
+		// Use this for initialization
+		private void Start()
         {
             m_LastTargetPosition = target.position;
             m_OffsetZ = (transform.position - target.position).z;
             transform.parent = null;
-        }
+
+			camHorizontalExtend = Camera.main.orthographicSize * Screen.width / Screen.height;
+			camVerticalExtend = Camera.main.orthographicSize;
+		}
 
 
         // Update is called once per frame
@@ -47,7 +56,14 @@ namespace UnityStandardAssets._2D
 
             transform.position = newPos;
 
-            m_LastTargetPosition = target.position;
+			if (bounds)
+			{
+				transform.position = new Vector3(Mathf.Clamp(transform.position.x, minCameraPos.position.x + camHorizontalExtend, maxCameraPos.position.x - camHorizontalExtend),
+												 Mathf.Clamp(transform.position.y, minCameraPos.position.y + camVerticalExtend, maxCameraPos.position.y - camVerticalExtend),
+												 Mathf.Clamp(transform.position.z, minCameraPos.position.z, maxCameraPos.position.z));
+			}
+
+			m_LastTargetPosition = target.position;
         }
     }
 }
