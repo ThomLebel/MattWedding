@@ -15,12 +15,16 @@ public class PlayerControls : MonoBehaviour
 	private float vertical;
 	private float safeSpot = 0.2f;
 
+	const float groundedRadius = .2f;
+
 	[SerializeField]
 	private bool grounded = false;
 	[SerializeField]
 	private bool isJumping = false;
 	[SerializeField]
 	private bool isFalling = false;
+	[SerializeField]
+	private bool isJumpingDown = false;
 	[SerializeField]
 	private bool facingRight = true;
 
@@ -43,12 +47,19 @@ public class PlayerControls : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-		grounded = Physics2D.Linecast(transform.position, groundCheck.position, groundLayerMask);
+		//grounded = Physics2D.Linecast(transform.position, groundCheck.position, groundLayerMask);
+		grounded = false;
+		Collider2D[] colliders = Physics2D.OverlapCircleAll(groundCheck.position, groundedRadius, groundLayerMask);
+		for (int i = 0; i < colliders.Length; i++)
+		{
+			if (colliders[i].gameObject != gameObject)
+				grounded = true;
+		}
 
 		horizontal = Input.GetAxisRaw("Horizontal");
 		vertical = Input.GetAxisRaw("Vertical");
 
-		if (Input.GetButtonDown("Jump") && grounded && !isJumping && !isFalling)
+		if (Input.GetButtonDown("Jump") && grounded && !isJumping && !isFalling && !isJumpingDown)
 		{
 			isJumping = true;
 			if (vertical < safeSpot * -1)
@@ -58,7 +69,7 @@ public class PlayerControls : MonoBehaviour
 				{
 					platformCollider = ray.collider;
 					Physics2D.IgnoreCollision(playerCollider, platformCollider, true);
-					isFalling = true;
+					isJumpingDown = true;
 				}
 			}
 			else
@@ -77,13 +88,13 @@ public class PlayerControls : MonoBehaviour
 			}
 		}
 
-		if (isFalling)
+		if (isJumpingDown)
 		{
 			if (transform.position.y < platformCollider.transform.position.y)
 			{
 				Physics2D.IgnoreCollision(playerCollider, platformCollider, false);
 				platformCollider = null;
-				isFalling = false;
+				isJumpingDown = false;
 			}
 		}
 
