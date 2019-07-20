@@ -8,12 +8,15 @@ public class PlayerControls : MonoBehaviour
 	public Transform groundCheck;
 	public float speed;
 	public float jumpTakeOff;
+	public float bounceTakeOff;
 	public LayerMask groundLayerMask;
 	public LayerMask jumpThroughLayerMask;
 
 	private float horizontal;
 	private float vertical;
 	private float safeSpot = 0.2f;
+	[SerializeField]
+	private float bounceTimerWindow = 0.2f;
 
 	const float groundedRadius = .2f;
 
@@ -27,6 +30,9 @@ public class PlayerControls : MonoBehaviour
 	private bool isJumpingDown = false;
 	[SerializeField]
 	private bool facingRight = true;
+	private bool canBounce = false;
+
+	private IEnumerator bounceOnMonster;
 
 	private Rigidbody2D rb2d;
 	private Collider2D platformCollider;
@@ -59,24 +65,32 @@ public class PlayerControls : MonoBehaviour
 		horizontal = Input.GetAxisRaw("Horizontal");
 		vertical = Input.GetAxisRaw("Vertical");
 
-		if (Input.GetButtonDown("Jump") && grounded && !isJumping && !isFalling && !isJumpingDown)
+		if (Input.GetButtonDown("Jump"))
 		{
-			isJumping = true;
-			if (vertical < safeSpot * -1)
+			//Jump from the ground
+			if (grounded && !isJumping && !isFalling && !isJumpingDown)
 			{
-				RaycastHit2D ray = Physics2D.Linecast(transform.position, groundCheck.position, jumpThroughLayerMask);
-				if (ray.collider != null)
+				isJumping = true;
+				if (vertical < safeSpot * -1)
 				{
-					platformCollider = ray.collider;
-					Physics2D.IgnoreCollision(playerCollider, platformCollider, true);
-					isJumpingDown = true;
+					RaycastHit2D ray = Physics2D.Linecast(transform.position, groundCheck.position, jumpThroughLayerMask);
+					if (ray.collider != null)
+					{
+						platformCollider = ray.collider;
+						Physics2D.IgnoreCollision(playerCollider, platformCollider, true);
+						isJumpingDown = true;
+					}
+				}
+				else
+				{
+					rb2d.AddForce(new Vector2(0f, jumpTakeOff));
 				}
 			}
-			else
+			//Jump from the head of a monster
+			if (canBounce)
 			{
-				rb2d.AddForce(new Vector2(0f, jumpTakeOff));
+				rb2d.AddForce(new Vector2(0f, jumpTakeOff+bounceTakeOff));
 			}
-			
 		}
 
 		if (Input.GetButtonUp("Jump"))
@@ -126,5 +140,22 @@ public class PlayerControls : MonoBehaviour
 		Vector3 theScale = transform.localScale;
 		theScale.x *= -1;
 		transform.localScale = theScale;
+	}
+
+	public void Bounce()
+	{
+		canBounce = true;
+
+		bounceOnMonster = BounceOnMonster(bounceTimerWindow);
+		StartCoroutine(bounceOnMonster);
+
+		rb2d.AddForce(new Vector2(0f, bounceTakeOff));
+	}
+
+	private IEnumerator BounceOnMonster(float time)
+	{
+		yield return new WaitForSeconds(time);
+		canBounce = false;
+		StopCoroutine(bounceOnMonster);
 	}
 }

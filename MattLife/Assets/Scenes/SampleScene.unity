@@ -740,7 +740,7 @@ MonoBehaviour:
   bumpOnWall: 0
   wallLayerMask:
     serializedVersion: 2
-    m_Bits: 1536
+    m_Bits: 1792
   baseCollider: {fileID: 778861025}
   headCollider: {fileID: 778861020}
   wallCheck: {fileID: 1126143283}

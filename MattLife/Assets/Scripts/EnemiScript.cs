@@ -39,6 +39,7 @@ public class EnemiScript : MonoBehaviour
 		rb2d.velocity = new Vector2(direction * speed * Time.deltaTime, rb2d.velocity.y);
 	}
 
+	// Player jump on his head
 	private void OnTriggerEnter2D(Collider2D collision)
 	{
 		if (collision.tag == "Player")
@@ -47,8 +48,17 @@ public class EnemiScript : MonoBehaviour
 			//Play hit animation
 
 			//Raise a flag notifying the player that is can bounce on the monster back
+			collision.GetComponent<PlayerControls>().Bounce();
 
-			Kill();
+			//Kill();
+		}
+	}
+
+	private void OnCollisionEnter2D(Collision2D collision)
+	{
+		if (collision.transform.tag == "Player")
+		{
+			Debug.Log("Kill the player !");
 		}
 	}
 

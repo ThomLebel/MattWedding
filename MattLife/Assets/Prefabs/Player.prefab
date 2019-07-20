@@ -124,7 +124,7 @@ GameObject:
   - component: {fileID: 6491860515620567800}
   m_Layer: 11
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -182,12 +182,14 @@ MonoBehaviour:
   groundCheck: {fileID: 2285168291325908484}
   speed: 250
   jumpTakeOff: 1200
+  bounceTakeOff: 600
   groundLayerMask:
     serializedVersion: 2
     m_Bits: 768
   jumpThroughLayerMask:
     serializedVersion: 2
     m_Bits: 512
+  bounceTimerWindow: 0.2
   grounded: 0
   isJumping: 0
   isFalling: 0
