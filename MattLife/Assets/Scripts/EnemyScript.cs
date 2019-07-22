@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemiScript : MonoBehaviour
+public class EnemyScript : MonoBehaviour
 {
 	public float speed;
 
@@ -10,8 +10,7 @@ public class EnemiScript : MonoBehaviour
 	public bool bumpOnWall = false;
 	public LayerMask wallLayerMask;
 
-	public PolygonCollider2D baseCollider;      //Collide with the ground and kill the player
-	public PolygonCollider2D headCollider;      //Vulnerable spot
+	public Transform headCheck;
 	public Transform wallCheck;
 
 	private Rigidbody2D rb2d;
@@ -39,26 +38,40 @@ public class EnemiScript : MonoBehaviour
 		rb2d.velocity = new Vector2(direction * speed * Time.deltaTime, rb2d.velocity.y);
 	}
 
-	// Player jump on his head
-	private void OnTriggerEnter2D(Collider2D collision)
-	{
-		if (collision.tag == "Player")
-		{
-			Debug.Log("Kill this monster !");
-			//Play hit animation
+	//// Player jump on his head
+	//private void OnTriggerEnter2D(Collider2D collision)
+	//{
+	//	if (collision.tag == "Player")
+	//	{
+	//		Debug.Log("Kill this monster !");
+	//		//Play hit animation
 
-			//Raise a flag notifying the player that is can bounce on the monster back
-			collision.GetComponent<PlayerControls>().Bounce();
+	//		//Raise a flag notifying the player that is can bounce on the monster back
+	//		collision.GetComponent<PlayerControls>().Bounce();
 
-			//Kill();
-		}
-	}
+	//		//Kill();
+	//	}
+	//}
 
 	private void OnCollisionEnter2D(Collision2D collision)
 	{
 		if (collision.transform.tag == "Player")
 		{
-			Debug.Log("Kill the player !");
+			Vector2 contact = collision.GetContact(0).point;
+
+			if (contact.y >= headCheck.position.y)
+			{
+				Debug.Log("Kill this monster !");
+				//Play hit animation
+
+				//Raise a flag notifying the player that is can bounce on the monster back
+				collision.transform.GetComponent<PlayerControls>().Bounce();
+
+				//Kill();
+			}else
+			{
+				Debug.Log("Kill the player !");
+			}
 		}
 	}
 
