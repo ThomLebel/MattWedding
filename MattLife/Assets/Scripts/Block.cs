@@ -5,7 +5,7 @@ using UnityEngine;
 public class Block : MonoBehaviour
 {
 	[SerializeField]
-	private bool open = false;
+	protected bool open = false;
 
 	private Animator animator;
 
@@ -19,7 +19,7 @@ public class Block : MonoBehaviour
         
     }
 
-	private void OnCollisionEnter2D(Collision2D collision)
+	public virtual void OnCollisionEnter2D(Collision2D collision)
 	{
 		if (collision.transform.tag == "Player" && !open)
 		{

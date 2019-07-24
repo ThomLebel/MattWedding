@@ -1,18 +1,26 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Video;
 
 public class VideoBlock : Block
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+	public VideoClip videoClip;
+	public StreamSouvenir videoPlayer;
+	[SerializeField]
+	private bool streamLaunched = false;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+	private void Update()
+	{
+		if (open && !streamLaunched)
+		{
+			streamLaunched = true;
+			videoPlayer.StartVideoStream(videoClip);
+		}
+	}
+
+	public override void OnCollisionEnter2D(Collision2D collision)
+	{
+		base.OnCollisionEnter2D(collision);
+	}
 }
