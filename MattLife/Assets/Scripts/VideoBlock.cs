@@ -6,7 +6,9 @@ using UnityEngine.Video;
 public class VideoBlock : Block
 {
 	public VideoClip videoClip;
+	public Sprite videoMiniature;
 	public StreamSouvenir videoPlayer;
+	public GalerieScript galerie;
 	[SerializeField]
 	private bool streamLaunched = false;
 
@@ -16,11 +18,7 @@ public class VideoBlock : Block
 		{
 			streamLaunched = true;
 			videoPlayer.StartVideoStream(videoClip);
+			galerie.RevealSouvenirs(id, videoMiniature);
 		}
-	}
-
-	public override void OnCollisionEnter2D(Collision2D collision)
-	{
-		base.OnCollisionEnter2D(collision);
 	}
 }

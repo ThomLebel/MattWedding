@@ -16,6 +16,7 @@ public class StreamSouvenir : MonoBehaviour
 	{
 		videoPlayer.clip = videoClip;
 		StartCoroutine(PlayVideo());
+		GameMaster.Instance.state = "souvenirs";
 	}
 
 	public void StartPhotoStream(Sprite photoSouvenir)
@@ -24,6 +25,7 @@ public class StreamSouvenir : MonoBehaviour
 		photoProjector.preserveAspect = true;
 		photoProjector.enabled = true;
 		closeButton.gameObject.SetActive(true);
+		GameMaster.Instance.state = "souvenirs";
 		Time.timeScale = 0;
 	}
 
@@ -58,8 +60,8 @@ public class StreamSouvenir : MonoBehaviour
 		videoPlayer.clip = null;
 		videoProjector.texture = null;
 		videoProjector.enabled = false;
-		//closeButton.enabled = false;
 		closeButton.gameObject.SetActive(false);
+		GameMaster.Instance.state = "game";
 		Time.timeScale = 1;
 	}
 }

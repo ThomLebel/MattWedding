@@ -6,6 +6,7 @@ public class PhotoBlock : Block
 {
 	public Sprite photo;
 	public StreamSouvenir photoPlayer;
+	public GalerieScript galerie;
 	[SerializeField]
 	private bool photoDisplayed = false;
 
@@ -21,6 +22,7 @@ public class PhotoBlock : Block
 		{
 			photoDisplayed = true;
 			photoPlayer.StartPhotoStream(photo);
+			galerie.RevealSouvenirs(id, photo);
 		}
 	}
 }
