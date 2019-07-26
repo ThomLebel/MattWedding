@@ -10,15 +10,15 @@ public class VideoBlock : Block
 	public StreamSouvenir videoPlayer;
 	public GalerieScript galerie;
 	[SerializeField]
-	private bool streamLaunched = false;
+	private bool blockRevealed = false;
 
 	private void Update()
 	{
-		if (open && !streamLaunched)
+		if (open && !blockRevealed)
 		{
-			streamLaunched = true;
+			blockRevealed = true;
 			videoPlayer.StartVideoStream(videoClip);
-			galerie.RevealSouvenirs(id, videoMiniature);
+			galerie.RevealSouvenirs(id, videoMiniature, videoClip);
 		}
 	}
 }

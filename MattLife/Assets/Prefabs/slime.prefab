@@ -24,7 +24,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4250086509124869556}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.413, y: -0.335, z: 0}
+  m_LocalPosition: {x: -0.5, y: -0.34, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4250086510925361497}
@@ -54,7 +54,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4250086509473935988}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.175, z: 0}
+  m_LocalPosition: {x: 0, y: -0.14, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4250086510925361497}
@@ -72,7 +72,8 @@ GameObject:
   - component: {fileID: 4250086510925361496}
   - component: {fileID: 4250086510925361499}
   - component: {fileID: 4250086510925361501}
-  - component: {fileID: 4250086510925361498}
+  - component: {fileID: 3768229476442288282}
+  - component: {fileID: 91788750821069553}
   m_Layer: 0
   m_Name: slime
   m_TagString: Untagged
@@ -177,14 +178,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c69b913c1d70d8640ad7f0da690f91af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 0
+  walkSpeed: 40
   bumpOnWall: 0
   wallLayerMask:
     serializedVersion: 2
-    m_Bits: 1792
+    m_Bits: 9984
   headCheck: {fileID: 4250086509473935986}
   wallCheck: {fileID: 4250086509124869557}
---- !u!60 &4250086510925361498
+--- !u!95 &3768229476442288282
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4250086510925361500}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: cc4283f38541915448af1617bfb8775d, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!60 &91788750821069553
 PolygonCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

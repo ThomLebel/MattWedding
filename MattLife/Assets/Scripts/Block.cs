@@ -25,9 +25,9 @@ public class Block : MonoBehaviour
 		}
     }
 
-	public virtual void OnCollisionEnter2D(Collision2D collision)
+	public virtual void OnTriggerEnter2D(Collider2D collision)
 	{
-		if (collision.transform.tag == "Player" && !open)
+		if (collision.tag == "Player" && !open)
 		{
 			//Do stuff
 			open = true;

@@ -8,7 +8,7 @@ public class PhotoBlock : Block
 	public StreamSouvenir photoPlayer;
 	public GalerieScript galerie;
 	[SerializeField]
-	private bool photoDisplayed = false;
+	private bool blockRevealed = false;
 
     // Start is called before the first frame update
     void Start()
@@ -18,9 +18,9 @@ public class PhotoBlock : Block
 
 	private void Update()
 	{
-		if (open && !photoDisplayed)
+		if (open && !blockRevealed)
 		{
-			photoDisplayed = true;
+			blockRevealed = true;
 			photoPlayer.StartPhotoStream(photo);
 			galerie.RevealSouvenirs(id, photo);
 		}

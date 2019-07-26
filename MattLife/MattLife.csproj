@@ -656,14 +656,17 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Scripts\Block.cs" />
+    <Compile Include="Assets\Scripts\CollectibleScript.cs" />
     <Compile Include="Assets\Scripts\EnemyScript.cs" />
     <Compile Include="Assets\Scripts\GalerieScript.cs" />
     <Compile Include="Assets\Scripts\GameMaster.cs" />
     <Compile Include="Assets\Scripts\Parallaxing.cs" />
     <Compile Include="Assets\Scripts\PhotoBlock.cs" />
     <Compile Include="Assets\Scripts\PlayerControls.cs" />
+    <Compile Include="Assets\Scripts\ResetTrigger.cs" />
     <Compile Include="Assets\Scripts\StreamSouvenir.cs" />
     <Compile Include="Assets\Scripts\Tiling.cs" />
+    <Compile Include="Assets\Scripts\TwoStepEnemy.cs" />
     <Compile Include="Assets\Scripts\VideoBlock.cs" />
     <Compile Include="Assets\Tilemap\Brushes\Tint Brush Smooth\Scripts\TintTextureGenerator.cs" />
     <Compile Include="Assets\Tilemap\GridInformation\Scripts\GridInformation.cs" />

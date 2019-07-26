@@ -4,26 +4,36 @@ using UnityEngine;
 
 public class EnemyScript : MonoBehaviour
 {
-	public float speed;
+	public float walkSpeed = 40;
 
-	private int direction = -1;
 	public bool bumpOnWall = false;
 	public LayerMask wallLayerMask;
 
 	public Transform headCheck;
 	public Transform wallCheck;
 
-	private Rigidbody2D rb2d;
+	protected float speed;
+	protected int direction = -1;
+	protected float spriteWidth;
+	protected float spriteHeight;
+
+	protected SpriteRenderer spriteRenderer;
+	protected Rigidbody2D rb2d;
+	protected Animator animator;
 
 	private void Awake()
 	{
+		spriteRenderer = GetComponent<SpriteRenderer>();
 		rb2d = GetComponent<Rigidbody2D>();
+		animator = GetComponent<Animator>();
 	}
 	// Start is called before the first frame update
 	void Start()
     {
-        
-    }
+		speed = walkSpeed;
+		spriteWidth = spriteRenderer.bounds.size.x;
+		spriteWidth = spriteRenderer.bounds.size.y;
+	}
 
     // Update is called once per frame
     void Update()
@@ -31,29 +41,13 @@ public class EnemyScript : MonoBehaviour
 		bumpOnWall = Physics2D.Linecast(transform.position, wallCheck.position, wallLayerMask);
 		if (bumpOnWall)
 		{
-			direction *= -1;
 			Flip();
 		}
 
 		rb2d.velocity = new Vector2(direction * speed * Time.deltaTime, rb2d.velocity.y);
 	}
 
-	//// Player jump on his head
-	//private void OnTriggerEnter2D(Collider2D collision)
-	//{
-	//	if (collision.tag == "Player")
-	//	{
-	//		Debug.Log("Kill this monster !");
-	//		//Play hit animation
-
-	//		//Raise a flag notifying the player that is can bounce on the monster back
-	//		collision.GetComponent<PlayerControls>().Bounce();
-
-	//		//Kill();
-	//	}
-	//}
-
-	private void OnCollisionEnter2D(Collision2D collision)
+	public virtual void OnCollisionEnter2D(Collision2D collision)
 	{
 		if (collision.transform.tag == "Player")
 		{
@@ -75,15 +69,16 @@ public class EnemyScript : MonoBehaviour
 		}
 	}
 
-	private void Flip()
+	protected void Flip()
 	{
 		// Multiply the player's x local scale by -1.
+		direction *= -1;
 		Vector3 theScale = transform.localScale;
 		theScale.x *= -1;
 		transform.localScale = theScale;
 	}
 
-	private void Kill()
+	public void Kill()
 	{
 		Destroy(gameObject);
 	}

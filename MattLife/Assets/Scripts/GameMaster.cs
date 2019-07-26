@@ -5,7 +5,11 @@ using UnityEngine;
 public class GameMaster : MonoBehaviour
 {
 	public GameObject menuPause;
+	public GameObject galerie;
 	public string state = "";
+
+	public Vector3 playerSpawnPosition = Vector3.zero;
+
 	[SerializeField]
 	private bool gamePaused = false;
 
@@ -38,8 +42,26 @@ public class GameMaster : MonoBehaviour
 			{
 				gameObject.GetComponent<StreamSouvenir>().StopStream();
 			}
+			else if (state == "galerie")
+			{
+				CloseGalerie();
+			}
 		}
     }
+
+	public void DisplayGalerie()
+	{
+		galerie.SetActive(true);
+		menuPause.SetActive(false);
+		state = "galerie";
+	}
+
+	public void CloseGalerie()
+	{
+		galerie.SetActive(false);
+		menuPause.SetActive(true);
+		state = "game";
+	}
 
 	public void PauseGame()
 	{

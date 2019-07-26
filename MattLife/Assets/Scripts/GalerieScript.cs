@@ -2,27 +2,48 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Video;
 
 public class GalerieScript : MonoBehaviour
 {
 	public List<GameObject> souvenirsList;
 	public Sprite revealedBackground;
+	public StreamSouvenir streamSouvenir;
 
-    public void RevealSouvenirs(int ID, Sprite sprite)
+	public void RevealSouvenirs(int ID, Sprite sprite, VideoClip video = null)
 	{
 		//Change the souvenirs background
 		souvenirsList[ID].GetComponent<Image>().sprite = revealedBackground;
+		RectTransform souvenirTransform = souvenirsList[ID].GetComponent<RectTransform>();
+
+		//Remove the unerevealed message from the button and add the correct stream
+		souvenirsList[ID].GetComponent<Button>().onClick.RemoveAllListeners();
+		if (video != null)
+		{
+			souvenirsList[ID].GetComponent<Button>().onClick.AddListener(() => streamSouvenir.StartVideoStream(video));
+		}
+		else
+		{
+			souvenirsList[ID].GetComponent<Button>().onClick.AddListener(() => streamSouvenir.StartPhotoStream(sprite));
+		}
 
 		GameObject souvenirs = new GameObject();
 		Image souvenirsSprite = souvenirs.AddComponent<Image>();
+		RectTransform rectTransform = souvenirs.GetComponent<RectTransform>();
+
 		souvenirsSprite.sprite = sprite;
 		souvenirsSprite.preserveAspect = true;
-		souvenirs.GetComponent<RectTransform>().SetParent(souvenirsList[ID].GetComponent<RectTransform>());
-		souvenirs.GetComponent<RectTransform>().offsetMax = souvenirsList[ID].GetComponent<RectTransform>().offsetMax;
-		souvenirs.GetComponent<RectTransform>().offsetMin = souvenirsList[ID].GetComponent<RectTransform>().offsetMin;
-		souvenirs.GetComponent<RectTransform>().anchorMax = souvenirsList[ID].GetComponent<RectTransform>().anchorMax;
-		souvenirs.GetComponent<RectTransform>().anchorMin = souvenirsList[ID].GetComponent<RectTransform>().anchorMin;
-		souvenirs.GetComponent<RectTransform>().pivot = souvenirsList[ID].GetComponent<RectTransform>().pivot;
-		souvenirs.GetComponent<RectTransform>().anchoredPosition = new Vector2(0f,0f);
+		rectTransform.SetParent(souvenirTransform);
+		rectTransform.offsetMax = souvenirTransform.offsetMax;
+		rectTransform.offsetMin = souvenirTransform.offsetMin;
+		rectTransform.anchorMax = souvenirTransform.anchorMax;
+		rectTransform.anchorMin = souvenirTransform.anchorMin;
+		rectTransform.pivot = souvenirTransform.pivot;
+		rectTransform.anchoredPosition = new Vector2(0f,0f);
+	}
+
+	public void DisplayUnrevealedMessage()
+	{
+		Debug.Log("You haven't revealed this souvenir yet");
 	}
 }

@@ -13,7 +13,8 @@ GameObject:
   - component: {fileID: 207197533}
   - component: {fileID: 207197532}
   - component: {fileID: 207197531}
-  m_Layer: 0
+  - component: {fileID: 5101069550345885962}
+  m_Layer: 13
   m_Name: VideoBlock
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -92,7 +93,7 @@ BoxCollider2D:
   m_GameObject: {fileID: 3069580417668623738}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 72dfa52a6836249459c7acefb55482b2, type: 2}
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
@@ -140,7 +141,36 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63cb1289c03b2a146b54e913080664b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  id: 1
   open: 0
   videoClip: {fileID: 32900000, guid: a416118ff3733f242ad6c9f235174a91, type: 3}
+  videoMiniature: {fileID: 21300000, guid: 1b9d20f8b6c1afc45907a841472c103b, type: 3}
   videoPlayer: {fileID: 0}
-  streamLaunched: 0
+  galerie: {fileID: 0}
+  blockRevealed: 0
+--- !u!61 &5101069550345885962
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3069580417668623738}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: -0.47}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 1, y: 1}
+    newSize: {x: 1, y: 1}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 0.7954408, y: 0.06924248}
+  m_EdgeRadius: 0
