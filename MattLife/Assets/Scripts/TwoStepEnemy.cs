@@ -13,6 +13,8 @@ public class TwoStepEnemy : EnemyScript
 	[SerializeField]
 	private bool isLaunch = false;
 	[SerializeField]
+	private bool scoreGained = false;
+	[SerializeField]
 	private float stunTime = 3f;
 
 	private IEnumerator stunCoroutine;
@@ -55,6 +57,7 @@ public class TwoStepEnemy : EnemyScript
 				else
 				{
 					Debug.Log("Kill the player !");
+					GameMaster.Instance.UpdateLife(-1);
 				}
 				
 			}
@@ -62,7 +65,7 @@ public class TwoStepEnemy : EnemyScript
 		else if (collision.transform.tag == "Enemy")
 		{
 			Debug.Log("Kill this enemy !");
-			//collision.transform.GetComponent<EnemyScript>().Kill();
+			collision.transform.GetComponent<EnemyScript>().Kill();
 		}
 	}
 
@@ -75,6 +78,11 @@ public class TwoStepEnemy : EnemyScript
 		speed = 0f;
 		stunCoroutine = StunTimer();
 		StartCoroutine(stunCoroutine);
+		if (!scoreGained)
+		{
+			scoreGained = true;
+			GameMaster.Instance.UpdateScore(score);
+		}
 	}
 
 	private void LaunchMonster(Vector2 contact)
@@ -100,10 +108,6 @@ public class TwoStepEnemy : EnemyScript
 				}
 				break;
 		}
-		/*if (contact.x > transform.position.x + headCheck.position.x)
-		{
-			Flip();
-		}*/
 		speed = launchSpeed;
 	}
 

@@ -12,7 +12,10 @@ ScriptsOnlyBuild:
     Assembly-CSharp-firstpass.dll:
     - UnityStandardAssets._2D.Camera2DFollow
     Assembly-CSharp.dll:
+    - CollectibleBlock
+    - CollectibleScript
     - EnemyScript
+    - EnemySpawner
     - GalerieScript
     - GameMaster
     - Parallaxing
@@ -60,6 +63,8 @@ ScriptsOnlyBuild:
     - Class: 48
       Script: {instanceID: 0}
     - Class: 50
+      Script: {instanceID: 0}
+    - Class: 58
       Script: {instanceID: 0}
     - Class: 60
       Script: {instanceID: 0}
@@ -120,21 +125,27 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 9568}
     - Class: 114
-      Script: {instanceID: 9964}
+      Script: {instanceID: 9588}
     - Class: 114
-      Script: {instanceID: 9988}
+      Script: {instanceID: 9814}
     - Class: 114
-      Script: {instanceID: 10080}
+      Script: {instanceID: 9968}
     - Class: 114
-      Script: {instanceID: 10362}
+      Script: {instanceID: 9992}
     - Class: 114
-      Script: {instanceID: 10456}
+      Script: {instanceID: 10084}
     - Class: 114
-      Script: {instanceID: 10534}
+      Script: {instanceID: 10306}
     - Class: 114
-      Script: {instanceID: 28716}
+      Script: {instanceID: 10368}
     - Class: 114
-      Script: {instanceID: 43720}
+      Script: {instanceID: 10462}
+    - Class: 114
+      Script: {instanceID: 10540}
+    - Class: 114
+      Script: {instanceID: 23318}
+    - Class: 114
+      Script: {instanceID: 30652}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -648,6 +659,12 @@ ScriptsOnlyBuild:
     className: PrefabBrush
   - hash:
       serializedVersion: 2
+      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: ResetTrigger
+  - hash:
+      serializedVersion: 2
       Hash: d54db1d6b78ae548315eb44a68d84585
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
@@ -744,6 +761,12 @@ ScriptsOnlyBuild:
     className: Joystick
   - hash:
       serializedVersion: 2
+      Hash: 2819cd9ea8f7691b2b74a2b46ad8f48d
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: TwoStepEnemy
+  - hash:
+      serializedVersion: 2
       Hash: aef908e94a9c4eb953102e26170ff9c8
     assemblyName: Assembly-CSharp.dll
     namespaceName: UnityEngine.Tilemaps
@@ -822,7 +845,7 @@ ScriptsOnlyBuild:
     className: AnalyticsEventTrackerEditor
   - hash:
       serializedVersion: 2
-      Hash: 9ad87e67e58c65fe32d686e8033c45d0
+      Hash: 4064f2185151c42f5b43e8218207a7bb
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: GameMaster
@@ -996,6 +1019,12 @@ ScriptsOnlyBuild:
     className: IsometricRuleTile
   - hash:
       serializedVersion: 2
+      Hash: bfdf060b2603148594c3c06838d1c1db
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: CollectibleScript
+  - hash:
+      serializedVersion: 2
       Hash: 3b3bf14021899a113dbb5c9e4f0d86ad
     assemblyName: Assembly-CSharp.dll
     namespaceName: UnityEngine.Tilemaps
@@ -1020,7 +1049,7 @@ ScriptsOnlyBuild:
     className: AudioTrack
   - hash:
       serializedVersion: 2
-      Hash: 1a54c9f6dda7f7a907fe808263be5e5a
+      Hash: 5be54ee6b6bc0b46945a61e94609c454
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: EnemyScript
@@ -1128,16 +1157,16 @@ ScriptsOnlyBuild:
     className: AutoMobileShaderSwitch
   - hash:
       serializedVersion: 2
-      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
+      Hash: 7c64860ea8ab16cbb3bc298418ec7af0
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
-    className: ResetTrigger
+    className: EnemySpawner
   - hash:
       serializedVersion: 2
-      Hash: b9f4f0c05413e5344f424a0d89ed4f55
+      Hash: 5718336cee61d8140ef61550f54f1372
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
-    className: TwoStepEnemy
+    className: CollectibleBlock
   platform: 19
   scenePathNames:
   - Assets/Scenes/SampleScene.unity

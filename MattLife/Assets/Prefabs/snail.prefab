@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 1564111901532185145}
   m_Layer: 0
   m_Name: snail
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -137,6 +137,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b8c7e78572b6787479caa878f9530fa8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  score: 50
   walkSpeed: 40
   bumpOnWall: 0
   wallLayerMask:
@@ -149,6 +150,7 @@ MonoBehaviour:
   stunSprite: {fileID: 21300000, guid: 34f707f38a01c0842ab1fa837bc94b4c, type: 3}
   isStun: 0
   isLaunch: 0
+  scoreGained: 0
   stunTime: 3
 --- !u!60 &1564111901532185145
 PolygonCollider2D:

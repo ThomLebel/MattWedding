@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class EnemyScript : MonoBehaviour
 {
+	public int score;
 	public float walkSpeed = 40;
 
 	public bool bumpOnWall = false;
@@ -11,6 +12,8 @@ public class EnemyScript : MonoBehaviour
 
 	public Transform headCheck;
 	public Transform wallCheck;
+
+	public EnemySpawner spawner;
 
 	protected float speed;
 	protected int direction = -1;
@@ -21,8 +24,15 @@ public class EnemyScript : MonoBehaviour
 	protected Rigidbody2D rb2d;
 	protected Animator animator;
 
+	[SerializeField]
+	private float deletingDistance = 10f;
+	private Camera cam;
+	private float camHorizontalExtend;
+	private float camVerticalExtend;
+
 	private void Awake()
 	{
+		cam = Camera.main;
 		spriteRenderer = GetComponent<SpriteRenderer>();
 		rb2d = GetComponent<Rigidbody2D>();
 		animator = GetComponent<Animator>();
@@ -33,6 +43,7 @@ public class EnemyScript : MonoBehaviour
 		speed = walkSpeed;
 		spriteWidth = spriteRenderer.bounds.size.x;
 		spriteWidth = spriteRenderer.bounds.size.y;
+		camHorizontalExtend = cam.orthographicSize * Screen.width / Screen.height;
 	}
 
     // Update is called once per frame
@@ -45,6 +56,13 @@ public class EnemyScript : MonoBehaviour
 		}
 
 		rb2d.velocity = new Vector2(direction * speed * Time.deltaTime, rb2d.velocity.y);
+
+		//Delete monster if out of reach
+		if (transform.position.x >= cam.transform.position.x + camHorizontalExtend + deletingDistance ||
+			transform.position.x <= cam.transform.position.x - camHorizontalExtend - deletingDistance)
+		{
+			DeleteMonster();
+		}
 	}
 
 	public virtual void OnCollisionEnter2D(Collision2D collision)
@@ -61,10 +79,11 @@ public class EnemyScript : MonoBehaviour
 				//Raise a flag notifying the player that is can bounce on the monster back
 				collision.transform.GetComponent<PlayerControls>().Bounce();
 
-				//Kill();
+				Kill();
 			}else
 			{
 				Debug.Log("Kill the player !");
+				GameMaster.Instance.UpdateLife(-1);
 			}
 		}
 	}
@@ -80,6 +99,17 @@ public class EnemyScript : MonoBehaviour
 
 	public void Kill()
 	{
+		GameMaster.Instance.UpdateScore(score);
+		DeleteMonster();
+	}
+
+	public void DeleteMonster()
+	{
+		if (spawner != null)
+		{
+			spawner.monsterList.Remove(gameObject);
+		}
+		GameMaster.Instance.monsterList.Remove(gameObject);
 		Destroy(gameObject);
 	}
 }

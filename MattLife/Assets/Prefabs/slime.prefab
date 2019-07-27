@@ -76,7 +76,7 @@ GameObject:
   - component: {fileID: 91788750821069553}
   m_Layer: 0
   m_Name: slime
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -178,6 +178,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c69b913c1d70d8640ad7f0da690f91af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  score: 25
   walkSpeed: 40
   bumpOnWall: 0
   wallLayerMask:

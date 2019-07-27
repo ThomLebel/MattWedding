@@ -6,9 +6,15 @@ public class ResetTrigger : MonoBehaviour
 {
 	private void OnTriggerEnter2D(Collider2D collision)
 	{
-		if (collision.tag == "Player")
+		switch (collision.tag)
 		{
-			collision.transform.position = GameMaster.Instance.playerSpawnPosition;
+			case "Player":
+				GameMaster.Instance.UpdateLife(-1);
+				collision.transform.position = GameMaster.Instance.playerSpawnPosition;
+				break;
+			case "Enemy":
+				collision.transform.GetComponent<EnemyScript>().DeleteMonster();
+				break;
 		}
 	}
 }
