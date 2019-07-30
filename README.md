@@ -38,4 +38,8 @@ support clavier/manette
 
 *bouton 2* 		: sauter
 
+<<<<<<< HEAD
 *bouton 1*		: interagir/tirer (si on fout un gun ou quoi)
+=======
+*bouton 1*		: interagir/tirer (si on fout un gun ou quoi)
+>>>>>>> d0268e2a6d8d12722f0439f7e82c7b6d8b5b5bcc

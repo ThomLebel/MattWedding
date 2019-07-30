@@ -109,7 +109,6 @@ public class EnemyScript : MonoBehaviour
 		{
 			spawner.monsterList.Remove(gameObject);
 		}
-		GameMaster.Instance.monsterList.Remove(gameObject);
 		Destroy(gameObject);
 	}
 }

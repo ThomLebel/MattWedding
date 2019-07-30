@@ -59,10 +59,9 @@ public class TwoStepEnemy : EnemyScript
 					Debug.Log("Kill the player !");
 					GameMaster.Instance.UpdateLife(-1);
 				}
-				
 			}
 		}
-		else if (collision.transform.tag == "Enemy")
+		else if (collision.transform.tag == "Enemy" && isLaunch)
 		{
 			Debug.Log("Kill this enemy !");
 			collision.transform.GetComponent<EnemyScript>().Kill();

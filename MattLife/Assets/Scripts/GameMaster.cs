@@ -21,8 +21,6 @@ public class GameMaster : MonoBehaviour
 
 	public Vector3 playerSpawnPosition = Vector3.zero;
 
-	public List<GameObject> monsterList;
-
 	[SerializeField]
 	private bool gamePaused = false;
 	private GameObject player;
@@ -34,7 +32,6 @@ public class GameMaster : MonoBehaviour
     {
 		Instance = this;
 		state = "game";
-		monsterList = new List<GameObject>();
 		player = GameObject.FindGameObjectWithTag("Player");
     }
 
