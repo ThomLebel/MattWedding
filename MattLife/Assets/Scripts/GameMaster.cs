@@ -115,7 +115,12 @@ public class GameMaster : MonoBehaviour
 			playerGold = 0;
 			UpdateLife(1);
 		}
-		goldText.text = playerGold.ToString();
+		string zero = "";
+		if (playerGold < 10)
+		{
+			zero = "0";
+		}
+		goldText.text = zero + playerGold.ToString();
 	}
 
 	public void UpdateScore(int value)

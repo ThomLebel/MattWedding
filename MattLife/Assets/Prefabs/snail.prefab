@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 841231317549359146}
   - component: {fileID: 5502621271642572979}
   - component: {fileID: 1564111901532185145}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: snail
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -199,7 +199,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4661062945111960931}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: headCheck
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -229,7 +229,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1579746992812149680}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: wallCheck
   m_TagString: Untagged
   m_Icon: {fileID: 0}

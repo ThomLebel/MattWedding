@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4250086509124869557}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: wallCheck
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -39,7 +39,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4250086509473935986}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: headCheck
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -74,7 +74,7 @@ GameObject:
   - component: {fileID: 4250086510925361501}
   - component: {fileID: 3768229476442288282}
   - component: {fileID: 91788750821069553}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: slime
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -186,6 +186,8 @@ MonoBehaviour:
     m_Bits: 9984
   headCheck: {fileID: 4250086509473935986}
   wallCheck: {fileID: 4250086509124869557}
+  spawner: {fileID: 0}
+  deletingDistance: 10
 --- !u!95 &3768229476442288282
 Animator:
   serializedVersion: 3
