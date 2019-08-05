@@ -685,8 +685,10 @@
     <Compile Include="Assets\Scripts\GameMaster.cs" />
     <Compile Include="Assets\Scripts\Parallaxing.cs" />
     <Compile Include="Assets\Scripts\PhotoBlock.cs" />
+    <Compile Include="Assets\Scripts\PlatformController.cs" />
     <Compile Include="Assets\Scripts\Player.cs" />
     <Compile Include="Assets\Scripts\PlayerControls.cs" />
+    <Compile Include="Assets\Scripts\RaycastController.cs" />
     <Compile Include="Assets\Scripts\ResetTrigger.cs" />
     <Compile Include="Assets\Scripts\StreamSouvenir.cs" />
     <Compile Include="Assets\Scripts\Tiling.cs" />

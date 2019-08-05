@@ -17,11 +17,20 @@ public class Player : MonoBehaviour
 	private Vector3 velocity;
 	private float velocityXSmoothing;
 
+	[SerializeField]
+	private float bounceTakeOff;
+	private bool canBounce = false;
+	[SerializeField]
+	private float bounceTimerWindow = 0.2f;
+	private IEnumerator bounceOnMonster;
+
 	private Controller2D controller;
+	//private Rigidbody2D rb2d;
 
 	private void Awake()
 	{
 		controller = GetComponent<Controller2D>();
+		//rb2d = GetComponent<Rigidbody2D>();
 	}
 
 	// Start is called before the first frame update
@@ -41,9 +50,16 @@ public class Player : MonoBehaviour
 		}
 		Vector2 input = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
 
-		if (Input.GetButtonDown("Jump") && controller.collisions.below)
+		if (Input.GetButtonDown("Jump"))
 		{
-			velocity.y = jumpVelocity;
+			if (canBounce)
+			{
+				velocity.y = jumpVelocity;
+			}
+			else if (controller.collisions.below)
+			{
+				velocity.y = jumpVelocity;
+			}
 		}
 
 		float targetVelocityX = input.x * moveSpeed;
@@ -52,4 +68,23 @@ public class Player : MonoBehaviour
 
 		controller.Move(velocity * Time.deltaTime);
     }
+
+	public void Bounce()
+	{
+		canBounce = true;
+
+		bounceOnMonster = BounceOnMonster(bounceTimerWindow);
+		StartCoroutine(bounceOnMonster);
+
+		velocity.y = jumpVelocity;
+
+		//rb2d.AddForce(new Vector2(0f, bounceTakeOff));
+	}
+
+	private IEnumerator BounceOnMonster(float time)
+	{
+		yield return new WaitForSeconds(time);
+		canBounce = false;
+		StopCoroutine(bounceOnMonster);
+	}
 }
