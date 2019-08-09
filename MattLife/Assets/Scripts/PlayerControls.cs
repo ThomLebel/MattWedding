@@ -53,7 +53,6 @@ public class PlayerControls : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-		//grounded = Physics2D.Linecast(transform.position, groundCheck.position, groundLayerMask);
 		grounded = false;
 		Collider2D[] colliders = Physics2D.OverlapCircleAll(groundCheck.position, groundedRadius, groundLayerMask);
 		for (int i = 0; i < colliders.Length; i++)
@@ -129,6 +128,29 @@ public class PlayerControls : MonoBehaviour
 	private void FixedUpdate()
 	{
 		rb2d.velocity = new Vector2(horizontal * speed * Time.fixedDeltaTime, rb2d.velocity.y);
+		MovingOnSlopes();
+	}
+
+	private void MovingOnSlopes()
+	{
+		if (grounded && horizontal == 0 && vertical == 0 && !isJumping && !isJumpingDown)
+		{
+			RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down, 10, groundLayerMask);
+
+			// Check if we are on the slope
+			if (hit && Mathf.Abs(hit.normal.x) > 0.1f)
+			{
+				// We freeze all the rigidbody constraints and put velocity to 0
+				rb2d.constraints = RigidbodyConstraints2D.FreezeAll;
+				rb2d.velocity = Vector2.zero;
+			}
+		}
+		else
+		{
+			// if we are on air or moving - jumping, unfreeze all and freeze only rotation.
+			rb2d.constraints = RigidbodyConstraints2D.None;
+			rb2d.constraints = RigidbodyConstraints2D.FreezeRotation;
+		}
 	}
 
 	private void Flip()

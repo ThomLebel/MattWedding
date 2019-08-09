@@ -6,6 +6,8 @@ using UnityEngine;
 public class RaycastController : MonoBehaviour
 {
 	public LayerMask collisionMask;
+	public LayerMask whatIsGround;
+	public LayerMask canJumpThrough;
 
 	[SerializeField]
 	protected const float skinWidth = 0.02f;
