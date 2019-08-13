@@ -6,11 +6,9 @@ using UnityEngine;
 public class RaycastController : MonoBehaviour
 {
 	public LayerMask collisionMask;
-	public LayerMask whatIsGround;
-	public LayerMask canJumpThrough;
 
 	[SerializeField]
-	protected const float skinWidth = 0.02f;
+	protected const float skinWidth = 0.015f;
 	[SerializeField]
 	protected int horizontalRayCount = 4;
 	[SerializeField]
@@ -22,7 +20,6 @@ public class RaycastController : MonoBehaviour
 	protected BoxCollider2D boxCollider;
 	protected RaycastOrigins raycastOrigins;
 
-	// Start is called before the first frame update
 	public virtual void Start()
 	{
 		boxCollider = GetComponent<BoxCollider2D>();

@@ -78,7 +78,7 @@ public class EnemyScript : MonoBehaviour
 
 				//Raise a flag notifying the player that is can bounce on the monster back
 				//collision.transform.GetComponent<PlayerControls>().Bounce();
-				collision.transform.GetComponent<Player>().Bounce();
+				//collision.transform.GetComponent<Player>().Bounce();
 
 				Kill();
 			}else
