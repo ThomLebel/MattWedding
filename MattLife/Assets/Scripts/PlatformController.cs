@@ -24,9 +24,6 @@ public class PlatformController : RaycastController
 
 	public override void Start()
 	{
-		horizontalRayCount = verticalRayCount = (int)Mathf.Round(transform.localScale.x) * 10;
-		horizontalRayCount = verticalRayCount = Mathf.Clamp(horizontalRayCount, 4, 9999);
-
 		base.Start();
 
 		globalWaypoints = new Vector3[localWaypoints.Length];

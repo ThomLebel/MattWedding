@@ -13,6 +13,7 @@ public class Player : MonoBehaviour
 	public float accelerationTimeGrounded = .1f;
 	public float wallSlideSpeedMax = 3;
 	public float wallStickTime = .25f;
+	public float bounceTakeOff = 7f;
 
 	public Vector2 wallJumpClimb;
 	public Vector2 wallJumpOff;
@@ -24,7 +25,18 @@ public class Player : MonoBehaviour
 	private float timeToWallUnstick;
 	private Vector3 velocity;
 	private float velocityXSmoothing;
+	private bool wallSliding;
+	private int wallDirX;
 
+	[SerializeField]
+	private bool canBounce = false;
+	[SerializeField]
+	private bool bouncing = false;
+	[SerializeField]
+	private float bounceTimerWindow = 0.2f;
+	private IEnumerator bounceOnMonster;
+
+	private Vector2 directionalInput;
 	private Controller2D controller;
 
 	private void Awake()
@@ -44,13 +56,77 @@ public class Player : MonoBehaviour
 
 	void Update()
 	{
-		Vector2 input = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
-		int wallDirX = (controller.collisions.left) ? -1 : 1;
+		CalculateVelocity();
+		HandleWallSliding();
 
-		float targetVelocityX = input.x * moveSpeed;
+		controller.Move(velocity * Time.deltaTime, directionalInput);
+
+		if (controller.collisions.above || controller.collisions.below)
+		{
+			velocity.y = 0;
+		}
+		if (velocity.y <= 0 && bouncing)
+		{
+			bouncing = false;
+		}
+	}
+
+	public void SetDirectionalInput(Vector2 input)
+	{
+		directionalInput = input;
+	}
+
+	public void OnJumpInputDown()
+	{
+		if (wallSliding)
+		{
+			if (wallDirX == directionalInput.x)
+			{
+				velocity.x = -wallDirX * wallJumpClimb.x;
+				velocity.y = wallJumpClimb.y;
+			}
+			else if (directionalInput.x == 0)
+			{
+				velocity.x = -wallDirX * wallJumpOff.x;
+				velocity.y = wallJumpOff.y;
+			}
+			else
+			{
+				velocity.x = -wallDirX * wallLeap.x;
+				velocity.y = wallLeap.y;
+			}
+		}
+		if (controller.collisions.below)
+		{
+			velocity.y = maxJumpVelocity;
+		}
+		if (canBounce)
+		{
+			bouncing = true;
+			canBounce = false;
+			velocity.y = maxJumpVelocity + bounceTakeOff;
+		}
+	}
+
+	public void OnJumpInputUp()
+	{
+		if (velocity.y > minJumpVelocity && !bouncing)
+		{
+			velocity.y = minJumpVelocity;
+		}
+	}
+
+	void CalculateVelocity()
+	{
+		float targetVelocityX = directionalInput.x * moveSpeed;
 		velocity.x = Mathf.SmoothDamp(velocity.x, targetVelocityX, ref velocityXSmoothing, (controller.collisions.below) ? accelerationTimeGrounded : accelerationTimeAirborne);
+		velocity.y += gravity * Time.deltaTime;
+	}
 
-		bool wallSliding = false;
+	void HandleWallSliding()
+	{
+		wallDirX = (controller.collisions.left) ? -1 : 1;
+		wallSliding = false;
 		if ((controller.collisions.left || controller.collisions.right) && !controller.collisions.below && velocity.y < 0)
 		{
 			wallSliding = true;
@@ -65,7 +141,7 @@ public class Player : MonoBehaviour
 				velocityXSmoothing = 0;
 				velocity.x = 0;
 
-				if (input.x != wallDirX && input.x != 0)
+				if (directionalInput.x != wallDirX && directionalInput.x != 0)
 				{
 					timeToWallUnstick -= Time.deltaTime;
 				}
@@ -78,50 +154,23 @@ public class Player : MonoBehaviour
 			{
 				timeToWallUnstick = wallStickTime;
 			}
-
 		}
+	}
 
-		if (Input.GetButtonDown("Jump"))
-		{
-			if (wallSliding)
-			{
-				if (wallDirX == input.x)
-				{
-					velocity.x = -wallDirX * wallJumpClimb.x;
-					velocity.y = wallJumpClimb.y;
-				}
-				else if (input.x == 0)
-				{
-					velocity.x = -wallDirX * wallJumpOff.x;
-					velocity.y = wallJumpOff.y;
-				}
-				else
-				{
-					velocity.x = -wallDirX * wallLeap.x;
-					velocity.y = wallLeap.y;
-				}
-			}
-			if (controller.collisions.below)
-			{
-				velocity.y = maxJumpVelocity;
-			}
-		}
-		if (Input.GetButtonUp("Jump"))
-		{
-			if (velocity.y > minJumpVelocity)
-			{
-				velocity.y = minJumpVelocity;
-			}
-		}
+	public void Bounce()
+	{
+		canBounce = true;
 
+		bounceOnMonster = BounceOnMonster(bounceTimerWindow);
+		StartCoroutine(bounceOnMonster);
 
-		velocity.y += gravity * Time.deltaTime;
-		controller.Move(velocity * Time.deltaTime, input);
+		velocity.y = bounceTakeOff;
+	}
 
-		if (controller.collisions.above || controller.collisions.below)
-		{
-			velocity.y = 0;
-		}
-
+	private IEnumerator BounceOnMonster(float time)
+	{
+		yield return new WaitForSeconds(time);
+		canBounce = false;
+		StopCoroutine(bounceOnMonster);
 	}
 }

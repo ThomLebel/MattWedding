@@ -8,8 +8,10 @@ public class CollectibleScript : MonoBehaviour
 
 	private void OnTriggerEnter2D(Collider2D collision)
 	{
+		Debug.Log(collision.tag);
 		if (collision.tag == "Player")
 		{
+			Debug.Log("Hit a coin !");
 			GameMaster.Instance.UpdateGold();
 			GameMaster.Instance.UpdateScore(score);
 			Destroy(gameObject);
