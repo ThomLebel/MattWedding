@@ -215,9 +215,13 @@ MonoBehaviour:
   accelerationTimeGrounded: 0.1
   wallSlideSpeedMax: 3
   wallStickTime: 0.25
+  bounceTakeOff: 7
   wallJumpClimb: {x: 7.5, y: 16}
   wallJumpOff: {x: 8.5, y: 7}
   wallLeap: {x: 18, y: 17}
+  canBounce: 0
+  bouncing: 0
+  bounceTimerWindow: 0.1
 --- !u!114 &1504857912
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -233,8 +237,9 @@ MonoBehaviour:
   collisionMask:
     serializedVersion: 2
     m_Bits: 26368
-  maxClimbAngle: 80
-  maxDescendAngle: 75
+  boxCollider: {fileID: 0}
+  maxSlopeAngle: 80
+  playerInput: {x: 0, y: 0}
 --- !u!114 &2778404664396844214
 MonoBehaviour:
   m_ObjectHideFlags: 0

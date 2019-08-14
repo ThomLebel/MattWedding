@@ -18,12 +18,17 @@ public class RaycastController : MonoBehaviour
 	protected float horizontalRaySpacing;
 	protected float verticalRaySpacing;
 
-	protected BoxCollider2D boxCollider;
+	[HideInInspector]
+	public BoxCollider2D boxCollider;
 	protected RaycastOrigins raycastOrigins;
+
+	public virtual void Awake()
+	{
+		boxCollider = GetComponent<BoxCollider2D>();
+	}
 
 	public virtual void Start()
 	{
-		boxCollider = GetComponent<BoxCollider2D>();
 		CalculateRaySpacing();
 	}
 

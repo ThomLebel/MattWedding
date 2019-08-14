@@ -46,7 +46,8 @@ public class TwoStepEnemy : EnemyScript
 				}
 
 				//We bounce off the monster head
-				collision.transform.GetComponent<PlayerControls>().Bounce();
+				//collision.transform.GetComponent<PlayerControls>().Bounce();
+				collision.transform.GetComponent<Player>().Bounce();
 			}
 			else
 			{
