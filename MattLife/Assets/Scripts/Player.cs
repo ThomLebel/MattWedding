@@ -27,6 +27,7 @@ public class Player : MonoBehaviour
 	private float velocityXSmoothing;
 	private bool wallSliding;
 	private int wallDirX;
+	private bool facingRight = true;
 
 	[SerializeField]
 	private bool canBounce = false;
@@ -51,6 +52,7 @@ public class Player : MonoBehaviour
 		gravity = -(2 * maxJumpHeight) / Mathf.Pow(timeToJumpApex, 2);
 		maxJumpVelocity = Mathf.Abs(gravity) * timeToJumpApex;
 		minJumpVelocity = Mathf.Sqrt(2 * Mathf.Abs(gravity) * minJumpHeight);
+
 		print("Gravity: " + gravity + "  Jump Velocity: " + maxJumpVelocity);
 	}
 
@@ -60,6 +62,8 @@ public class Player : MonoBehaviour
 		HandleWallSliding();
 
 		controller.Move(velocity * Time.deltaTime, directionalInput);
+
+		//facingRight = (controller.collisions.faceDir == 1);
 
 		if (controller.collisions.above || controller.collisions.below)
 		{
@@ -76,6 +80,16 @@ public class Player : MonoBehaviour
 		{
 			bouncing = false;
 		}
+
+		if (!facingRight && directionalInput.x > 0)
+		{
+			Flip();
+		}
+		else if (facingRight && directionalInput.x < 0)
+		{
+			Flip();
+		}
+		
 	}
 
 	public void SetDirectionalInput(Vector2 input)
@@ -173,6 +187,16 @@ public class Player : MonoBehaviour
 				timeToWallUnstick = wallStickTime;
 			}
 		}
+	}
+
+	private void Flip()
+	{
+		// Switch the way the player is labelled as facing.
+		facingRight = !facingRight;
+
+		Vector3 theScale = transform.localScale;
+		theScale.x *= -1;
+		transform.localScale = theScale;
 	}
 
 	public void Bounce()
