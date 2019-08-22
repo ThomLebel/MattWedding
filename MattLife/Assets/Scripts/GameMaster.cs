@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class GameMaster : MonoBehaviour
 {
-	public int playerLife = 3;
+	public int playerLife = 32;
 	public int playerScore = 0;
 	public int playerGold = 0;
 
@@ -33,7 +33,9 @@ public class GameMaster : MonoBehaviour
 		Instance = this;
 		state = "game";
 		player = GameObject.FindGameObjectWithTag("Player");
-    }
+		lifeText.text = playerLife.ToString();
+
+	}
 
     // Update is called once per frame
     void Update()
@@ -101,10 +103,10 @@ public class GameMaster : MonoBehaviour
 		}
 		lifeText.text = playerLife.ToString();
 
-		if (value < 0)
-		{
-			player.transform.position = playerSpawnPosition;
-		}
+		//if (value < 0)
+		//{
+		//	player.transform.position = playerSpawnPosition;
+		//}
 	}
 
 	public void UpdateGold()

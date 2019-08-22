@@ -237,6 +237,76 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8f225f762246514408062874158a9633, type: 3}
+--- !u!1 &72479575
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 72479578}
+  - component: {fileID: 72479577}
+  - component: {fileID: 72479576}
+  m_Layer: 0
+  m_Name: EndLevelTrigger
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &72479576
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 72479575}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 18b485571cfd002419c6553ffca3cf30, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!61 &72479577
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 72479575}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 2.899765, y: 1.8067837}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 6.79953, y: 4.6135674}
+  m_EdgeRadius: 0
+--- !u!4 &72479578
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 72479575}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 190, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 15
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &114400289
 GameObject:
   m_ObjectHideFlags: 0
@@ -1874,6 +1944,16 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6642818741582295792, guid: cb9c67b8efaaf4446bcf16f03ac59eac,
+        type: 3}
+      propertyPath: m_UsedByEffector
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3005886869427273682, guid: cb9c67b8efaaf4446bcf16f03ac59eac,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6023227873271771942, guid: cb9c67b8efaaf4446bcf16f03ac59eac,
         type: 3}
       propertyPath: m_Layer
@@ -1893,16 +1973,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Layer
       value: 8
-      objectReference: {fileID: 0}
-    - target: {fileID: 6642818741582295792, guid: cb9c67b8efaaf4446bcf16f03ac59eac,
-        type: 3}
-      propertyPath: m_UsedByEffector
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3005886869427273682, guid: cb9c67b8efaaf4446bcf16f03ac59eac,
-        type: 3}
-      propertyPath: m_Enabled
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2135988067980761548, guid: cb9c67b8efaaf4446bcf16f03ac59eac,
         type: 3}
@@ -5922,7 +5992,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c0649c870263a6d45b7926aa10b98561, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerLife: 3
+  playerLife: 32
   playerScore: 0
   playerGold: 0
   menuPause: {fileID: 1108300303}
@@ -16845,14 +16915,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1504857912, guid: 278da4deca532ef428538013f6122124, type: 3}
-      propertyPath: maxSlopeAngle
-      value: 50
-      objectReference: {fileID: 0}
-    - target: {fileID: 1504857911, guid: 278da4deca532ef428538013f6122124, type: 3}
-      propertyPath: wallSlideSpeedMax
-      value: 5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 278da4deca532ef428538013f6122124, type: 3}

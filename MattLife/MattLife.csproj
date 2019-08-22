@@ -680,6 +680,7 @@
     <Compile Include="Assets\Scripts\CollectibleBlock.cs" />
     <Compile Include="Assets\Scripts\CollectibleScript.cs" />
     <Compile Include="Assets\Scripts\Controller2D.cs" />
+    <Compile Include="Assets\Scripts\EndLevel.cs" />
     <Compile Include="Assets\Scripts\EnemyScript.cs" />
     <Compile Include="Assets\Scripts\EnemySpawner.cs" />
     <Compile Include="Assets\Scripts\GalerieScript.cs" />

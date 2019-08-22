@@ -25,6 +25,12 @@ public class TwoStepEnemy : EnemyScript
 		//base.OnCollisionEnter2D(collision);
 		if (collision.transform.tag == "Player")
 		{
+			Player playerScript = collision.transform.GetComponent<Player>();
+			if (playerScript.isInvulnerable)
+			{
+				return;
+			}
+
 			Vector2 contact = collision.GetContact(0).point;
 
 			if (contact.y >= transform.position.y)
@@ -47,7 +53,8 @@ public class TwoStepEnemy : EnemyScript
 
 				//We bounce off the monster head
 				//collision.transform.GetComponent<PlayerControls>().Bounce();
-				collision.transform.GetComponent<Player>().Bounce();
+				playerScript.AllowBounceOffMonster();
+				//playerScript.Bounce();
 			}
 			else
 			{
@@ -58,9 +65,13 @@ public class TwoStepEnemy : EnemyScript
 				else
 				{
 					Debug.Log("Kill the player !");
-					GameMaster.Instance.UpdateLife(-1);
+					//GameMaster.Instance.UpdateLife(-1);
+					//playerScript.Bounce();
+					playerScript.Hit();
 				}
 			}
+
+			playerScript.Bounce();
 		}
 		else if (collision.transform.tag == "Enemy" && isLaunch)
 		{

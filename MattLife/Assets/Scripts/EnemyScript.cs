@@ -57,7 +57,7 @@ public class EnemyScript : MonoBehaviour
 
 		rb2d.velocity = new Vector2(direction * speed * Time.deltaTime, rb2d.velocity.y);
 
-		//Delete monster if out of reach
+		//Delete monster if out of sight
 		if (transform.position.x >= cam.transform.position.x + camHorizontalExtend + deletingDistance ||
 			transform.position.x <= cam.transform.position.x - camHorizontalExtend - deletingDistance)
 		{
@@ -69,6 +69,12 @@ public class EnemyScript : MonoBehaviour
 	{
 		if (collision.transform.tag == "Player")
 		{
+			Player playerScript = collision.transform.GetComponent<Player>();
+			if (playerScript.isInvulnerable)
+			{
+				return;
+			}
+
 			Vector2 contact = collision.GetContact(0).point;
 
 			if (contact.y >= headCheck.position.y)
@@ -78,14 +84,19 @@ public class EnemyScript : MonoBehaviour
 
 				//Raise a flag notifying the player that is can bounce on the monster back
 				//collision.transform.GetComponent<PlayerControls>().Bounce();
-				collision.transform.GetComponent<Player>().Bounce();
+				playerScript.AllowBounceOffMonster();
+				//playerScript.Bounce();
 
 				Kill();
 			}else
 			{
 				Debug.Log("Kill the player !");
-				GameMaster.Instance.UpdateLife(-1);
+				//GameMaster.Instance.UpdateLife(-1);
+				//playerScript.Bounce();
+				playerScript.Hit();
 			}
+
+			playerScript.Bounce();
 		}
 	}
 

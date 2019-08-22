@@ -9,8 +9,11 @@ public class ResetTrigger : MonoBehaviour
 		switch (collision.tag)
 		{
 			case "Player":
-				GameMaster.Instance.UpdateLife(-1);
-				collision.transform.position = GameMaster.Instance.playerSpawnPosition;
+				collision.transform.GetComponent <Player>().Hit();
+				collision.transform.GetComponent <Player>().Fall();
+				//GameMaster.Instance.UpdateLife(-1);
+				//collision.transform.position = GameMaster.Instance.playerSpawnPosition;
+				//collision.transform.position = new Vector3(collision.transform.position.x, 10f, collision.transform.position.z);
 				break;
 			case "Enemy":
 				collision.transform.GetComponent<EnemyScript>().DeleteMonster();
