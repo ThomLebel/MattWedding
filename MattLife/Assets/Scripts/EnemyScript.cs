@@ -14,6 +14,7 @@ public class EnemyScript : MonoBehaviour
 	public Transform wallCheck;
 
 	public EnemySpawner spawner;
+	public GameObject effect;
 
 	protected float speed;
 	protected int direction = -1;
@@ -80,10 +81,8 @@ public class EnemyScript : MonoBehaviour
 			if (contact.y >= headCheck.position.y)
 			{
 				Debug.Log("Kill this monster !");
-				//Play hit animation
 
-				//Raise a flag notifying the player that is can bounce on the monster back
-				//collision.transform.GetComponent<PlayerControls>().Bounce();
+				Instantiate(effect, transform.position, Quaternion.identity);
 				playerScript.AllowBounceOffMonster();
 				//playerScript.Bounce();
 

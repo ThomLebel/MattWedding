@@ -154,25 +154,6 @@ public class Controller2D : RaycastController
 					}
 				}
 
-
-				//if (hit.collider.tag == "JumpThrough")
-				//{
-				//	if (directionY == 1 || hit.distance == 0)
-				//	{
-				//		continue;
-				//	}
-				//	if (collisions.fallingThroughPlatform)
-				//	{
-				//		continue;
-				//	}
-				//	if (playerInput.y == -1)
-				//	{
-				//		collisions.fallingThroughPlatform = true;
-				//		Invoke("ResetFallingThroughPlatform", .1f);
-				//		continue;
-				//	}
-				//}
-
 				moveAmount.y = (hit.distance - skinWidth) * directionY;
 				rayLength = hit.distance;
 

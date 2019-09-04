@@ -35,6 +35,8 @@ public class TwoStepEnemy : EnemyScript
 
 			if (contact.y >= transform.position.y)
 			{
+
+				Instantiate(effect, transform.position, Quaternion.identity);
 				//On stun le monstre
 				if (!isStun)
 				{
@@ -76,6 +78,7 @@ public class TwoStepEnemy : EnemyScript
 		else if (collision.transform.tag == "Enemy" && isLaunch)
 		{
 			Debug.Log("Kill this enemy !");
+			Instantiate(effect, transform.position, Quaternion.identity);
 			collision.transform.GetComponent<EnemyScript>().Kill();
 		}
 	}

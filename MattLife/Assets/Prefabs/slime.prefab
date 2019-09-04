@@ -122,6 +122,7 @@ SpriteRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -187,6 +188,7 @@ MonoBehaviour:
   headCheck: {fileID: 4250086509473935986}
   wallCheck: {fileID: 4250086509124869557}
   spawner: {fileID: 0}
+  effect: {fileID: 7165646687091236009, guid: 45ee855e753ff2641be0b3ab4d690091, type: 3}
   deletingDistance: 10
 --- !u!95 &3768229476442288282
 Animator:

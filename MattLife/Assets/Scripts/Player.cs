@@ -22,6 +22,10 @@ public class Player : MonoBehaviour
 	public bool isInvulnerable = false;
 	public bool isFalling = false;
 
+	public Transform jumpParticlePosition;
+	public GameObject lifeLostParticle;
+	public GameObject jumpParticle;
+
 	private float gravity;
 	private float fallingGravity = 0.5f;
 	private float maxJumpVelocity;
@@ -33,6 +37,8 @@ public class Player : MonoBehaviour
 	private int wallDirX;
 	private bool facingRight = true;
 
+	[SerializeField]
+	private bool inAir = false;
 	[SerializeField]
 	private bool canBounce = false;
 	[SerializeField]
@@ -59,8 +65,6 @@ public class Player : MonoBehaviour
 		gravity = -(2 * maxJumpHeight) / Mathf.Pow(timeToJumpApex, 2);
 		maxJumpVelocity = Mathf.Abs(gravity) * timeToJumpApex;
 		minJumpVelocity = Mathf.Sqrt(2 * Mathf.Abs(gravity) * minJumpHeight);
-
-		print("Gravity: " + gravity + "  Jump Velocity: " + maxJumpVelocity);
 	}
 
 	void Update()
@@ -95,6 +99,16 @@ public class Player : MonoBehaviour
 			{
 				velocity.y = -fallingGravity;
 			}			
+		}
+
+		if (!controller.collisions.below)
+		{
+			inAir = true;
+		}
+		if (controller.collisions.below && inAir)
+		{
+			inAir = false;
+			Instantiate(jumpParticle, jumpParticlePosition.position, Quaternion.identity);
 		}
 
 		if (!facingRight && directionalInput.x > 0)
@@ -134,6 +148,7 @@ public class Player : MonoBehaviour
 		}
 		if (controller.collisions.below)
 		{
+			Instantiate(jumpParticle, jumpParticlePosition.position, Quaternion.identity);
 			if (controller.collisions.slidingDownMaxSlope)
 			{
 				if (directionalInput.x != -Mathf.Sign(controller.collisions.slopeNormal.x)) // not jumping against max slope
@@ -177,6 +192,7 @@ public class Player : MonoBehaviour
 		if ((controller.collisions.left || controller.collisions.right) && !controller.collisions.below && velocity.y < 0)
 		{
 			wallSliding = true;
+			Instantiate(jumpParticle, jumpParticlePosition.position, Quaternion.identity);
 
 			if (velocity.y < -wallSlideSpeedMax)
 			{
@@ -229,6 +245,7 @@ public class Player : MonoBehaviour
 
 	public void Hit()
 	{
+		Instantiate(lifeLostParticle, transform.position, Quaternion.identity);
 		GameMaster.Instance.UpdateLife(-1);
 		if (GameMaster.Instance.playerLife > 0)
 		{

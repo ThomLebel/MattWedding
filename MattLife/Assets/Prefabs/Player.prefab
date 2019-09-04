@@ -241,6 +241,12 @@ MonoBehaviour:
   wallJumpOff: {x: 8.5, y: 7}
   wallLeap: {x: 18, y: 17}
   isInvulnerable: 0
+  isFalling: 0
+  jumpParticlePosition: {fileID: 2064863854647819626}
+  lifeLostParticle: {fileID: 7165646687091236009, guid: 550f710bf1017fc4f949265886360f01,
+    type: 3}
+  jumpParticle: {fileID: 5965558650816100861, guid: 021a606d3b94b6d40b399286f9845e9e,
+    type: 3}
   canBounce: 0
   bouncing: 0
   bounceTimerWindow: 0.1
@@ -329,7 +335,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8551031903725001366}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.129, y: -0.631, z: 0}
+  m_LocalPosition: {x: 0, y: -0.631, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2285168291886181774}

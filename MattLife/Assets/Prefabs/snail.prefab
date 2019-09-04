@@ -62,6 +62,7 @@ SpriteRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -146,6 +147,7 @@ MonoBehaviour:
   headCheck: {fileID: 4661062945111960931}
   wallCheck: {fileID: 1579746992812149680}
   spawner: {fileID: 0}
+  effect: {fileID: 7165646687091236009, guid: e112502734c77ce43b0ac4d9d0c4ac2c, type: 3}
   deletingDistance: 10
   launchSpeed: 250
   baseSprite: {fileID: 21300000, guid: b8fb415a6f5b30348bf5bd4f0b3bf918, type: 3}
