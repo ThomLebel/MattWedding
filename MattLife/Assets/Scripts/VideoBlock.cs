@@ -5,8 +5,9 @@ using UnityEngine.Video;
 
 public class VideoBlock : Block
 {
-	public VideoClip videoClip;
-	public Sprite videoMiniature;
+	public Souvenir souvenir;
+	//public VideoClip videoClip;
+	//public Sprite videoMiniature;
 	public StreamSouvenir videoPlayer;
 	public GalerieScript galerie;
 	[SerializeField]
@@ -16,9 +17,10 @@ public class VideoBlock : Block
 	{
 		if (open && !blockRevealed)
 		{
+			Vector3 blockPosition = Camera.main.WorldToScreenPoint(transform.position);
 			blockRevealed = true;
-			videoPlayer.StartVideoStream(videoClip);
-			galerie.RevealSouvenirs(id, videoMiniature, videoClip);
+			videoPlayer.StartVideoStream(souvenir, blockPosition);
+			galerie.RevealSouvenirs(souvenir);
 		}
 	}
 }

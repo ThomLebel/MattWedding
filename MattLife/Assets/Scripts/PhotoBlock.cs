@@ -4,25 +4,24 @@ using UnityEngine;
 
 public class PhotoBlock : Block
 {
-	public Sprite photo;
+	public Souvenir[] souvenirs;
+	//public Sprite photo;
 	public StreamSouvenir photoPlayer;
 	public GalerieScript galerie;
 	[SerializeField]
 	private bool blockRevealed = false;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-		
-	}
-
 	private void Update()
 	{
 		if (open && !blockRevealed)
 		{
+			Vector3 blockPosition = Camera.main.WorldToScreenPoint(transform.position);
 			blockRevealed = true;
-			photoPlayer.StartPhotoStream(photo);
-			galerie.RevealSouvenirs(id, photo);
+			photoPlayer.StartPhotoStream(souvenirs, blockPosition);
+			foreach (Souvenir souvenir in souvenirs)
+			{
+				galerie.RevealSouvenirs(souvenir);
+			}
 		}
 	}
 }

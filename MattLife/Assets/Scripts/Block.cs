@@ -5,8 +5,6 @@ using UnityEngine;
 
 public class Block : MonoBehaviour
 {
-	public int id = -1;
-
 	[SerializeField]
 	protected bool open = false;
 
@@ -16,20 +14,11 @@ public class Block : MonoBehaviour
 	{
 		animator = GetComponent<Animator>();
 	}
-	// Start is called before the first frame update
-	void Start()
-    {
-		if (id == -1)
-		{
-			throw new Exception("Il faut assigner un id à ce block");
-		}
-    }
 
 	public virtual void OnTriggerEnter2D(Collider2D collision)
 	{
 		if (collision.tag == "Player" && !open)
 		{
-			//Do stuff
 			open = true;
 			animator.SetTrigger("BlockOpen");
 		}

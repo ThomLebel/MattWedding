@@ -62,6 +62,10 @@ public class GameMaster : MonoBehaviour
 				CloseGalerie();
 			}
 		}
+		if (Input.GetButtonDown("Jump") && state == "souvenirs")
+		{
+			gameObject.GetComponent<StreamSouvenir>().StopStream();
+		}
     }
 
 	public void DisplayGalerie()
@@ -102,11 +106,6 @@ public class GameMaster : MonoBehaviour
 			GameOver();
 		}
 		lifeText.text = playerLife.ToString();
-
-		//if (value < 0)
-		//{
-		//	player.transform.position = playerSpawnPosition;
-		//}
 	}
 
 	public void UpdateGold()

@@ -8,7 +8,7 @@ public class CollectibleBlock : MonoBehaviour
 
 	public int nbrCollectible = 1;
 	[SerializeField]
-	private int opend = 0;
+	private int opened = 0;
 
 	[SerializeField]
 	private bool open = false;
@@ -20,12 +20,6 @@ public class CollectibleBlock : MonoBehaviour
 	{
 		animator = GetComponent<Animator>();
 	}
-
-	// Start is called before the first frame update
-	void Start()
-    {
-        
-    }
 
 	public virtual void OnTriggerEnter2D(Collider2D collision)
 	{
@@ -42,7 +36,7 @@ public class CollectibleBlock : MonoBehaviour
 			return;
 		}
 
-		if (opend < nbrCollectible - 1)
+		if (opened < nbrCollectible - 1)
 		{
 			animator.SetTrigger("BlockBounce");
 		}
@@ -53,7 +47,7 @@ public class CollectibleBlock : MonoBehaviour
 		}
 
 		coinAnimator.SetTrigger("CoinBounce");
-		opend++;
+		opened++;
 		GameMaster.Instance.UpdateGold();
 	}
 }
