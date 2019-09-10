@@ -75,7 +75,7 @@ GameObject:
   - component: {fileID: 3768229476442288282}
   - component: {fileID: 91788750821069553}
   m_Layer: 14
-  m_Name: slime
+  m_Name: Slime
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -181,8 +181,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   score: 25
   walkSpeed: 40
-  bumpOnWall: 0
-  wallLayerMask:
+  bumpOnObstacle: 0
+  obstacleLayerMask:
     serializedVersion: 2
     m_Bits: 9984
   headCheck: {fileID: 4250086509473935986}

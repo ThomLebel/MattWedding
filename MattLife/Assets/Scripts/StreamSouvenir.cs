@@ -22,7 +22,7 @@ public class StreamSouvenir : MonoBehaviour
 
 	private void Update()
 	{
-		if (GameMaster.Instance.state != "souvenirs" || slider == null)
+		if (GameMaster.Instance.state != GameMaster.States.souvenirs || slider == null)
 		{
 			return;
 		}
@@ -86,7 +86,7 @@ public class StreamSouvenir : MonoBehaviour
 		AnimateSouvenirStream(blockPosition);
 
 		StartCoroutine(PlayVideo());
-		GameMaster.Instance.state = "souvenirs";
+		GameMaster.Instance.state = GameMaster.States.souvenirs;
 	}
 
 	public void StartPhotoStream(Souvenir[] souvenirs, Vector3 blockPosition)
@@ -101,7 +101,7 @@ public class StreamSouvenir : MonoBehaviour
 
 		AnimateSouvenirStream(blockPosition);
 
-		GameMaster.Instance.state = "souvenirs";
+		GameMaster.Instance.state = GameMaster.States.souvenirs;
 	}
 
 	public void StartPhotoStream(Souvenir souvenir, Vector3 blockPosition)
@@ -113,7 +113,7 @@ public class StreamSouvenir : MonoBehaviour
 
 		AnimateSouvenirStream(blockPosition);
 
-		GameMaster.Instance.state = "souvenirs";
+		GameMaster.Instance.state = GameMaster.States.souvenirs;
 	}
 
 	public void Slide(int dir)
@@ -171,11 +171,11 @@ public class StreamSouvenir : MonoBehaviour
 		rightButton.gameObject.SetActive(false);
 		if (GameMaster.Instance.galerie.activeSelf)
 		{
-			GameMaster.Instance.state = "galerie";
+			GameMaster.Instance.state = GameMaster.States.galerie;
 		}
 		else
 		{
-			GameMaster.Instance.state = "game";
+			GameMaster.Instance.state = GameMaster.States.game;
 		}
 		Time.timeScale = 1;
 	}

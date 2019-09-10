@@ -10,12 +10,91 @@ public class GalerieScript : MonoBehaviour
 	public Sprite revealedBackground;
 	public StreamSouvenir streamSouvenir;
 
+	public RectTransform selector;
+	public Scrollbar scrollBar;
+	private int currentSouvenirSelected = 0;
+	private float timeToNextSlide;
+	[SerializeField]
+	private float timeBetweenSlide = 0.25f;
+
 	private void Start()
 	{
 		foreach (GameObject button in souvenirsList)
 		{
 			button.GetComponent<Button>().onClick.AddListener(() => DisplayUnrevealedMessage());
 		}
+		RectTransform souvenirParent = souvenirsList[currentSouvenirSelected].transform.parent.GetComponent<RectTransform>();
+		selector.anchoredPosition = new Vector2(souvenirsList[currentSouvenirSelected].GetComponent<RectTransform>().anchoredPosition.x, souvenirParent.anchoredPosition.y);
+	}
+
+	private void Update()
+	{
+		if (Input.GetButtonDown("Jump") || Input.GetKeyDown(KeyCode.Return))
+		{
+			souvenirsList[currentSouvenirSelected].GetComponent<Button>().onClick.Invoke();
+		}
+
+		Vector2 directionalInput = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
+		Vector2 direction = Vector2.zero;
+		if (directionalInput.x > 0)
+		{
+			direction = Vector2.right;
+		}else if (directionalInput.x < 0)
+		{
+			direction = Vector2.left;
+		}
+		else if (directionalInput.y > 0)
+		{
+			direction = Vector2.up;
+		}
+		else if (directionalInput.y < 0)
+		{
+			direction = Vector2.down;
+		}
+
+		if (timeToNextSlide <= 0)
+		{
+			if (direction != Vector2.zero)
+			{
+				SwitchSelectedSouvenir(direction);
+				timeToNextSlide = timeBetweenSlide;
+			}
+		}
+		else
+		{
+			timeToNextSlide = timeToNextSlide - Time.unscaledDeltaTime;
+		}
+	}
+
+	private void SwitchSelectedSouvenir(Vector2 dir)
+	{
+		if (dir.x > 0)
+		{
+			currentSouvenirSelected++;
+		}else if (dir.x < 0)
+		{
+			currentSouvenirSelected--;
+		}else if (dir.y > 0)
+		{
+			currentSouvenirSelected -= 5;
+		}else if (dir.y < 0)
+		{
+			currentSouvenirSelected += 5;
+		}
+
+		if (currentSouvenirSelected < 0)
+		{
+			currentSouvenirSelected = souvenirsList.Count - 1;
+		}else if (currentSouvenirSelected >= souvenirsList.Count)
+		{
+			currentSouvenirSelected = 0;
+		}
+
+		RectTransform souvenirParent = souvenirsList[currentSouvenirSelected].transform.parent.GetComponent<RectTransform>();
+		selector.anchoredPosition = new Vector2(souvenirsList[currentSouvenirSelected].GetComponent<RectTransform>().anchoredPosition.x, souvenirParent.anchoredPosition.y);
+
+		float lineIndex = 1 - (Mathf.Floor(currentSouvenirSelected / 5) / 6);
+		scrollBar.value = lineIndex;
 	}
 
 	public void RevealSouvenirs(Souvenir souvenir)

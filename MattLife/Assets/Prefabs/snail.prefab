@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 5502621271642572979}
   - component: {fileID: 1564111901532185145}
   m_Layer: 14
-  m_Name: snail
+  m_Name: Snail
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -140,8 +140,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   score: 50
   walkSpeed: 40
-  bumpOnWall: 0
-  wallLayerMask:
+  bumpOnObstacle: 0
+  obstacleLayerMask:
     serializedVersion: 2
     m_Bits: 9984
   headCheck: {fileID: 4661062945111960931}

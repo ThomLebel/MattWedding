@@ -7,8 +7,8 @@ public class EnemyScript : MonoBehaviour
 	public int score;
 	public float walkSpeed = 40;
 
-	public bool bumpOnWall = false;
-	public LayerMask wallLayerMask;
+	public bool bumpOnObstacle = false;
+	public LayerMask obstacleLayerMask;
 
 	public Transform headCheck;
 	public Transform wallCheck;
@@ -24,6 +24,7 @@ public class EnemyScript : MonoBehaviour
 	protected SpriteRenderer spriteRenderer;
 	protected Rigidbody2D rb2d;
 	protected Animator animator;
+	protected Collider2D ownCollider;
 
 	[SerializeField]
 	private float deletingDistance = 10f;
@@ -37,21 +38,22 @@ public class EnemyScript : MonoBehaviour
 		spriteRenderer = GetComponent<SpriteRenderer>();
 		rb2d = GetComponent<Rigidbody2D>();
 		animator = GetComponent<Animator>();
+		ownCollider = GetComponent<Collider2D>();
 	}
 	// Start is called before the first frame update
 	void Start()
     {
 		speed = walkSpeed;
 		spriteWidth = spriteRenderer.bounds.size.x;
-		spriteWidth = spriteRenderer.bounds.size.y;
+		spriteHeight = spriteRenderer.bounds.size.y;
 		camHorizontalExtend = cam.orthographicSize * Screen.width / Screen.height;
 	}
 
     // Update is called once per frame
     void Update()
     {
-		bumpOnWall = Physics2D.Linecast(transform.position, wallCheck.position, wallLayerMask);
-		if (bumpOnWall)
+		bumpOnObstacle = Physics2D.Linecast(transform.position, wallCheck.position, obstacleLayerMask);
+		if (bumpOnObstacle)
 		{
 			Flip();
 		}
@@ -84,14 +86,11 @@ public class EnemyScript : MonoBehaviour
 
 				Instantiate(effect, transform.position, Quaternion.identity);
 				playerScript.AllowBounceOffMonster();
-				//playerScript.Bounce();
 
 				Kill();
 			}else
 			{
 				Debug.Log("Kill the player !");
-				//GameMaster.Instance.UpdateLife(-1);
-				//playerScript.Bounce();
 				playerScript.Hit();
 			}
 
@@ -101,7 +100,6 @@ public class EnemyScript : MonoBehaviour
 
 	protected void Flip()
 	{
-		// Multiply the player's x local scale by -1.
 		direction *= -1;
 		Vector3 theScale = transform.localScale;
 		theScale.x *= -1;

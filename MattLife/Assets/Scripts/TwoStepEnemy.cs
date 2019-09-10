@@ -28,6 +28,7 @@ public class TwoStepEnemy : EnemyScript
 			Player playerScript = collision.transform.GetComponent<Player>();
 			if (playerScript.isInvulnerable)
 			{
+				//Physics2D.IgnoreCollision(collision.collider, ownCollider);
 				return;
 			}
 
@@ -102,22 +103,20 @@ public class TwoStepEnemy : EnemyScript
 	private void LaunchMonster(Vector2 contact)
 	{
 		isLaunch = true;
-		Debug.Log("Launch this monster from :"+ contact.x);
-		Debug.Log("center is at : "+ transform.position.x + headCheck.position.x);
+		gameObject.layer = LayerMask.NameToLayer("MovingShells");
+
 		StopCoroutine(stunCoroutine);
 		switch (direction)
 		{
 			case 1:
 				if (contact.x > transform.position.x)
 				{
-					Debug.Log("going right, we flip to go left");
 					Flip();
 				}
 				break;
 			case -1:
 				if (contact.x < transform.position.x)
 				{
-					Debug.Log("going left, we flip to go right");
 					Flip();
 				}
 				break;
@@ -128,6 +127,7 @@ public class TwoStepEnemy : EnemyScript
 	private void StopMonster()
 	{
 		isLaunch = false;
+		gameObject.layer = LayerMask.NameToLayer("Enemies");
 		speed = 0f;
 		stunCoroutine = StunTimer();
 		StartCoroutine(stunCoroutine);

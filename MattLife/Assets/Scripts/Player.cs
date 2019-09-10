@@ -250,6 +250,11 @@ public class Player : MonoBehaviour
 		if (GameMaster.Instance.playerLife > 0)
 		{
 			isInvulnerable = true;
+			//Prevent player to collide with enemies
+			Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Player"),LayerMask.NameToLayer("Enemies"),true);
+			Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Player"),LayerMask.NameToLayer("MovingShells"),true);
+			controller.collisionMask &= ~(1 << LayerMask.NameToLayer("Enemies"));
+			controller.collisionMask &= ~(1 << LayerMask.NameToLayer("MovingShells"));
 			animator.SetBool("PlayerInvulnerable", isInvulnerable);
 			playerIsInvulnerable = PlayerInvulnerable(invulnerabilityTime);
 			StartCoroutine(playerIsInvulnerable);
@@ -273,6 +278,10 @@ public class Player : MonoBehaviour
 	{
 		yield return new WaitForSeconds(time);
 		isInvulnerable = false;
+		Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Player"), LayerMask.NameToLayer("Enemies"), false);
+		Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Player"), LayerMask.NameToLayer("MovingShells"), false);
+		controller.collisionMask |= (1 << LayerMask.NameToLayer("Enemies"));
+		controller.collisionMask |= (1 << LayerMask.NameToLayer("MovingShells"));
 		animator.SetBool("PlayerInvulnerable", isInvulnerable);
 		StopCoroutine(playerIsInvulnerable);
 	}

@@ -17,7 +17,8 @@ public class GameMaster : MonoBehaviour
 	public Text goldText;
 	public Text scoreText;
 
-	public string state = "";
+	//public string state = "";
+	public States state;
 
 	public Vector3 playerSpawnPosition = Vector3.zero;
 
@@ -31,7 +32,7 @@ public class GameMaster : MonoBehaviour
     void Start()
     {
 		Instance = this;
-		state = "game";
+		state = States.game;
 		player = GameObject.FindGameObjectWithTag("Player");
 		lifeText.text = playerLife.ToString();
 
@@ -42,7 +43,7 @@ public class GameMaster : MonoBehaviour
     {
 		if (Input.GetButtonDown("Cancel"))
 		{
-			if (state == "game")
+			if (state == States.game)
 			{
 				if (!gamePaused)
 				{
@@ -53,16 +54,16 @@ public class GameMaster : MonoBehaviour
 					ResumeGame();
 				}
 			}
-			else if (state == "souvenirs")
+			else if (state == States.souvenirs)
 			{
 				gameObject.GetComponent<StreamSouvenir>().StopStream();
 			}
-			else if (state == "galerie")
+			else if (state == States.galerie)
 			{
 				CloseGalerie();
 			}
 		}
-		if (Input.GetButtonDown("Jump") && state == "souvenirs")
+		if (Input.GetButtonDown("Jump") && state == States.souvenirs)
 		{
 			gameObject.GetComponent<StreamSouvenir>().StopStream();
 		}
@@ -72,14 +73,14 @@ public class GameMaster : MonoBehaviour
 	{
 		galerie.SetActive(true);
 		menuPause.SetActive(false);
-		state = "galerie";
+		state = States.galerie;
 	}
 
 	public void CloseGalerie()
 	{
 		galerie.SetActive(false);
 		menuPause.SetActive(true);
-		state = "game";
+		state = States.game;
 	}
 
 	public void PauseGame()
@@ -143,6 +144,15 @@ public class GameMaster : MonoBehaviour
 	public void QuitGame()
 	{
 		Application.Quit();
+	}
+
+	public enum States
+	{
+		menu,
+		game,
+		galerie,
+		souvenirs,
+		pause
 	}
 }
  
