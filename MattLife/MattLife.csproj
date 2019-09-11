@@ -677,12 +677,14 @@
   <ItemGroup>
     <Compile Include="Assets\Scripts\Block.cs" />
     <Compile Include="Assets\Scripts\CameraFollow.cs" />
+    <Compile Include="Assets\Scripts\CameraShake.cs" />
     <Compile Include="Assets\Scripts\CollectibleBlock.cs" />
     <Compile Include="Assets\Scripts\CollectibleScript.cs" />
     <Compile Include="Assets\Scripts\Controller2D.cs" />
     <Compile Include="Assets\Scripts\EndLevel.cs" />
     <Compile Include="Assets\Scripts\EnemyScript.cs" />
     <Compile Include="Assets\Scripts\EnemySpawner.cs" />
+    <Compile Include="Assets\Scripts\FallingEnemy.cs" />
     <Compile Include="Assets\Scripts\GalerieScript.cs" />
     <Compile Include="Assets\Scripts\GameMaster.cs" />
     <Compile Include="Assets\Scripts\MenuPause.cs" />

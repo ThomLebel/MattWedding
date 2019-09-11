@@ -245,6 +245,7 @@ public class Player : MonoBehaviour
 
 	public void Hit()
 	{
+		StartCoroutine(CameraShake.Instance.Shake());
 		Instantiate(lifeLostParticle, transform.position, Quaternion.identity);
 		GameMaster.Instance.UpdateLife(-1);
 		if (GameMaster.Instance.playerLife > 0)

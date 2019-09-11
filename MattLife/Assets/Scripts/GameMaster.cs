@@ -25,6 +25,10 @@ public class GameMaster : MonoBehaviour
 	[SerializeField]
 	private bool gamePaused = false;
 	private GameObject player;
+	[SerializeField]
+	private float timeToMouseFadeOut = 2f;
+	private float timeBeforeMouseFadeOut;
+	private bool mouseInvisible = false;
 
 	static public GameMaster Instance;
 
@@ -41,18 +45,28 @@ public class GameMaster : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+		if (Input.GetAxis("Mouse X") != 0 || Input.GetAxis("Mouse Y") != 0)
+		{
+			timeBeforeMouseFadeOut = timeToMouseFadeOut;
+			Cursor.visible = true;
+			mouseInvisible = false;
+		}
+		else
+		{
+			timeBeforeMouseFadeOut -= Time.unscaledDeltaTime;
+		}
+
+		if (timeBeforeMouseFadeOut <= 0 && !mouseInvisible)
+		{
+			mouseInvisible = true;
+			Cursor.visible = false;
+		}
+
 		if (Input.GetButtonDown("Cancel"))
 		{
 			if (state == States.game)
 			{
-				if (!gamePaused)
-				{
-					PauseGame();
-				}
-				else
-				{
-					ResumeGame();
-				}
+				PauseGame();
 			}
 			else if (state == States.souvenirs)
 			{
@@ -61,6 +75,9 @@ public class GameMaster : MonoBehaviour
 			else if (state == States.galerie)
 			{
 				CloseGalerie();
+			}else if (state == States.pause)
+			{
+				ResumeGame();
 			}
 		}
 		if (Input.GetButtonDown("Jump") && state == States.souvenirs)
@@ -80,7 +97,7 @@ public class GameMaster : MonoBehaviour
 	{
 		galerie.SetActive(false);
 		menuPause.SetActive(true);
-		state = States.game;
+		state = States.pause;
 	}
 
 	public void PauseGame()
@@ -88,6 +105,7 @@ public class GameMaster : MonoBehaviour
 		gamePaused = true;
 		menuPause.SetActive(true);
 		Time.timeScale = 0;
+		state = States.pause;
 	}
 
 	public void ResumeGame()
@@ -95,6 +113,7 @@ public class GameMaster : MonoBehaviour
 		gamePaused = false;
 		menuPause.SetActive(false);
 		Time.timeScale = 1;
+		state = States.game;
 	}
 
 	public void UpdateLife(int value)
