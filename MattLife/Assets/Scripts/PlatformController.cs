@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -8,8 +9,9 @@ public class PlatformController : RaycastController
 
 	public Vector3[] localWaypoints;
 	private Vector3[] globalWaypoints;
-
+	
 	public float speed;
+	public float descendSpeed;
 	public bool cyclic;
 	public float waitTime;
 	[Range(0,2)]
@@ -20,7 +22,7 @@ public class PlatformController : RaycastController
 	private float nextMoveTime;
 
 	private List<PassengerMovement> passengerMovement;
-	Dictionary<Transform, Controller2D> passengerDictionary = new Dictionary<Transform, Controller2D>();
+	public Dictionary<Transform, Controller2D> passengerDictionary = new Dictionary<Transform, Controller2D>();
 
 	public override void Start()
 	{
@@ -66,6 +68,7 @@ public class PlatformController : RaycastController
 		percentBetweenWaypoints += Time.deltaTime * speed / distanceBetweenWaypoints;
 		percentBetweenWaypoints = Mathf.Clamp01(percentBetweenWaypoints);
 		float easedPercentBetweenWaypoints = Ease(percentBetweenWaypoints);
+		//float easedPercentBetweenWaypoints = Easing.Quadratic.In(percentBetweenWaypoints);
 
 		Vector3 newPos = Vector3.Lerp(globalWaypoints[fromWaypointIndex], globalWaypoints[toWaypointIndex], easedPercentBetweenWaypoints);
 
@@ -220,5 +223,4 @@ public class PlatformController : RaycastController
 			}
 		}
 	}
-
 }

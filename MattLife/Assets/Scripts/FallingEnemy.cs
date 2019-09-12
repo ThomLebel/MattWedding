@@ -19,6 +19,7 @@ public class FallingEnemy : MonoBehaviour
 	private float activatingDistance = 10f;
 	private Camera cam;
 	private float camHorizontalExtend;
+	private Vector3 velocity;
 
 	[SerializeField]
 	private float ascendWaitTime = 2f;
@@ -26,11 +27,13 @@ public class FallingEnemy : MonoBehaviour
 	private float fallWaitTime = 4f;
 	private float timeBeforeNextMove;
 
+	private Rigidbody2D rb2d;
 	private Animator animator;
 
-	private void Awake()
+	void Awake()
 	{
 		cam = Camera.main;
+		rb2d = GetComponent<Rigidbody2D>();
 		animator = GetComponent<Animator>();
 	}
 
@@ -52,8 +55,8 @@ public class FallingEnemy : MonoBehaviour
     void Update()
     {
 		//Deactivate monster if out of sight
-		if ((transform.position.x >= cam.transform.position.x + camHorizontalExtend + activatingDistance ||
-			transform.position.x <= cam.transform.position.x - camHorizontalExtend - activatingDistance) && isActive)
+		if (transform.position.x >= cam.transform.position.x + camHorizontalExtend + activatingDistance ||
+			transform.position.x <= cam.transform.position.x - camHorizontalExtend - activatingDistance)
 		{
 			isActive = false;
 		}
@@ -126,7 +129,7 @@ public class FallingEnemy : MonoBehaviour
 
 	private void OnTriggerEnter2D(Collider2D collision)
 	{
-		if (state == State.ascending || collision.tag != "Player")
+		if (state != State.falling || collision.tag != "Player")
 		{
 			return;
 		}
@@ -139,6 +142,15 @@ public class FallingEnemy : MonoBehaviour
 
 		playerScript.Hit();
 		playerScript.Bounce();
+	}
+
+	enum State
+	{
+		falling,
+		ascending,
+		onGround,
+		inAir,
+		preparing
 	}
 
 	void OnDrawGizmos()
@@ -155,14 +167,5 @@ public class FallingEnemy : MonoBehaviour
 				Gizmos.DrawLine(globalWaypointPos - Vector3.left * size, globalWaypointPos + Vector3.left * size);
 			}
 		}
-	}
-
-	enum State
-	{
-		falling,
-		ascending,
-		onGround,
-		inAir,
-		preparing
 	}
 }
