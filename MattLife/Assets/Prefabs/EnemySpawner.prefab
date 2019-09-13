@@ -81,6 +81,7 @@ MonoBehaviour:
   nbrToSpawn: 1
   delayBetweenSpawn: 0
   monsterList: []
+  effect: {fileID: 5965558650816100861, guid: ceaadfcc855939c48b1718a4fdaba87d, type: 3}
   monsterSpawned: 0
   spawning: 0
   respawnDistance: 10

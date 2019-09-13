@@ -181,7 +181,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   score: 25
-  walkSpeed: 40
+  walkSpeed: 60
   bumpOnObstacle: 0
   obstacleLayerMask:
     serializedVersion: 2

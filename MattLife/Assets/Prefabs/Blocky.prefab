@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 6528255297559572040}
   - component: {fileID: 6370949040041745576}
   - component: {fileID: 6594218909062534786}
-  - component: {fileID: 3058341482636981421}
+  - component: {fileID: 791240959}
   m_Layer: 14
   m_Name: Blocky
   m_TagString: Enemy
@@ -168,7 +168,7 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &3058341482636981421
+--- !u!114 &791240959
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -177,22 +177,28 @@ MonoBehaviour:
   m_GameObject: {fileID: 7051381856146899112}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 03183e65ec1bd834cb608c568ef9c5df, type: 3}
+  m_Script: {fileID: 11500000, guid: 521a70dea3d7f994e89044522b774c87, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   collisionMask:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 2048
   boxCollider: {fileID: 0}
+  passengerMask:
+    serializedVersion: 2
+    m_Bits: 2048
   localWaypoints:
   - {x: 0, y: 0, z: 0}
   - {x: 0, y: 5, z: 0}
-  globalWaypoints: []
-  fallingTime: 0.5
-  ascendTime: 2
+  speed: 0
+  cyclic: 0
+  waitTime: 0
+  easeAmount: 0
+  slamingSpeed: 8
+  replacingSpeed: 3
   dustPartices: {fileID: 5965558650816100861, guid: ea417261a6f436e49bb8ea7c85d6e4d5,
     type: 3}
   state: 0
   activatingDistance: 10
-  ascendWaitTime: 2
-  fallWaitTime: 4
+  replaceWaitTime: 2
+  slamWaitTime: 4

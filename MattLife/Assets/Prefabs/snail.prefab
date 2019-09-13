@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 5502621271642572979}
   - component: {fileID: 1564111901532185145}
   m_Layer: 14
-  m_Name: Snail
+  m_Name: snail
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -139,7 +139,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   score: 50
-  walkSpeed: 40
+  walkSpeed: 60
   bumpOnObstacle: 0
   obstacleLayerMask:
     serializedVersion: 2
@@ -149,7 +149,7 @@ MonoBehaviour:
   spawner: {fileID: 0}
   effect: {fileID: 7165646687091236009, guid: e112502734c77ce43b0ac4d9d0c4ac2c, type: 3}
   deletingDistance: 10
-  launchSpeed: 250
+  launchSpeed: 350
   baseSprite: {fileID: 21300000, guid: b8fb415a6f5b30348bf5bd4f0b3bf918, type: 3}
   stunSprite: {fileID: 21300000, guid: 34f707f38a01c0842ab1fa837bc94b4c, type: 3}
   isStun: 0

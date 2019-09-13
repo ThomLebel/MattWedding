@@ -8,23 +8,22 @@ public class PlatformController : RaycastController
 	public LayerMask passengerMask;
 
 	public Vector3[] localWaypoints;
-	private Vector3[] globalWaypoints;
+	protected Vector3[] globalWaypoints;
 	
 	public float speed;
-	public float descendSpeed;
 	public bool cyclic;
 	public float waitTime;
 	[Range(0,2)]
 	public float easeAmount;
 
-	private int fromWaypointIndex;
-	private float percentBetweenWaypoints;
-	private float nextMoveTime;
+	protected int fromWaypointIndex;
+	protected float percentBetweenWaypoints;
+	protected float nextMoveTime;
 
-	private List<PassengerMovement> passengerMovement;
-	public Dictionary<Transform, Controller2D> passengerDictionary = new Dictionary<Transform, Controller2D>();
+	protected List<PassengerMovement> passengerMovement;
+	protected Dictionary<Transform, Controller2D> passengerDictionary = new Dictionary<Transform, Controller2D>();
 
-	public override void Start()
+	protected override void Start()
 	{
 		base.Start();
 
@@ -35,12 +34,12 @@ public class PlatformController : RaycastController
 		}
 	}
 
-	void Update()
+	protected virtual void Update()
 	{
 		UpdateRaycastOrigins();
 
 		Vector3 velocity = CalculatePlatformMovement();
-
+		//Debug.Log(velocity);
 		CalculatePassengerMovement(velocity);
 
 		MovePassengers(true);
@@ -48,13 +47,14 @@ public class PlatformController : RaycastController
 		MovePassengers(false);
 	}
 
+	//Not used anymore
 	float Ease(float x)
 	{
 		float a = easeAmount + 1;
 		return Mathf.Pow(x, a) / (Mathf.Pow(x, a) + Mathf.Pow(1 - x, a));
 	}
 
-	Vector3 CalculatePlatformMovement()
+	protected virtual Vector3 CalculatePlatformMovement()
 	{
 
 		if (Time.time < nextMoveTime)
@@ -67,8 +67,8 @@ public class PlatformController : RaycastController
 		float distanceBetweenWaypoints = Vector3.Distance(globalWaypoints[fromWaypointIndex], globalWaypoints[toWaypointIndex]);
 		percentBetweenWaypoints += Time.deltaTime * speed / distanceBetweenWaypoints;
 		percentBetweenWaypoints = Mathf.Clamp01(percentBetweenWaypoints);
-		float easedPercentBetweenWaypoints = Ease(percentBetweenWaypoints);
-		//float easedPercentBetweenWaypoints = Easing.Quadratic.In(percentBetweenWaypoints);
+		//float easedPercentBetweenWaypoints = Ease(percentBetweenWaypoints);
+		float easedPercentBetweenWaypoints = Easing.Quadratic.InOut(percentBetweenWaypoints);
 
 		Vector3 newPos = Vector3.Lerp(globalWaypoints[fromWaypointIndex], globalWaypoints[toWaypointIndex], easedPercentBetweenWaypoints);
 
@@ -91,7 +91,7 @@ public class PlatformController : RaycastController
 		return newPos - transform.position;
 	}
 
-	void MovePassengers(bool beforeMovePlatform)
+	protected virtual void MovePassengers(bool beforeMovePlatform)
 	{
 		foreach (PassengerMovement passenger in passengerMovement)
 		{
@@ -107,7 +107,7 @@ public class PlatformController : RaycastController
 		}
 	}
 
-	void CalculatePassengerMovement(Vector3 velocity)
+	protected virtual void CalculatePassengerMovement(Vector3 velocity)
 	{
 		HashSet<Transform> movedPassengers = new HashSet<Transform>();
 		passengerMovement = new List<PassengerMovement>();
@@ -192,7 +192,7 @@ public class PlatformController : RaycastController
 		}
 	}
 
-	struct PassengerMovement
+	protected struct PassengerMovement
 	{
 		public Transform transform;
 		public Vector3 velocity;

@@ -10,7 +10,7 @@ public class Controller2D : RaycastController
 	[HideInInspector]
 	public Vector2 playerInput;
 
-	public override void Start()
+	protected override void Start()
 	{
 		base.Start();
 		collisions.faceDir = 1;

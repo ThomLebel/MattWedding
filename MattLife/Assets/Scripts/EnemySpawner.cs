@@ -9,6 +9,7 @@ public class EnemySpawner : MonoBehaviour
 	public int nbrToSpawn;
 	public float delayBetweenSpawn;
 	public List<GameObject> monsterList;
+	public GameObject effect;
 
 	[SerializeField]
 	private int monsterSpawned = 0;
@@ -30,7 +31,7 @@ public class EnemySpawner : MonoBehaviour
 
 	// Start is called before the first frame update
 	void Start()
-    {
+	{
 		monsterList = new List<GameObject>();
 		camHorizontalExtend = cam.orthographicSize * Screen.width / Screen.height;
 	}
@@ -60,10 +61,6 @@ public class EnemySpawner : MonoBehaviour
 		{
 			SpawnMonster();
 		}
-		/*else
-		{
-			DeleteMonster();
-		}*/
 	}
 
 	private void SpawnMonster()
@@ -80,6 +77,7 @@ public class EnemySpawner : MonoBehaviour
 		monster.GetComponent<EnemyScript>().spawner = this;
 		monsterList.Add(monster);
 		monsterSpawned++;
+		Instantiate(effect, spawn.position, Quaternion.identity);
 
 		spawnCoroutine = SpawnDelay();
 		StartCoroutine(spawnCoroutine);
@@ -98,7 +96,7 @@ public class EnemySpawner : MonoBehaviour
 			return;
 		}
 
-		for (int i=monsterList.Count-1; i>=0; i--)
+		for (int i = monsterList.Count - 1; i >= 0; i--)
 		{
 			monsterList[i].GetComponent<EnemyScript>().DeleteMonster();
 		}

@@ -8493,7 +8493,6 @@ MonoBehaviour:
   - {x: 0, y: 7, z: 0}
   - {x: 15, y: 7, z: 0}
   speed: 3
-  descendSpeed: 0
   cyclic: 0
   waitTime: 0
   easeAmount: 1
@@ -20787,26 +20786,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3058341482636981421, guid: 5a9b72a17a1e40746b2b3452e186c2e9,
-        type: 3}
-      propertyPath: localWaypoints.Array.data[1].y
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 3058341482636981421, guid: 5a9b72a17a1e40746b2b3452e186c2e9,
-        type: 3}
-      propertyPath: localWaypoints.Array.data[1].x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3058341482636981421, guid: 5a9b72a17a1e40746b2b3452e186c2e9,
-        type: 3}
-      propertyPath: collisionMask.m_Bits
-      value: 2048
-      objectReference: {fileID: 0}
-    - target: {fileID: 3058341482636981421, guid: 5a9b72a17a1e40746b2b3452e186c2e9,
-        type: 3}
-      propertyPath: passengerMask.m_Bits
-      value: 2048
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5a9b72a17a1e40746b2b3452e186c2e9, type: 3}
 --- !u!1001 &3667108749738087078
@@ -20821,14 +20800,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
-    - target: {fileID: 1504857912, guid: 278da4deca532ef428538013f6122124, type: 3}
-      propertyPath: collisionMask.m_Bits
-      value: 59136
-      objectReference: {fileID: 0}
     - target: {fileID: 2285168291886181774, guid: 278da4deca532ef428538013f6122124,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 10.4
+      value: 160
       objectReference: {fileID: 0}
     - target: {fileID: 2285168291886181774, guid: 278da4deca532ef428538013f6122124,
         type: 3}
@@ -20879,6 +20854,10 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1504857912, guid: 278da4deca532ef428538013f6122124, type: 3}
+      propertyPath: collisionMask.m_Bits
+      value: 59136
       objectReference: {fileID: 0}
     - target: {fileID: 1504857911, guid: 278da4deca532ef428538013f6122124, type: 3}
       propertyPath: jumpParticle
