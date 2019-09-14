@@ -5,12 +5,14 @@ using UnityEngine;
 
 public class Block : MonoBehaviour
 {
+
+	public string type;
 	[SerializeField]
 	protected bool open = false;
 
 	private Animator animator;
 
-	private void Awake()
+	protected virtual void Awake()
 	{
 		animator = GetComponent<Animator>();
 	}

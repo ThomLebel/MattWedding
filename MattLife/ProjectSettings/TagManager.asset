@@ -9,6 +9,9 @@ TagManager:
   - Collectible
   - Block
   - JumpThrough
+  - SouvenirsHolder
+  - SouvenirBlock
+  - ScreenReveal
   layers:
   - Default
   - TransparentFX

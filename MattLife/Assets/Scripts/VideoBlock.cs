@@ -13,6 +13,12 @@ public class VideoBlock : Block
 	[SerializeField]
 	private bool blockRevealed = false;
 
+	protected override void Awake()
+	{
+		base.Awake();
+		type = "video";
+	}
+
 	private void Update()
 	{
 		if (open && !blockRevealed)

@@ -5,6 +5,10 @@ using UnityEngine;
 [RequireComponent (typeof(Controller2D))]
 public class Player : MonoBehaviour
 {
+	public int playerLife = 32;
+	public int playerScore = 0;
+	public int playerGold = 0;
+
 	public float moveSpeed = 6;
 	public float maxJumpHeight = 5;
 	public float minJumpHeight = 1;
@@ -56,6 +60,7 @@ public class Player : MonoBehaviour
 
 	private void Awake()
 	{
+		DontDestroyOnLoad(gameObject);
 		controller = GetComponent<Controller2D>();
 		animator = GetComponent<Animator>();
 	}
@@ -248,7 +253,7 @@ public class Player : MonoBehaviour
 		StartCoroutine(CameraShake.Instance.Shake());
 		Instantiate(lifeLostParticle, transform.position, Quaternion.identity);
 		GameMaster.Instance.UpdateLife(-1);
-		if (GameMaster.Instance.playerLife > 0)
+		if (playerLife > 0)
 		{
 			isInvulnerable = true;
 			//Prevent player to collide with enemies

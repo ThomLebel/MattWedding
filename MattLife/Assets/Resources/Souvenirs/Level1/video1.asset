@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6fdb78b4c08742c4b9c4ee4430d27918, type: 3}
   m_Name: video1
   m_EditorClassIdentifier: 
-  id: 3
+  id: 6
   photo: {fileID: 21300000, guid: 1b9d20f8b6c1afc45907a841472c103b, type: 3}
   video: {fileID: 32900000, guid: a416118ff3733f242ad6c9f235174a91, type: 3}
+  revealed: 1

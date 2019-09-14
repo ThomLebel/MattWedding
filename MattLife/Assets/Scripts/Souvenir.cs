@@ -7,4 +7,5 @@ public class Souvenir : ScriptableObject
 	public int id;
 	public Sprite photo;
 	public VideoClip video;
+	public bool revealed = false;
 }

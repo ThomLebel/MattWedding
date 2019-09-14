@@ -17,11 +17,21 @@ public class GalerieScript : MonoBehaviour
 	[SerializeField]
 	private float timeBetweenSlide = 0.25f;
 
+	private SouvenirsHolder souvenirHolder;
+
 	private void Start()
 	{
+		souvenirHolder = GameObject.FindGameObjectWithTag("SouvenirsHolder").GetComponent<SouvenirsHolder>();
 		foreach (GameObject button in souvenirsList)
 		{
 			button.GetComponent<Button>().onClick.AddListener(() => DisplayUnrevealedMessage());
+		}
+		foreach (Souvenir souvenir in souvenirHolder.souvenirsList)
+		{
+			if (souvenir.revealed)
+			{
+				RevealSouvenirs(souvenir);
+			}
 		}
 		RectTransform souvenirParent = souvenirsList[currentSouvenirSelected].transform.parent.GetComponent<RectTransform>();
 		selector.anchoredPosition = new Vector2(souvenirsList[currentSouvenirSelected].GetComponent<RectTransform>().anchoredPosition.x, souvenirParent.anchoredPosition.y);
@@ -99,6 +109,7 @@ public class GalerieScript : MonoBehaviour
 
 	public void RevealSouvenirs(Souvenir souvenir)
 	{
+		souvenir.revealed = true;
 		//Change the souvenirs background
 		souvenirsList[souvenir.id].GetComponent<Image>().sprite = revealedBackground;
 		RectTransform souvenirTransform = souvenirsList[souvenir.id].GetComponent<RectTransform>();

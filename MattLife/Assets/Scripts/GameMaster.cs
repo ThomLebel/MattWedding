@@ -6,10 +6,6 @@ using UnityEngine.UI;
 
 public class GameMaster : MonoBehaviour
 {
-	public int playerLife = 32;
-	public int playerScore = 0;
-	public int playerGold = 0;
-
 	public GameObject menuPause;
 	public GameObject galerie;
 	public GameObject gameUI;
@@ -25,10 +21,13 @@ public class GameMaster : MonoBehaviour
 	[SerializeField]
 	private bool gamePaused = false;
 	private GameObject player;
+	private Player playerScript;
 	[SerializeField]
 	private float timeToMouseFadeOut = 2f;
 	private float timeBeforeMouseFadeOut;
 	private bool mouseInvisible = false;
+
+	private Animator screenRevealAnimator;
 
 	static public GameMaster Instance;
 
@@ -36,10 +35,17 @@ public class GameMaster : MonoBehaviour
     void Start()
     {
 		Instance = this;
-		state = States.game;
-		player = GameObject.FindGameObjectWithTag("Player");
-		lifeText.text = playerLife.ToString();
 
+		screenRevealAnimator = GameObject.FindGameObjectWithTag("ScreenReveal").GetComponent<Animator>();
+		//screenRevealAnimator.SetTrigger("End");
+		StartCoroutine("OnCompleteScreenReavealEndAnimation");
+
+		player = GameObject.FindGameObjectWithTag("Player");
+		playerScript = player.GetComponent<Player>();
+
+		player.transform.position = playerSpawnPosition;
+
+		lifeText.text = playerScript.playerLife.ToString();
 	}
 
     // Update is called once per frame
@@ -118,40 +124,50 @@ public class GameMaster : MonoBehaviour
 
 	public void UpdateLife(int value)
 	{
-		playerLife += value;
-		if (playerLife <= 0)
+		playerScript.playerLife += value;
+		if (playerScript.playerLife <= 0)
 		{
-			playerLife = 0;
-			Debug.Log("GameOver");
+			playerScript.playerLife = 0;
+			state = States.gameOver;
 			GameOver();
 		}
-		lifeText.text = playerLife.ToString();
+		lifeText.text = playerScript.playerLife.ToString();
 	}
 
 	public void UpdateGold()
 	{
-		playerGold++;
-		if (playerGold >= 100)
+		playerScript.playerGold++;
+		if (playerScript.playerGold >= 100)
 		{
-			playerGold = 0;
+			playerScript.playerGold = 0;
 			UpdateLife(1);
 		}
 		string zero = "";
-		if (playerGold < 10)
+		if (playerScript.playerGold < 10)
 		{
 			zero = "0";
 		}
-		goldText.text = zero + playerGold.ToString();
+		goldText.text = zero + playerScript.playerGold.ToString();
 	}
 
 	public void UpdateScore(int value)
 	{
-		playerScore += value;
-		if (playerScore <= 0)
+		playerScript.playerScore += value;
+		if (playerScript.playerScore <= 0)
 		{
-			playerScore = 0;
+			playerScript.playerScore = 0;
 		}
-		scoreText.text = playerScore.ToString();
+		scoreText.text = playerScript. playerScore.ToString();
+	}
+
+
+	IEnumerator OnCompleteScreenReavealEndAnimation()
+	{
+		while (screenRevealAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime < 1.0f)
+			yield return null;
+
+		// TODO: Do something when animation did complete
+		state = States.game;
 	}
 
 	public void GameOver()
@@ -171,7 +187,8 @@ public class GameMaster : MonoBehaviour
 		game,
 		galerie,
 		souvenirs,
-		pause
+		pause,
+		gameOver
 	}
 }
  

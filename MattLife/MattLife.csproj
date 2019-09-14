@@ -693,6 +693,7 @@
     <Compile Include="Assets\Scripts\ResetTrigger.cs" />
     <Compile Include="Assets\Scripts\SlamingEnemy.cs" />
     <Compile Include="Assets\Scripts\Souvenir.cs" />
+    <Compile Include="Assets\Scripts\SouvenirsHolder.cs" />
     <Compile Include="Assets\Scripts\StreamSouvenir.cs" />
     <Compile Include="Assets\Scripts\Tiling.cs" />
     <Compile Include="Assets\Scripts\TwoStepEnemy.cs" />

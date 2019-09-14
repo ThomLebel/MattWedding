@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 5101069550345885962}
   m_Layer: 13
   m_Name: VideoBlock
-  m_TagString: Block
+  m_TagString: SouvenirBlock
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -60,6 +60,7 @@ SpriteRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -141,10 +142,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63cb1289c03b2a146b54e913080664b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  id: 1
   open: 0
-  videoClip: {fileID: 32900000, guid: a416118ff3733f242ad6c9f235174a91, type: 3}
-  videoMiniature: {fileID: 21300000, guid: 1b9d20f8b6c1afc45907a841472c103b, type: 3}
+  souvenir: {fileID: 0}
   videoPlayer: {fileID: 0}
   galerie: {fileID: 0}
   blockRevealed: 0

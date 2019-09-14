@@ -11,6 +11,12 @@ public class PhotoBlock : Block
 	[SerializeField]
 	private bool blockRevealed = false;
 
+	protected override void Awake()
+	{
+		base.Awake();
+		type = "photo";
+	}
+
 	private void Update()
 	{
 		if (open && !blockRevealed)
