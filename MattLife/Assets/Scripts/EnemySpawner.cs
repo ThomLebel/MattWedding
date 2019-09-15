@@ -46,6 +46,7 @@ public class EnemySpawner : MonoBehaviour
 			{
 				spawning = false;
 				monsterSpawned = 0;
+				StopCoroutine(spawnCoroutine);
 			}
 		}
 	}

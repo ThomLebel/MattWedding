@@ -31,6 +31,7 @@ public class Player : MonoBehaviour
 	public GameObject jumpParticle;
 
 	private float gravity;
+	[SerializeField]
 	private float fallingGravity = 0.5f;
 	private float maxJumpVelocity;
 	private float minJumpVelocity;
