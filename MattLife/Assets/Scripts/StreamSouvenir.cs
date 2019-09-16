@@ -96,6 +96,7 @@ public class StreamSouvenir : MonoBehaviour
 	{
 		player.StopMovement();
 		Time.timeScale = 0;
+
 		AudioManager.instance.FadeToMusic(GameMaster.Instance.musicName, 1);
 		videoPlayer.clip = souvenir.video;
 		videoBackup.sprite = souvenir.photo;
@@ -163,13 +164,13 @@ public class StreamSouvenir : MonoBehaviour
 	IEnumerator PlayVideo()
 	{
 		videoPlayer.Prepare();
-		WaitForSeconds waitForSeconds = new WaitForSeconds(1);
+		WaitForSecondsRealtime waitForSeconds = new WaitForSecondsRealtime(1);
 		while (!videoPlayer.isPrepared)
 		{
 			yield return waitForSeconds;
 			break;
 		}
-
+		Debug.Log("play video");
 		videoProjector.texture = videoPlayer.texture;
 		videoProjector.enabled = true;
 		videoPlayer.Play();

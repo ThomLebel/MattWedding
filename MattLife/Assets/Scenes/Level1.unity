@@ -3857,7 +3857,7 @@ MonoBehaviour:
   musics:
   - name: musicLevel1
     clip: {fileID: 8300000, guid: 3a38e77e6d314e24285f569c2cee6621, type: 3}
-    volume: 0.25
+    volume: 0
     pitch: 1
     gamePausedVolume: 0.15
     loop: 1
@@ -9364,6 +9364,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c0649c870263a6d45b7926aa10b98561, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  moneyLimit: 30
   menuPause: {fileID: 1108300303}
   galerie: {fileID: 1566365986}
   gameUI: {fileID: 1435496039}

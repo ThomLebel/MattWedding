@@ -156,7 +156,6 @@ public class Player : MonoBehaviour
 		}
 		if (controller.collisions.below)
 		{
-			//Instantiate(jumpParticle, jumpParticlePosition.position, Quaternion.identity);
 			if (controller.collisions.slidingDownMaxSlope)
 			{
 				if (directionalInput.x != -Mathf.Sign(controller.collisions.slopeNormal.x)) // not jumping against max slope
@@ -214,6 +213,7 @@ public class Player : MonoBehaviour
 		{
 			wallSliding = true;
 			Instantiate(jumpParticle, jumpParticlePosition.position, Quaternion.identity);
+			//AudioManager.instance.PlaySound("PlayerJump");
 
 			if (velocity.y < -wallSlideSpeedMax)
 			{
