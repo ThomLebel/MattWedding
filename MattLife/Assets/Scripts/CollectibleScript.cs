@@ -11,6 +11,7 @@ public class CollectibleScript : MonoBehaviour
 	{
 		if (collision.tag == "Player")
 		{
+			AudioManager.instance.PlaySound("CoinSound");
 			Instantiate(effect, transform.position, Quaternion.identity);
 			GameMaster.Instance.UpdateGold();
 			GameMaster.Instance.UpdateScore(score);

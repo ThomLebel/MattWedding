@@ -16,6 +16,8 @@ public class EnemyScript : MonoBehaviour
 	public EnemySpawner spawner;
 	public GameObject effect;
 
+	public string hitSound;
+
 	protected float speed;
 	protected int direction = -1;
 	protected float spriteWidth;
@@ -108,6 +110,7 @@ public class EnemyScript : MonoBehaviour
 
 	public void Kill()
 	{
+		AudioManager.instance.PlaySound(hitSound);
 		GameMaster.Instance.UpdateScore(score);
 		DeleteMonster();
 	}

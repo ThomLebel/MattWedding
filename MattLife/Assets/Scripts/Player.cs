@@ -5,7 +5,7 @@ using UnityEngine;
 [RequireComponent (typeof(Controller2D))]
 public class Player : MonoBehaviour
 {
-	public int playerLife = 32;
+	public int playerLife = 5;
 	public int playerScore = 0;
 	public int playerGold = 0;
 
@@ -115,6 +115,7 @@ public class Player : MonoBehaviour
 		{
 			inAir = false;
 			Instantiate(jumpParticle, jumpParticlePosition.position, Quaternion.identity);
+			AudioManager.instance.PlaySound("PlayerLand");
 		}
 
 		if (!facingRight && directionalInput.x > 0)
@@ -151,10 +152,11 @@ public class Player : MonoBehaviour
 				velocity.x = -wallDirX * wallLeap.x;
 				velocity.y = wallLeap.y;
 			}
+			JumpEffect();
 		}
 		if (controller.collisions.below)
 		{
-			Instantiate(jumpParticle, jumpParticlePosition.position, Quaternion.identity);
+			//Instantiate(jumpParticle, jumpParticlePosition.position, Quaternion.identity);
 			if (controller.collisions.slidingDownMaxSlope)
 			{
 				if (directionalInput.x != -Mathf.Sign(controller.collisions.slopeNormal.x)) // not jumping against max slope
@@ -167,13 +169,21 @@ public class Player : MonoBehaviour
 			{
 				velocity.y = maxJumpVelocity;
 			}
+			JumpEffect();
 		}
 		if (canBounce)
 		{
 			bouncing = true;
 			canBounce = false;
 			velocity.y = maxJumpVelocity + bounceTakeOff;
+			JumpEffect();
 		}
+	}
+
+	public void JumpEffect()
+	{
+		Instantiate(jumpParticle, jumpParticlePosition.position, Quaternion.identity);
+		AudioManager.instance.PlaySound("PlayerJump");
 	}
 
 	public void OnJumpInputUp()
@@ -182,6 +192,11 @@ public class Player : MonoBehaviour
 		{
 			velocity.y = minJumpVelocity;
 		}
+	}
+
+	public void StopMovement()
+	{
+		velocity = Vector3.zero;
 	}
 
 	void CalculateVelocity()
@@ -251,6 +266,16 @@ public class Player : MonoBehaviour
 
 	public void Hit()
 	{
+		int rand = Random.Range(0,2);
+		if (rand == 0)
+		{
+			AudioManager.instance.PlaySound("PlayerHit1");
+		}
+		else
+		{
+			AudioManager.instance.PlaySound("PlayerHit2");
+		}
+
 		StartCoroutine(CameraShake.Instance.Shake());
 		Instantiate(lifeLostParticle, transform.position, Quaternion.identity);
 		GameMaster.Instance.UpdateLife(-1);
@@ -285,6 +310,7 @@ public class Player : MonoBehaviour
 	{
 		yield return new WaitForSeconds(time);
 		isInvulnerable = false;
+		isFalling = false;
 		Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Player"), LayerMask.NameToLayer("Enemies"), false);
 		Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Player"), LayerMask.NameToLayer("MovingShells"), false);
 		controller.collisionMask |= (1 << LayerMask.NameToLayer("Enemies"));

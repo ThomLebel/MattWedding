@@ -21,6 +21,7 @@ public class PhotoBlock : Block
 	{
 		if (open && !blockRevealed)
 		{
+			AudioManager.instance.PlaySound("SouvenirRevealed");
 			Vector3 blockPosition = Camera.main.WorldToScreenPoint(transform.position);
 			blockRevealed = true;
 			photoPlayer.StartPhotoStream(souvenirs, blockPosition);

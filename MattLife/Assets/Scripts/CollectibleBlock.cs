@@ -46,6 +46,7 @@ public class CollectibleBlock : MonoBehaviour
 			animator.SetTrigger("BlockOpen");
 		}
 
+		AudioManager.instance.PlaySound("CoinSound");
 		coinAnimator.SetTrigger("CoinBounce");
 		opened++;
 		GameMaster.Instance.UpdateGold();

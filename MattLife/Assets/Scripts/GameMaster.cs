@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -6,6 +7,8 @@ using UnityEngine.UI;
 
 public class GameMaster : MonoBehaviour
 {
+	public int moneyLimit = 30;
+
 	public GameObject menuPause;
 	public GameObject galerie;
 	public GameObject gameUI;
@@ -15,11 +18,11 @@ public class GameMaster : MonoBehaviour
 
 	//public string state = "";
 	public States state;
-
+	public string musicName;
 	public Vector3 playerSpawnPosition = Vector3.zero;
 
-	[SerializeField]
-	private bool gamePaused = false;
+	//[SerializeField]
+	//private bool gamePaused = false;
 	private GameObject player;
 	private Player playerScript;
 	[SerializeField]
@@ -46,6 +49,9 @@ public class GameMaster : MonoBehaviour
 		player.transform.position = playerSpawnPosition;
 
 		lifeText.text = playerScript.playerLife.ToString();
+		
+		AudioManager.instance.PlayMusic(musicName);
+		AudioManager.instance.FadeFromMusic(musicName, 1.5f);
 	}
 
     // Update is called once per frame
@@ -108,7 +114,8 @@ public class GameMaster : MonoBehaviour
 
 	public void PauseGame()
 	{
-		gamePaused = true;
+		Sound m = Array.Find(AudioManager.instance.musics, music => music.name == GameMaster.Instance.musicName);
+		AudioManager.instance.FadeToMusic(m.name, 1f, m.gamePausedVolume);
 		menuPause.SetActive(true);
 		Time.timeScale = 0;
 		state = States.pause;
@@ -116,7 +123,8 @@ public class GameMaster : MonoBehaviour
 
 	public void ResumeGame()
 	{
-		gamePaused = false;
+		Sound m = Array.Find(AudioManager.instance.musics, music => music.name == GameMaster.Instance.musicName);
+		AudioManager.instance.FadeToMusic(m.name, 1f, m.volume);
 		menuPause.SetActive(false);
 		Time.timeScale = 1;
 		state = States.game;
@@ -137,7 +145,7 @@ public class GameMaster : MonoBehaviour
 	public void UpdateGold()
 	{
 		playerScript.playerGold++;
-		if (playerScript.playerGold >= 100)
+		if (playerScript.playerGold >= moneyLimit)
 		{
 			playerScript.playerGold = 0;
 			UpdateLife(1);
@@ -163,7 +171,7 @@ public class GameMaster : MonoBehaviour
 
 	IEnumerator OnCompleteScreenReavealEndAnimation()
 	{
-		while (screenRevealAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime < 1.0f)
+		while (screenRevealAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime < 0.8f)
 			yield return null;
 
 		// TODO: Do something when animation did complete

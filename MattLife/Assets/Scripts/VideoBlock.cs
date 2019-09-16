@@ -23,6 +23,7 @@ public class VideoBlock : Block
 	{
 		if (open && !blockRevealed)
 		{
+			AudioManager.instance.PlaySound("SouvenirRevealed");
 			Vector3 blockPosition = Camera.main.WorldToScreenPoint(transform.position);
 			blockRevealed = true;
 			videoPlayer.StartVideoStream(souvenir, blockPosition);

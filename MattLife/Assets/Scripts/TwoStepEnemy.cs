@@ -36,7 +36,7 @@ public class TwoStepEnemy : EnemyScript
 
 			if (contact.y >= transform.position.y)
 			{
-
+				AudioManager.instance.PlaySound(hitSound);
 				Instantiate(effect, transform.position, Quaternion.identity);
 				//On stun le monstre
 				if (!isStun)
@@ -55,9 +55,7 @@ public class TwoStepEnemy : EnemyScript
 				}
 
 				//We bounce off the monster head
-				//collision.transform.GetComponent<PlayerControls>().Bounce();
 				playerScript.AllowBounceOffMonster();
-				//playerScript.Bounce();
 			}
 			else
 			{
@@ -67,9 +65,6 @@ public class TwoStepEnemy : EnemyScript
 				}
 				else
 				{
-					Debug.Log("Kill the player !");
-					//GameMaster.Instance.UpdateLife(-1);
-					//playerScript.Bounce();
 					playerScript.Hit();
 				}
 			}
@@ -78,7 +73,6 @@ public class TwoStepEnemy : EnemyScript
 		}
 		else if (collision.transform.tag == "Enemy" && isLaunch)
 		{
-			Debug.Log("Kill this enemy !");
 			Instantiate(effect, transform.position, Quaternion.identity);
 			collision.transform.GetComponent<EnemyScript>().Kill();
 		}

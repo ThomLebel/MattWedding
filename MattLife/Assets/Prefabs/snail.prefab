@@ -148,6 +148,7 @@ MonoBehaviour:
   wallCheck: {fileID: 1579746992812149680}
   spawner: {fileID: 0}
   effect: {fileID: 7165646687091236009, guid: e112502734c77ce43b0ac4d9d0c4ac2c, type: 3}
+  hitSound: SnailHit
   deletingDistance: 10
   launchSpeed: 350
   baseSprite: {fileID: 21300000, guid: b8fb415a6f5b30348bf5bd4f0b3bf918, type: 3}

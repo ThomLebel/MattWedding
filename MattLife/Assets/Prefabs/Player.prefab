@@ -184,7 +184,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: -0.06546664}
+  m_Offset: {x: 0, y: -0.0014262199}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -195,7 +195,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.67292136, y: 1.1309333}
+  m_Size: {x: 0.67292136, y: 1.0028524}
   m_EdgeRadius: 0
 --- !u!95 &3821676407196577880
 Animator:
@@ -228,6 +228,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f13ea49afb6bec648983a9ff5efbe0fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerLife: 32
+  playerScore: 0
+  playerGold: 0
   moveSpeed: 6
   maxJumpHeight: 5
   minJumpHeight: 1
@@ -247,6 +250,8 @@ MonoBehaviour:
     type: 3}
   jumpParticle: {fileID: 5965558650816100861, guid: 021a606d3b94b6d40b399286f9845e9e,
     type: 3}
+  fallingGravity: 3.5
+  inAir: 0
   canBounce: 0
   bouncing: 0
   bounceTimerWindow: 0.1
@@ -265,7 +270,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   collisionMask:
     serializedVersion: 2
-    m_Bits: 26368
+    m_Bits: 59136
   boxCollider: {fileID: 0}
   maxSlopeAngle: 50
   playerInput: {x: 0, y: 0}

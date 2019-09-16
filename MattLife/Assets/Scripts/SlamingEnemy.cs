@@ -7,6 +7,7 @@ public class SlamingEnemy : PlatformController
 	public float slamingSpeed;
 	public float replacingSpeed;
 	public GameObject dustPartices;
+	public AudioSource slamSound;
 
 	[SerializeField]
 	private State state;
@@ -149,6 +150,7 @@ public class SlamingEnemy : PlatformController
 		state = State.hasSlamed;
 		StartCoroutine(CameraShake.Instance.Shake());
 		Instantiate(dustPartices, transform.position, Quaternion.identity);
+		slamSound.Play();
 		timeBeforeNextMove = replaceWaitTime;
 	}
 

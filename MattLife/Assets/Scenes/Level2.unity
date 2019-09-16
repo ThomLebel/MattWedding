@@ -287,6 +287,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   effect: {fileID: 8141103298874470972, guid: 17377c5f625e9724fae8446dda675d4e, type: 3}
   nextScene: Level1
+  transitionTime: 1.5
 --- !u!61 &72479577
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -9117,6 +9118,7 @@ MonoBehaviour:
   goldText: {fileID: 224086462}
   scoreText: {fileID: 246493649}
   state: 0
+  musicName: musicLevel2
   playerSpawnPosition: {x: 10, y: 4, z: 0}
   gamePaused: 0
   timeToMouseFadeOut: 2

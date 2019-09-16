@@ -23,6 +23,7 @@ public class EndLevel : MonoBehaviour
 			Debug.Log("You reached the end of this level ! ");
 			Instantiate(effect, collision.transform.position, Quaternion.identity);
 			screenRevealAnimator.SetTrigger("End");
+			AudioManager.instance.FadeToMusic(GameMaster.Instance.musicName, transitionTime);
 			StartCoroutine("OnCompleteScreenReavealStartAnimation");
 		}
 	}

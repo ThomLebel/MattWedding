@@ -10,6 +10,7 @@ public class EnemySpawner : MonoBehaviour
 	public float delayBetweenSpawn;
 	public List<GameObject> monsterList;
 	public GameObject effect;
+	public AudioSource spawnSound;
 
 	[SerializeField]
 	private int monsterSpawned = 0;
@@ -46,7 +47,8 @@ public class EnemySpawner : MonoBehaviour
 			{
 				spawning = false;
 				monsterSpawned = 0;
-				StopCoroutine(spawnCoroutine);
+				if(spawnCoroutine != null)
+					StopCoroutine(spawnCoroutine);
 			}
 		}
 	}
@@ -79,6 +81,7 @@ public class EnemySpawner : MonoBehaviour
 		monsterList.Add(monster);
 		monsterSpawned++;
 		Instantiate(effect, spawn.position, Quaternion.identity);
+		spawnSound.Play();
 
 		spawnCoroutine = SpawnDelay();
 		StartCoroutine(spawnCoroutine);

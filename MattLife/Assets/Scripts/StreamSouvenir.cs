@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Video;
@@ -14,15 +15,27 @@ public class StreamSouvenir : MonoBehaviour
 	public Button leftButton;
 	public Button rightButton;
 
+	private bool sliderOn;
 	private Souvenir[] slider;
 	private int currentSlide = 0;
 	private float timeToNextSlide;
 	[SerializeField]
 	private float timeBetweenSlide = 0.5f;
 
+	private Player player;
+
+	private void Start()
+	{
+		player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
+	}
+
 	private void Update()
 	{
 		if (GameMaster.Instance.state != GameMaster.States.souvenirs || slider == null)
+		{
+			return;
+		}
+		if (slider != null && !sliderOn)
 		{
 			return;
 		}
@@ -67,17 +80,23 @@ public class StreamSouvenir : MonoBehaviour
 			"position", blockPosition,
 			"time", 1.5f,
 			"oncomplete", "RevealAnimationComplete",
+			"oncompletetarget", gameObject,
 			"ignoretimescale", true
 		));
 	}
 
-	private void RevealAnimationComplete()
+	public void RevealAnimationComplete()
 	{
+		sliderOn = true;
 		Time.timeScale = 0;
+		player.StopMovement();
 	}
 
 	public void StartVideoStream(Souvenir souvenir, Vector3 blockPosition)
 	{
+		player.StopMovement();
+		Time.timeScale = 0;
+		AudioManager.instance.FadeToMusic(GameMaster.Instance.musicName, 1);
 		videoPlayer.clip = souvenir.video;
 		videoBackup.sprite = souvenir.photo;
 
@@ -91,6 +110,11 @@ public class StreamSouvenir : MonoBehaviour
 
 	public void StartPhotoStream(Souvenir[] souvenirs, Vector3 blockPosition)
 	{
+		Sound m = Array.Find(AudioManager.instance.musics, music => music.name == GameMaster.Instance.musicName);
+		AudioManager.instance.FadeToMusic(m.name, 1, m.gamePausedVolume);
+
+		player.StopMovement();
+		Time.timeScale = 0;
 		slider = souvenirs;
 		photoProjector.sprite = slider[currentSlide].photo;
 		photoProjector.preserveAspect = true;
@@ -106,6 +130,8 @@ public class StreamSouvenir : MonoBehaviour
 
 	public void StartPhotoStream(Souvenir souvenir, Vector3 blockPosition)
 	{
+		player.StopMovement();
+		Time.timeScale = 0;
 		photoProjector.sprite = souvenir.photo;
 		photoProjector.preserveAspect = true;
 		photoProjector.enabled = true;
@@ -158,6 +184,7 @@ public class StreamSouvenir : MonoBehaviour
 
 	public void StopStream()
 	{
+		sliderOn = false;
 		slider = null;
 		photoProjector.sprite = null;
 		photoProjector.enabled = false;
@@ -169,14 +196,20 @@ public class StreamSouvenir : MonoBehaviour
 		videoBackup.gameObject.SetActive(false);
 		leftButton.gameObject.SetActive(false);
 		rightButton.gameObject.SetActive(false);
+
+		Sound m = Array.Find(AudioManager.instance.musics, music => music.name == GameMaster.Instance.musicName);
+		AudioManager.instance.ResumeMusic(m.name);
+
 		if (GameMaster.Instance.galerie.activeSelf)
 		{
+			AudioManager.instance.FadeToMusic(m.name, 1f, m.gamePausedVolume);
 			GameMaster.Instance.state = GameMaster.States.galerie;
 		}
 		else
 		{
+			AudioManager.instance.FadeToMusic(m.name, 1f, m.volume);
 			GameMaster.Instance.state = GameMaster.States.game;
+			Time.timeScale = 1;
 		}
-		Time.timeScale = 1;
 	}
 }
