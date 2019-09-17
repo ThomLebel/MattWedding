@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Controller2D : RaycastController
 {
+	public LayerMask enemiesMask;
 	public float maxSlopeAngle = 80;
 
 	public CollisionInfo collisions;
@@ -13,7 +14,7 @@ public class Controller2D : RaycastController
 	protected override void Start()
 	{
 		base.Start();
-		collisions.faceDir = 1;
+		collisions.faceDir = -1;
 	}
 
 	public void Move(Vector2 moveAmount, bool standingOnPlatform)
@@ -64,6 +65,7 @@ public class Controller2D : RaycastController
 
 		for (int i = 0; i < horizontalRayCount; i++)
 		{
+			//Raycast in moving direction
 			Vector2 rayOrigin = (directionX == -1) ? raycastOrigins.bottomLeft : raycastOrigins.bottomRight;
 			rayOrigin += Vector2.up * (horizontalRaySpacing * i);
 			RaycastHit2D hit = Physics2D.Raycast(rayOrigin, Vector2.right * directionX, rayLength, collisionMask);
@@ -72,10 +74,26 @@ public class Controller2D : RaycastController
 
 			if (hit)
 			{
-
 				if (hit.distance <= 0)
 				{
 					continue;
+				}
+
+				if (hit.collider != collisions.horizontalCollider)
+				{
+					collisions.horizontalCollider = hit.collider;
+				}
+
+				if (collisions.ignoredCollider != null)
+				{
+					if (collisions.ignoredCollider == hit.collider)
+					{
+						continue;
+					}
+					else
+					{
+						collisions.ignoredCollider = null;
+					}
 				}
 
 				float slopeAngle = Vector2.Angle(hit.normal, Vector2.up);
@@ -111,6 +129,37 @@ public class Controller2D : RaycastController
 					collisions.right = directionX == 1;
 				}
 			}
+
+			//Raycast in opposite direction
+			Vector2 rayOpposite = (directionX == 1) ? raycastOrigins.bottomLeft : raycastOrigins.bottomRight;
+			rayOpposite += Vector2.up * (horizontalRaySpacing * i);
+			RaycastHit2D hitOpposite = Physics2D.Raycast(rayOpposite, Vector2.right * (directionX * -1), rayLength/2, enemiesMask);
+
+			Debug.DrawRay(rayOpposite, Vector2.right * (directionX * -1), Color.blue);
+
+			if (hitOpposite)
+			{
+				if (hitOpposite.distance <= 0)
+				{
+					continue;
+				}
+
+				if (hitOpposite.collider != collisions.reverseHorizontalCollider)
+				{
+					collisions.reverseHorizontalCollider = hitOpposite.collider;
+				}
+
+				if (collisions.ignoredCollider != null)
+				{
+					if (collisions.ignoredCollider == hitOpposite.collider)
+					{
+						continue;
+					}
+				}
+
+				collisions.left = directionX == 1;
+				collisions.right = directionX == -1;
+			}
 		}
 	}
 
@@ -121,7 +170,7 @@ public class Controller2D : RaycastController
 
 		for (int i = 0; i < verticalRayCount; i++)
 		{
-
+			//Raycast in moving direction
 			Vector2 rayOrigin = (directionY == -1) ? raycastOrigins.bottomLeft : raycastOrigins.topLeft;
 			rayOrigin += Vector2.right * (verticalRaySpacing * i + moveAmount.x);
 			RaycastHit2D hit = Physics2D.Raycast(rayOrigin, Vector2.up * directionY, rayLength, collisionMask);
@@ -130,15 +179,20 @@ public class Controller2D : RaycastController
 
 			if (hit)
 			{
-				if (collisions.fallingThroughPlatform != null)
+				if (hit.collider != collisions.verticalCollider)
 				{
-					if (collisions.fallingThroughPlatform == hit.collider)
+					collisions.verticalCollider = hit.collider;
+				}
+
+				if (collisions.ignoredCollider != null)
+				{
+					if (collisions.ignoredCollider == hit.collider)
 					{
 						continue;
 					}
 					else
 					{
-						collisions.fallingThroughPlatform = null;
+						collisions.ignoredCollider = null;
 					}
 				}
 
@@ -150,7 +204,7 @@ public class Controller2D : RaycastController
 					}
 					if (playerInput.y == -1)
 					{
-						collisions.fallingThroughPlatform = hit.collider;
+						collisions.ignoredCollider = hit.collider;
 					}
 				}
 
@@ -164,6 +218,32 @@ public class Controller2D : RaycastController
 
 				collisions.below = directionY == -1;
 				collisions.above = directionY == 1;
+			}
+
+			//Raycast in opposite direction
+			Vector2 rayOpposite = (directionY == 1) ? raycastOrigins.bottomLeft : raycastOrigins.topLeft;
+			rayOpposite += Vector2.right * (verticalRaySpacing * i + moveAmount.x);
+			RaycastHit2D hitOpposite = Physics2D.Raycast(rayOpposite, Vector2.up * (directionY * -1), rayLength, enemiesMask);
+
+			Debug.DrawRay(rayOpposite, Vector2.up * (directionY * -1), Color.blue);
+
+			if (hitOpposite)
+			{
+				if (hitOpposite.collider != collisions.reverseVerticalCollider)
+				{
+					collisions.reverseVerticalCollider = hitOpposite.collider;
+				}
+
+				if (collisions.ignoredCollider != null)
+				{
+					if (collisions.ignoredCollider == hitOpposite.collider)
+					{
+						continue;
+					}
+				}
+
+				collisions.below = directionY == 1;
+				collisions.above = directionY == -1;
 			}
 		}
 
@@ -264,9 +344,10 @@ public class Controller2D : RaycastController
 
 	void ResetFallingThroughPlatform()
 	{
-		collisions.fallingThroughPlatform = null;
+		collisions.ignoredCollider = null;
 	}
 
+	[System.Serializable]
 	public struct CollisionInfo
 	{
 		public bool above, below;
@@ -280,7 +361,11 @@ public class Controller2D : RaycastController
 		public Vector2 slopeNormal;
 		public Vector2 moveAmountOld;
 		public int faceDir;
-		public Collider2D fallingThroughPlatform;
+		public Collider2D ignoredCollider;
+		public Collider2D horizontalCollider;
+		public Collider2D verticalCollider;
+		public Collider2D reverseHorizontalCollider;
+		public Collider2D reverseVerticalCollider;
 
 		public void Reset()
 		{
@@ -290,8 +375,12 @@ public class Controller2D : RaycastController
 			descendingSlope = false;
 			slidingDownMaxSlope = false;
 			slopeNormal = Vector2.zero;
+			horizontalCollider = null;
+			verticalCollider = null;
+			reverseHorizontalCollider = null;
+			reverseVerticalCollider = null;
 
-			slopeAngleOld = slopeAngle;
+		slopeAngleOld = slopeAngle;
 			slopeAngle = 0;
 		}
 	}

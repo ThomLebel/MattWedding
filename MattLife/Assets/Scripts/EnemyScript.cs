@@ -81,7 +81,7 @@ public class EnemyScript : MonoBehaviour
 			}
 
 			Vector2 contact = collision.GetContact(0).point;
-
+			Debug.Log(contact);
 			if (contact.y >= headCheck.position.y)
 			{
 				Debug.Log("Kill this monster !");

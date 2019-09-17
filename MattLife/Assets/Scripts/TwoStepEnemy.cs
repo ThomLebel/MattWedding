@@ -74,7 +74,8 @@ public class TwoStepEnemy : EnemyScript
 		else if (collision.transform.tag == "Enemy" && isLaunch)
 		{
 			Instantiate(effect, transform.position, Quaternion.identity);
-			collision.transform.GetComponent<EnemyScript>().Kill();
+			//collision.transform.GetComponent<EnemyScript>().Kill();
+			collision.transform.GetComponent<Enemy>().Kill();
 		}
 	}
 

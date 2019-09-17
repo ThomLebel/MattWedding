@@ -16,7 +16,8 @@ public class ResetTrigger : MonoBehaviour
 				//collision.transform.position = new Vector3(collision.transform.position.x, 10f, collision.transform.position.z);
 				break;
 			case "Enemy":
-				collision.transform.GetComponent<EnemyScript>().DeleteMonster();
+				//collision.transform.GetComponent<EnemyScript>().DeleteMonster();
+				collision.transform.GetComponent<Enemy>().DeleteMonster();
 				break;
 		}
 	}

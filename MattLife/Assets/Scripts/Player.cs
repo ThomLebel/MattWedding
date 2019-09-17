@@ -135,24 +135,25 @@ public class Player : MonoBehaviour
 
 	public void OnJumpInputDown()
 	{
+		Vector2 jumpVelocity = Vector2.zero;
+
 		if (wallSliding)
 		{
 			if (wallDirX == directionalInput.x)
 			{
-				velocity.x = -wallDirX * wallJumpClimb.x;
-				velocity.y = wallJumpClimb.y;
+				jumpVelocity.x = -wallDirX * wallJumpClimb.x;
+				jumpVelocity.y = wallJumpClimb.y;
 			}
 			else if (directionalInput.x == 0)
 			{
-				velocity.x = -wallDirX * wallJumpOff.x;
-				velocity.y = wallJumpOff.y;
+				jumpVelocity.x = -wallDirX * wallJumpOff.x;
+				jumpVelocity.y = wallJumpOff.y;
 			}
 			else
 			{
-				velocity.x = -wallDirX * wallLeap.x;
-				velocity.y = wallLeap.y;
+				jumpVelocity.x = -wallDirX * wallLeap.x;
+				jumpVelocity.y = wallLeap.y;
 			}
-			JumpEffect();
 		}
 		if (controller.collisions.below)
 		{
@@ -160,23 +161,32 @@ public class Player : MonoBehaviour
 			{
 				if (directionalInput.x != -Mathf.Sign(controller.collisions.slopeNormal.x)) // not jumping against max slope
 				{
-					velocity.y = maxJumpVelocity * controller.collisions.slopeNormal.y;
-					velocity.x = maxJumpVelocity * controller.collisions.slopeNormal.x;
+					jumpVelocity.y = maxJumpVelocity * controller.collisions.slopeNormal.y;
+					jumpVelocity.x = maxJumpVelocity * controller.collisions.slopeNormal.x;
 				}
 			}
 			else
 			{
-				velocity.y = maxJumpVelocity;
+				jumpVelocity.y = maxJumpVelocity;
 			}
-			JumpEffect();
 		}
 		if (canBounce)
 		{
 			bouncing = true;
 			canBounce = false;
-			velocity.y = maxJumpVelocity + bounceTakeOff;
-			JumpEffect();
+			jumpVelocity.y = maxJumpVelocity;
 		}
+
+		if (jumpVelocity != Vector2.zero)
+		{
+			Jump(jumpVelocity);
+		}
+	}
+
+	public void Jump(Vector2 jumpVelocity)
+	{
+		velocity = jumpVelocity;
+		JumpEffect();
 	}
 
 	public void JumpEffect()
@@ -266,6 +276,10 @@ public class Player : MonoBehaviour
 
 	public void Hit()
 	{
+		if (isInvulnerable)
+		{
+			return;
+		}
 		int rand = Random.Range(0,2);
 		if (rand == 0)
 		{
@@ -287,6 +301,8 @@ public class Player : MonoBehaviour
 			Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Player"),LayerMask.NameToLayer("MovingShells"),true);
 			controller.collisionMask &= ~(1 << LayerMask.NameToLayer("Enemies"));
 			controller.collisionMask &= ~(1 << LayerMask.NameToLayer("MovingShells"));
+			controller.enemiesMask &= ~(1 << LayerMask.NameToLayer("Enemies"));
+			controller.enemiesMask &= ~(1 << LayerMask.NameToLayer("MovingShells"));
 			animator.SetBool("PlayerInvulnerable", isInvulnerable);
 			playerIsInvulnerable = PlayerInvulnerable(invulnerabilityTime);
 			StartCoroutine(playerIsInvulnerable);
@@ -315,6 +331,8 @@ public class Player : MonoBehaviour
 		Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Player"), LayerMask.NameToLayer("MovingShells"), false);
 		controller.collisionMask |= (1 << LayerMask.NameToLayer("Enemies"));
 		controller.collisionMask |= (1 << LayerMask.NameToLayer("MovingShells"));
+		controller.enemiesMask |= (1 << LayerMask.NameToLayer("Enemies"));
+		controller.enemiesMask |= (1 << LayerMask.NameToLayer("MovingShells"));
 		animator.SetBool("PlayerInvulnerable", isInvulnerable);
 		StopCoroutine(playerIsInvulnerable);
 	}

@@ -77,7 +77,8 @@ public class EnemySpawner : MonoBehaviour
 
 		spawning = true;
 		GameObject monster = Instantiate(monsterToSpawn, spawn.position, Quaternion.identity);
-		monster.GetComponent<EnemyScript>().spawner = this;
+		//monster.GetComponent<EnemyScript>().spawner = this;
+		monster.GetComponent<Enemy>().SetEnemySpwaner(this);
 		monsterList.Add(monster);
 		monsterSpawned++;
 		Instantiate(effect, spawn.position, Quaternion.identity);
@@ -102,7 +103,8 @@ public class EnemySpawner : MonoBehaviour
 
 		for (int i = monsterList.Count - 1; i >= 0; i--)
 		{
-			monsterList[i].GetComponent<EnemyScript>().DeleteMonster();
+			//monsterList[i].GetComponent<EnemyScript>().DeleteMonster();
+			monsterList[i].GetComponent<Enemy>().DeleteMonster();
 		}
 
 		monsterList = new List<GameObject>();

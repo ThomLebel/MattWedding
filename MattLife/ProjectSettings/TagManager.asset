@@ -12,6 +12,7 @@ TagManager:
   - SouvenirsHolder
   - SouvenirBlock
   - ScreenReveal
+  - Obstacle
   layers:
   - Default
   - TransparentFX
