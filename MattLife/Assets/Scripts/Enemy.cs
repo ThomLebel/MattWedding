@@ -9,7 +9,7 @@ public class Enemy : MonoBehaviour
 	public GameObject effect;
 	public string hitSound;
 
-	public float moveSpeed = 6;
+	public float walkSpeed = 2;
 	public float maxJumpHeight = 5;
 	public float minJumpHeight = 1;
 	public float timeToJumpApex = .4f;
@@ -21,6 +21,7 @@ public class Enemy : MonoBehaviour
 	protected float gravity;
 	protected float maxJumpVelocity;
 	protected float minJumpVelocity;
+	protected float speed;
 	protected bool facingRight = true;
 
 	[SerializeField]
@@ -30,6 +31,7 @@ public class Enemy : MonoBehaviour
 	protected EnemySpawner spawner;
 	protected Controller2D controller;
 	protected Animator animator;
+	protected SpriteRenderer spriteRenderer;
 
 	[SerializeField]
 	protected float deletingDistance = 10f;
@@ -42,20 +44,22 @@ public class Enemy : MonoBehaviour
 		cam = Camera.main;
 		controller = GetComponent<Controller2D>();
 		animator = GetComponent<Animator>();
+		spriteRenderer = GetComponent<SpriteRenderer>();
 	}
 
 	// Start is called before the first frame update
-	void Start()
+	protected virtual void Start()
     {
 		gravity = -(2 * maxJumpHeight) / Mathf.Pow(timeToJumpApex, 2);
 		maxJumpVelocity = Mathf.Abs(gravity) * timeToJumpApex;
 		minJumpVelocity = Mathf.Sqrt(2 * Mathf.Abs(gravity) * minJumpHeight);
 		camHorizontalExtend = cam.orthographicSize * Screen.width / Screen.height;
 		directionalInput = Vector2.left;
+		speed = walkSpeed;
 	}
 
     // Update is called once per frame
-    void Update()
+    protected virtual void Update()
     {
 		//Delete monster if out of sight
 		if (transform.position.x >= cam.transform.position.x + camHorizontalExtend + deletingDistance ||
@@ -99,7 +103,7 @@ public class Enemy : MonoBehaviour
 		}
 	}
 
-	private void CollideWithPlayer()
+	protected virtual void CollideWithPlayer()
 	{
 		Collider2D targetCollider = null;
 		Player playerScript = null;
@@ -169,7 +173,6 @@ public class Enemy : MonoBehaviour
 		if (beingAttacked)
 		{
 			beingAttacked = false;
-			Instantiate(effect, transform.position, Quaternion.identity);
 			playerScript.AllowBounceOffMonster();
 			Kill();
 		}
@@ -232,13 +235,15 @@ public class Enemy : MonoBehaviour
 
 	void CalculateVelocity()
 	{
-		float targetVelocityX = directionalInput.x * moveSpeed;
+		float targetVelocityX = directionalInput.x * speed;
 		velocity.x = Mathf.SmoothDamp(velocity.x, targetVelocityX, ref velocityXSmoothing, (controller.collisions.below) ? accelerationTimeGrounded : accelerationTimeAirborne);
 		velocity.y += gravity * Time.deltaTime;
 	}
 
 	public void Kill()
 	{
+		Debug.Log("monster killed");
+		Instantiate(effect, transform.position, Quaternion.identity);
 		AudioManager.instance.PlaySound(hitSound);
 		GameMaster.Instance.UpdateScore(score);
 		DeleteMonster();

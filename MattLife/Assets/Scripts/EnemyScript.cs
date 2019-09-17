@@ -5,7 +5,7 @@ using UnityEngine;
 public class EnemyScript : MonoBehaviour
 {
 	public int score;
-	public float walkSpeed = 40;
+	public float walkSpeed = 2;
 
 	public bool bumpOnObstacle = false;
 	public LayerMask obstacleLayerMask;

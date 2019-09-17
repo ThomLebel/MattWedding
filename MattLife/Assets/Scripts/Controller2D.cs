@@ -74,7 +74,7 @@ public class Controller2D : RaycastController
 
 			if (hit)
 			{
-				if (hit.distance <= 0)
+				if (hit.distance <= 0 || hit.collider == boxCollider)
 				{
 					continue;
 				}
@@ -139,7 +139,7 @@ public class Controller2D : RaycastController
 
 			if (hitOpposite)
 			{
-				if (hitOpposite.distance <= 0)
+				if (hitOpposite.distance <= 0 || hit.collider == boxCollider)
 				{
 					continue;
 				}
@@ -179,6 +179,11 @@ public class Controller2D : RaycastController
 
 			if (hit)
 			{
+				if (hit.collider == boxCollider)
+				{
+					continue;
+				}
+
 				if (hit.collider != collisions.verticalCollider)
 				{
 					collisions.verticalCollider = hit.collider;
@@ -229,6 +234,11 @@ public class Controller2D : RaycastController
 
 			if (hitOpposite)
 			{
+				if (hit.collider == boxCollider)
+				{
+					continue;
+				}
+
 				if (hitOpposite.collider != collisions.reverseVerticalCollider)
 				{
 					collisions.reverseVerticalCollider = hitOpposite.collider;
