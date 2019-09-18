@@ -14,6 +14,9 @@ public class ShellEnemy : Enemy
 	private bool scoreGained = false;
 	[SerializeField]
 	private float stunTime = 3f;
+	[SerializeField]
+	private float timeBetweenPlayerCollisions = 0.05f;
+	private float timeBeforeNextPlayerCollisions;
 
 	private IEnumerator stunCoroutine;
 
@@ -28,81 +31,63 @@ public class ShellEnemy : Enemy
 	{
 		base.Update();
 
-		CollideWithEnemy();
+		if (collisions.left || collisions.right || collisions.above || collisions.below)
+		{
+			CollideWithEnemy();
+		}
 	}
 
 	protected override void CollideWithPlayer()
 	{
+		if (timeBeforeNextPlayerCollisions > 0)
+		{
+			timeBeforeNextPlayerCollisions -= Time.deltaTime;
+			return;
+		}
+
 		Collider2D targetCollider = null;
 		Player playerScript = null;
 		bool attack = false;
 		bool beingAttacked = false;
 
-		if (controller.collisions.below)
+		if (collisions.below && collisions.belowCollider.tag == "Player")
 		{
-			if (controller.collisions.verticalCollider != null && controller.collisions.verticalCollider.tag == "Player")
-			{
-				playerScript = controller.collisions.verticalCollider.GetComponent<Player>();
-				targetCollider = controller.collisions.verticalCollider;
-				if (state != State.stun)
-				{
-					attack = true;
-				}
-			}
-			else if (controller.collisions.reverseVerticalCollider != null && controller.collisions.reverseVerticalCollider.tag == "Player")
-			{
-				playerScript = controller.collisions.reverseVerticalCollider.GetComponent<Player>();
-				targetCollider = controller.collisions.reverseVerticalCollider;
-				if (state != State.stun)
-				{
-					attack = true;
-				}
-			}
+			targetCollider = collisions.belowCollider;
+			if(state != State.stun)
+				attack = true;
 		}
-		else if (controller.collisions.above)
+		else if (collisions.above && collisions.aboveCollider.tag == "Player")
 		{
-			if (controller.collisions.verticalCollider != null && controller.collisions.verticalCollider.tag == "Player")
+			targetCollider = collisions.aboveCollider;
+			beingAttacked = true;
+		}
+		else if (collisions.left && collisions.leftCollider.tag == "Player")
+		{
+			targetCollider = collisions.leftCollider;
+			if (state != State.stun)
+				attack = true;
+			else
+				beingAttacked = true;
+		}
+		else if (collisions.right && collisions.rightCollider.tag == "Player")
+		{
+			targetCollider = collisions.rightCollider;
+			if (state != State.stun)
+			{
+				attack = true;
+			}
+			else
 			{
 				beingAttacked = true;
-				playerScript = controller.collisions.verticalCollider.GetComponent<Player>();
-				targetCollider = controller.collisions.verticalCollider;
-			}
-			else if (controller.collisions.reverseVerticalCollider != null && controller.collisions.reverseVerticalCollider.tag == "Player")
-			{
-				beingAttacked = true;
-				playerScript = controller.collisions.reverseVerticalCollider.GetComponent<Player>();
-				targetCollider = controller.collisions.reverseVerticalCollider;
 			}
 		}
-		if (controller.collisions.left || controller.collisions.right)
+
+		if (targetCollider == null)
 		{
-			if (controller.collisions.horizontalCollider != null && controller.collisions.horizontalCollider.tag == "Player")
-			{
-				playerScript = controller.collisions.horizontalCollider.GetComponent<Player>();
-				targetCollider = controller.collisions.horizontalCollider;
-				if (state != State.stun)
-				{
-					attack = true;
-				}
-				else
-				{
-					beingAttacked = true;
-				}
-			}
-			else if (controller.collisions.reverseHorizontalCollider != null && controller.collisions.reverseHorizontalCollider.tag == "Player")
-			{
-				playerScript = controller.collisions.reverseHorizontalCollider.GetComponent<Player>();
-				targetCollider = controller.collisions.reverseHorizontalCollider;
-				if (state != State.stun)
-				{
-					attack = true;
-				}
-				else
-				{
-					beingAttacked = true;
-				}
-			}
+			return;
 		}
+
+		playerScript = targetCollider.GetComponent<Player>();
 
 		if (playerScript == null)
 		{
@@ -110,17 +95,16 @@ public class ShellEnemy : Enemy
 		}
 		if (playerScript.isInvulnerable)
 		{
-			controller.collisions.ignoredCollider = targetCollider;
+			collisions.ignoredCollider = targetCollider;
 			return;
 		}
 		else
 		{
-			controller.collisions.ignoredCollider = null;
+			collisions.ignoredCollider = null;
 		}
 
 		if (beingAttacked)
 		{
-			Debug.Log("being attacked");
 			beingAttacked = false;
 			playerScript.AllowBounceOffMonster();
 			UnderAttack(targetCollider);
@@ -132,6 +116,42 @@ public class ShellEnemy : Enemy
 		}
 
 		playerScript.Bounce();
+		timeBeforeNextPlayerCollisions = timeBetweenPlayerCollisions;
+	}
+
+	private void CollideWithEnemy()
+	{
+		if (state != State.launched)
+		{
+			return;
+		}
+
+		Enemy enemyScript = null;
+
+		if (collisions.below && collisions.belowCollider.tag == "Enemy")
+		{
+			enemyScript = collisions.belowCollider.GetComponent<Enemy>();
+		}
+		else if (collisions.above && collisions.aboveCollider.tag == "Enemy")
+		{
+			enemyScript = collisions.aboveCollider.GetComponent<Enemy>();
+		}
+		else if (collisions.left && collisions.leftCollider.tag == "Enemy")
+		{
+			enemyScript = collisions.leftCollider.GetComponent<Enemy>();
+		}
+		else if (collisions.right && collisions.rightCollider.tag == "Enemy")
+		{
+			enemyScript = collisions.rightCollider.GetComponent<Enemy>();
+		}
+
+		if (enemyScript != null)
+		{
+			collisions.rightCollider = null;
+			collisions.right = false;
+			Instantiate(effect, transform.position, Quaternion.identity);
+			enemyScript.Kill();
+		}
 	}
 
 	private void UnderAttack(Collider2D targetCollider)
@@ -154,7 +174,6 @@ public class ShellEnemy : Enemy
 
 	private void StunMonster()
 	{
-		Debug.Log("monster stun");
 		state = State.stun;
 		animator.enabled = false;
 		spriteRenderer.sprite = stunSprite;
@@ -170,38 +189,28 @@ public class ShellEnemy : Enemy
 
 	private void LaunchMonster(Collider2D targetCollider)
 	{
-		Debug.Log("monster launched");
 		state = State.launched;
-		//gameObject.layer = LayerMask.NameToLayer("MovingShells");
-		controller.collisionMask |= (1 << LayerMask.NameToLayer("Enemies"));
-		controller.enemiesMask |= (1 << LayerMask.NameToLayer("Enemies"));
+		gameObject.layer = LayerMask.NameToLayer("MovingShells");
+		enemiesMask |= (1 << LayerMask.NameToLayer("Enemies"));
 		StopCoroutine(stunCoroutine);
 
-		/*switch (controller.collisions.faceDir)
+		if (targetCollider.transform.position.x > transform.position.x && facingRight)
 		{
-			case 1:
-				if (targetCollider.transform.position.x > transform.position.x)
+			Flip();
+		}
+		else if(targetCollider.transform.position.x < transform.position.x && !facingRight)
 				{
-					Flip();
-				}
-				break;
-			case -1:
-				if (targetCollider.transform.position.x < transform.position.x)
-				{
-					Flip();
-				}
-				break;
-		}*/
+			Flip();
+		}
+
 		speed = launchSpeed;
 	}
 
 	private void StopMonster()
 	{
-		Debug.Log("stop monster");
 		state = State.stun;
-		//gameObject.layer = LayerMask.NameToLayer("Enemies");
-		controller.collisionMask &= ~(1 << LayerMask.NameToLayer("Enemies"));
-		controller.enemiesMask &= ~(1 << LayerMask.NameToLayer("Enemies"));
+		gameObject.layer = LayerMask.NameToLayer("Enemies");
+		enemiesMask &= ~(1 << LayerMask.NameToLayer("Enemies"));
 		speed = 0f;
 		stunCoroutine = StunTimer();
 		StartCoroutine(stunCoroutine);
@@ -214,47 +223,6 @@ public class ShellEnemy : Enemy
 		spriteRenderer.sprite = baseSprite;
 		animator.enabled = true;
 		speed = walkSpeed;
-	}
-
-	private void CollideWithEnemy()
-	{
-		if (state != State.launched)
-		{
-			return;
-		}
-
-		Enemy enemyScript = null;
-
-		if (controller.collisions.below || controller.collisions.above)
-		{
-			if (controller.collisions.verticalCollider != null && controller.collisions.verticalCollider.tag == "Enemy")
-			{
-				enemyScript = controller.collisions.verticalCollider.GetComponent<Enemy>();
-			}
-			else if (controller.collisions.reverseVerticalCollider != null && controller.collisions.reverseVerticalCollider.tag == "Enemy")
-			{
-				enemyScript = controller.collisions.reverseVerticalCollider.GetComponent<Enemy>();
-			}
-		}
-		else if (controller.collisions.left || controller.collisions.right)
-		{
-			if (controller.collisions.horizontalCollider != null && controller.collisions.horizontalCollider.tag == "Enemy")
-			{
-				enemyScript = controller.collisions.horizontalCollider.GetComponent<Enemy>();
-			}
-			else if (controller.collisions.reverseHorizontalCollider != null && controller.collisions.reverseHorizontalCollider.tag == "Enemy")
-			{
-				enemyScript = controller.collisions.reverseHorizontalCollider.GetComponent<Enemy>();
-			}
-		}
-
-		if (enemyScript != null)
-		{
-			Debug.Log("got killed from here ?");
-			Instantiate(effect, transform.position, Quaternion.identity);
-			//collision.transform.GetComponent<EnemyScript>().Kill();
-			enemyScript.Kill();
-		}
 	}
 
 	enum State

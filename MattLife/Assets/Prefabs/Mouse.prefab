@@ -33,7 +33,8 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 7.307, y: -2.259, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 6554527179992703982}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -263,11 +264,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   collisionMask:
     serializedVersion: 2
-    m_Bits: 12032
+    m_Bits: 9984
+  horizontalRayCount: 4
+  verticalRayCount: 4
+  horizontalRaySpacing: 0
+  verticalRaySpacing: 0
   boxCollider: {fileID: 0}
-  enemiesMask:
-    serializedVersion: 2
-    m_Bits: 34816
   maxSlopeAngle: 50
   collisions:
     above: 0
@@ -283,10 +285,6 @@ MonoBehaviour:
     moveAmountOld: {x: 0, y: 0}
     faceDir: 0
     ignoredCollider: {fileID: 0}
-    horizontalCollider: {fileID: 0}
-    verticalCollider: {fileID: 0}
-    reverseHorizontalCollider: {fileID: 0}
-    reverseVerticalCollider: {fileID: 0}
   playerInput: {x: 0, y: 0}
 --- !u!114 &8571101424990767514
 MonoBehaviour:
@@ -300,14 +298,60 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13bbca5018055a14c89f6502127b4fd0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemiesMask:
+    serializedVersion: 2
+    m_Bits: 2048
+  collisions:
+    above: 0
+    below: 0
+    left: 0
+    right: 0
+    ignoredCollider: {fileID: 0}
+    leftCollider: {fileID: 0}
+    rightCollider: {fileID: 0}
+    aboveCollider: {fileID: 0}
+    belowCollider: {fileID: 0}
   score: 25
   effect: {fileID: 7165646687091236009, guid: 45ee855e753ff2641be0b3ab4d690091, type: 3}
   hitSound: MouseHit
-  moveSpeed: 2
+  wallCheck: {fileID: 6554527179992703982}
+  walkSpeed: 2
   maxJumpHeight: 5
   minJumpHeight: 1
   timeToJumpApex: 0.4
   accelerationTimeAirborne: 0.2
   accelerationTimeGrounded: 0.1
+  facingRight: 1
+  collisionsRayLength: 0.1
   inAir: 0
   deletingDistance: 10
+--- !u!1 &4467741455415973413
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6554527179992703982}
+  m_Layer: 14
+  m_Name: wallCheck
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6554527179992703982
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4467741455415973413}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.602, y: 0.263, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4250086510925361497}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

@@ -264,6 +264,7 @@ public class Player : MonoBehaviour
 	public void Bounce()
 	{
 		velocity.y = bounceTakeOff;
+		Jump(velocity);
 	}
 
 	public void AllowBounceOffMonster()
@@ -301,8 +302,8 @@ public class Player : MonoBehaviour
 			Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Player"),LayerMask.NameToLayer("MovingShells"),true);
 			controller.collisionMask &= ~(1 << LayerMask.NameToLayer("Enemies"));
 			controller.collisionMask &= ~(1 << LayerMask.NameToLayer("MovingShells"));
-			controller.enemiesMask &= ~(1 << LayerMask.NameToLayer("Enemies"));
-			controller.enemiesMask &= ~(1 << LayerMask.NameToLayer("MovingShells"));
+			//controller.enemiesMask &= ~(1 << LayerMask.NameToLayer("Enemies"));
+			//controller.enemiesMask &= ~(1 << LayerMask.NameToLayer("MovingShells"));
 			animator.SetBool("PlayerInvulnerable", isInvulnerable);
 			playerIsInvulnerable = PlayerInvulnerable(invulnerabilityTime);
 			StartCoroutine(playerIsInvulnerable);
@@ -331,8 +332,8 @@ public class Player : MonoBehaviour
 		Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Player"), LayerMask.NameToLayer("MovingShells"), false);
 		controller.collisionMask |= (1 << LayerMask.NameToLayer("Enemies"));
 		controller.collisionMask |= (1 << LayerMask.NameToLayer("MovingShells"));
-		controller.enemiesMask |= (1 << LayerMask.NameToLayer("Enemies"));
-		controller.enemiesMask |= (1 << LayerMask.NameToLayer("MovingShells"));
+		//controller.enemiesMask |= (1 << LayerMask.NameToLayer("Enemies"));
+		//controller.enemiesMask |= (1 << LayerMask.NameToLayer("MovingShells"));
 		animator.SetBool("PlayerInvulnerable", isInvulnerable);
 		StopCoroutine(playerIsInvulnerable);
 	}

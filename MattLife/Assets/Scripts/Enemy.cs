@@ -5,9 +5,12 @@ using UnityEngine;
 [RequireComponent(typeof(Controller2D))]
 public class Enemy : MonoBehaviour
 {
+	public LayerMask enemiesMask;
+	public Collisions collisions;
 	public int score;
 	public GameObject effect;
 	public string hitSound;
+	public Transform wallCheck;
 
 	public float walkSpeed = 2;
 	public float maxJumpHeight = 5;
@@ -22,10 +25,13 @@ public class Enemy : MonoBehaviour
 	protected float maxJumpVelocity;
 	protected float minJumpVelocity;
 	protected float speed;
-	protected bool facingRight = true;
+	[SerializeField] protected bool facingRight = false;
+	[SerializeField] protected float collisionsRayLength = 0.1f;
 
 	[SerializeField]
 	protected bool inAir = false;
+	protected bool bumpOnObstacle = false;
+	protected bool hasFlipped = false;
 
 	protected Vector2 directionalInput;
 	protected EnemySpawner spawner;
@@ -93,13 +99,102 @@ public class Enemy : MonoBehaviour
 			inAir = false;
 		}
 
-		CollideWithPlayer();
-
-		//Change
-		if (controller.collisions.horizontalCollider != null && controller.collisions.horizontalCollider.tag == "Obstacle")
+		if ((controller.collisions.left || controller.collisions.right) && !hasFlipped)
 		{
-			controller.collisions.horizontalCollider = null;
+			hasFlipped = true;
 			Flip();
+		}
+		if (hasFlipped && (!controller.collisions.left && !controller.collisions.right))
+		{
+			hasFlipped = false;
+		}
+
+		collisions.Reset();
+		HorizontalCollisions();
+		VerticalCollisions();
+		if (collisions.left || collisions.right || collisions.above || collisions.below)
+		{
+			CollideWithPlayer();
+		}
+	}
+
+	protected void HorizontalCollisions()
+	{
+		for (int i = 0; i < controller.horizontalRayCount; i++)
+		{
+			//Raycast left
+			Vector2 rayOrigin = controller.raycastOrigins.bottomLeft;
+			rayOrigin += Vector2.up * (controller.horizontalRaySpacing * i);
+			RaycastHit2D hit = Physics2D.Raycast(rayOrigin, Vector2.left, collisionsRayLength, enemiesMask);
+			Debug.DrawRay(rayOrigin, Vector2.left * collisionsRayLength, Color.red);
+
+			if (hit)
+			{
+				if (hit.collider == controller.boxCollider || collisions.leftCollider == hit.collider)
+				{
+					continue;
+				}
+
+				collisions.left = true;
+				collisions.leftCollider = hit.collider;
+			}
+
+			//Raycast right
+			rayOrigin = controller.raycastOrigins.bottomRight;
+			rayOrigin += Vector2.up * (controller.horizontalRaySpacing * i);
+			hit = Physics2D.Raycast(rayOrigin, Vector2.right, collisionsRayLength, enemiesMask);
+			Debug.DrawRay(rayOrigin, Vector2.right * collisionsRayLength, Color.blue);
+
+			if (hit)
+			{
+				if (hit.collider == controller.boxCollider || collisions.rightCollider == hit.collider)
+				{
+					continue;
+				}
+
+				collisions.right = true;
+				collisions.rightCollider = hit.collider;
+			}
+		}
+	}
+
+	protected void VerticalCollisions()
+	{
+		for (int i = 0; i < controller.verticalRayCount; i++)
+		{
+			//Raycast above
+			Vector2 rayOrigin = controller.raycastOrigins.topLeft;
+			rayOrigin += Vector2.right * (controller.verticalRaySpacing * i);
+			RaycastHit2D hit = Physics2D.Raycast(rayOrigin, Vector2.up, collisionsRayLength, enemiesMask);
+			Debug.DrawRay(rayOrigin, Vector2.up * collisionsRayLength, Color.green);
+
+			if (hit)
+			{
+				if (hit.collider == controller.boxCollider || collisions.aboveCollider == hit.collider)
+				{
+					continue;
+				}
+
+				collisions.above = true;
+				collisions.aboveCollider = hit.collider;
+			}
+
+			//Raycast below
+			rayOrigin = controller.raycastOrigins.bottomLeft;
+			rayOrigin += Vector2.right * (controller.verticalRaySpacing * i);
+			hit = Physics2D.Raycast(rayOrigin, Vector2.down, collisionsRayLength, enemiesMask);
+			Debug.DrawRay(rayOrigin, Vector2.down * collisionsRayLength, Color.black);
+
+			if (hit)
+			{
+				if (hit.collider == controller.boxCollider || collisions.belowCollider == hit.collider)
+				{
+					continue;
+				}
+
+				collisions.below = true;
+				collisions.belowCollider = hit.collider;
+			}
 		}
 	}
 
@@ -110,51 +205,30 @@ public class Enemy : MonoBehaviour
 		bool attack = false;
 		bool beingAttacked = false;
 
-		if (controller.collisions.below)
+		if (collisions.below)
 		{
-			if (controller.collisions.verticalCollider != null && controller.collisions.verticalCollider.tag == "Player")
-			{
-				attack = true;
-				playerScript = controller.collisions.verticalCollider.GetComponent<Player>();
-				targetCollider = controller.collisions.verticalCollider;
-			}
-			else if (controller.collisions.reverseVerticalCollider != null && controller.collisions.reverseVerticalCollider.tag == "Player")
-			{
-				attack = true;
-				playerScript = controller.collisions.reverseVerticalCollider.GetComponent<Player>();
-				targetCollider = controller.collisions.reverseVerticalCollider;
-			}
-		}
-		else if (controller.collisions.above)
+			targetCollider = collisions.belowCollider;
+			attack = true;
+		}else if (collisions.above)
 		{
-			if (controller.collisions.verticalCollider != null && controller.collisions.verticalCollider.tag == "Player")
-			{
-				beingAttacked = true;
-				playerScript = controller.collisions.verticalCollider.GetComponent<Player>();
-				targetCollider = controller.collisions.verticalCollider;
-			}
-			else if (controller.collisions.reverseVerticalCollider != null && controller.collisions.reverseVerticalCollider.tag == "Player")
-			{
-				beingAttacked = true;
-				playerScript = controller.collisions.reverseVerticalCollider.GetComponent<Player>();
-				targetCollider = controller.collisions.reverseVerticalCollider;
-			}
-		}
-		if (controller.collisions.left || controller.collisions.right)
+			targetCollider = collisions.aboveCollider;
+			beingAttacked = true;
+		}else if (collisions.left)
 		{
-			if (controller.collisions.horizontalCollider != null && controller.collisions.horizontalCollider.tag == "Player")
-			{
-				attack = true;
-				playerScript = controller.collisions.horizontalCollider.GetComponent<Player>();
-				targetCollider = controller.collisions.horizontalCollider;
-			}
-			else if (controller.collisions.reverseHorizontalCollider != null && controller.collisions.reverseHorizontalCollider.tag == "Player")
-			{
-				attack = true;
-				playerScript = controller.collisions.reverseHorizontalCollider.GetComponent<Player>();
-				targetCollider = controller.collisions.reverseHorizontalCollider;
-			}
+			targetCollider = collisions.leftCollider;
+			attack = true;
+		}else if (collisions.right)
+		{
+			targetCollider = collisions.rightCollider;
+			attack = true;
 		}
+
+		if (targetCollider == null)
+		{
+			return;
+		}
+
+		playerScript = targetCollider.GetComponent<Player>();
 
 		if (playerScript == null)
 		{
@@ -162,12 +236,12 @@ public class Enemy : MonoBehaviour
 		}
 		if (playerScript.isInvulnerable)
 		{
-			controller.collisions.ignoredCollider = targetCollider;
+			collisions.ignoredCollider = targetCollider;
 			return;
 		}
 		else
 		{
-			controller.collisions.ignoredCollider = null;
+			collisions.ignoredCollider = null;
 		}
 
 		if (beingAttacked)
@@ -176,7 +250,7 @@ public class Enemy : MonoBehaviour
 			playerScript.AllowBounceOffMonster();
 			Kill();
 		}
-		else if(attack)
+		else if (attack)
 		{
 			attack = false;
 			playerScript.Hit();
@@ -267,5 +341,25 @@ public class Enemy : MonoBehaviour
 		Vector3 theScale = transform.localScale;
 		theScale.x *= -1;
 		transform.localScale = theScale;
+	}
+
+	[System.Serializable]
+	public struct Collisions
+	{
+		public bool above, below;
+		public bool left, right;
+
+		public Collider2D ignoredCollider;
+		public Collider2D leftCollider, rightCollider;
+		public Collider2D aboveCollider, belowCollider;
+
+		public void Reset()
+		{
+			above = below = false;
+			left = right = false;
+
+			leftCollider = rightCollider = null;
+			aboveCollider = belowCollider = null;
+		}
 	}
 }

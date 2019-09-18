@@ -12,15 +12,15 @@ public class RaycastController : MonoBehaviour
 	[SerializeField]
 	protected const float distBetweenRays = 0.25f;
 
-	protected int horizontalRayCount = 4;
-	protected int verticalRayCount = 4;
+	[HideInInspector] public int horizontalRayCount = 4;
+	[HideInInspector] public int verticalRayCount = 4;
 
-	protected float horizontalRaySpacing;
-	protected float verticalRaySpacing;
+	[HideInInspector] public float horizontalRaySpacing;
+	[HideInInspector] public float verticalRaySpacing;
+	[HideInInspector] public RaycastOrigins raycastOrigins;
 
 	[HideInInspector]
 	public BoxCollider2D boxCollider;
-	protected RaycastOrigins raycastOrigins;
 
 	protected virtual void Awake()
 	{
