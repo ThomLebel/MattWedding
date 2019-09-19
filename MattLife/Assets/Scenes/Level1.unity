@@ -549,7 +549,7 @@ PrefabInstance:
         type: 3}
       propertyPath: monsterToSpawn
       value: 
-      objectReference: {fileID: 841231317549359145, guid: 1d442ae81b30c314e9ff656661a0c9d7,
+      objectReference: {fileID: 841231317549359145, guid: 813e6396c0ea8ba459bfe039d46e0bdf,
         type: 3}
     - target: {fileID: 5823163377981265298, guid: cad924558ab9d484ab8baf22aaa7a95e,
         type: 3}
@@ -10021,7 +10021,7 @@ PrefabInstance:
         type: 3}
       propertyPath: monsterToSpawn
       value: 
-      objectReference: {fileID: 841231317549359145, guid: 1d442ae81b30c314e9ff656661a0c9d7,
+      objectReference: {fileID: 841231317549359145, guid: 813e6396c0ea8ba459bfe039d46e0bdf,
         type: 3}
     - target: {fileID: 5582310621963803223, guid: cad924558ab9d484ab8baf22aaa7a95e,
         type: 3}

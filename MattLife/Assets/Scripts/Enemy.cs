@@ -10,7 +10,8 @@ public class Enemy : MonoBehaviour
 	public int score;
 	public GameObject effect;
 	public string hitSound;
-	public Transform wallCheck;
+
+	public State state;
 
 	public float walkSpeed = 2;
 	public float maxJumpHeight = 5;
@@ -62,6 +63,8 @@ public class Enemy : MonoBehaviour
 		camHorizontalExtend = cam.orthographicSize * Screen.width / Screen.height;
 		directionalInput = Vector2.left;
 		speed = walkSpeed;
+
+		state = State.walking;
 	}
 
     // Update is called once per frame
@@ -112,10 +115,7 @@ public class Enemy : MonoBehaviour
 		collisions.Reset();
 		HorizontalCollisions();
 		VerticalCollisions();
-		if (collisions.left || collisions.right || collisions.above || collisions.below)
-		{
-			CollideWithPlayer();
-		}
+		CollideWithPlayer();
 	}
 
 	protected void HorizontalCollisions()
@@ -264,7 +264,7 @@ public class Enemy : MonoBehaviour
 		directionalInput = input;
 	}
 
-	public void SetEnemySpwaner(EnemySpawner spawn)
+	public void SetEnemySpawner(EnemySpawner spawn)
 	{
 		spawner = spawn;
 	}
@@ -361,5 +361,12 @@ public class Enemy : MonoBehaviour
 			leftCollider = rightCollider = null;
 			aboveCollider = belowCollider = null;
 		}
+	}
+
+	public enum State
+	{
+		walking,
+		stun,
+		launched
 	}
 }

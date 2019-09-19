@@ -1,5 +1,7 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Reflection;
 using UnityEngine;
 
 public class ShellEnemy : Enemy
@@ -8,8 +10,6 @@ public class ShellEnemy : Enemy
 	public Sprite baseSprite;
 	public Sprite stunSprite;
 
-	[SerializeField]
-	private State state;
 	[SerializeField]
 	private bool scoreGained = false;
 	[SerializeField]
@@ -23,18 +23,13 @@ public class ShellEnemy : Enemy
 	protected override void Start()
 	{
 		base.Start();
-
-		state = State.walking;
 	}
 
 	protected override void Update()
 	{
 		base.Update();
-
-		if (collisions.left || collisions.right || collisions.above || collisions.below)
-		{
-			CollideWithEnemy();
-		}
+		
+		CollideWithEnemy();
 	}
 
 	protected override void CollideWithPlayer()
@@ -127,22 +122,29 @@ public class ShellEnemy : Enemy
 		}
 
 		Enemy enemyScript = null;
+		Collider2D target = null;
 
 		if (collisions.below && collisions.belowCollider.tag == "Enemy")
 		{
-			enemyScript = collisions.belowCollider.GetComponent<Enemy>();
+			target = collisions.belowCollider;
 		}
 		else if (collisions.above && collisions.aboveCollider.tag == "Enemy")
 		{
-			enemyScript = collisions.aboveCollider.GetComponent<Enemy>();
+			target = collisions.aboveCollider;
 		}
 		else if (collisions.left && collisions.leftCollider.tag == "Enemy")
 		{
-			enemyScript = collisions.leftCollider.GetComponent<Enemy>();
+			target = collisions.leftCollider;
 		}
 		else if (collisions.right && collisions.rightCollider.tag == "Enemy")
 		{
-			enemyScript = collisions.rightCollider.GetComponent<Enemy>();
+			target = collisions.rightCollider;
+		}
+
+		if (target != null)
+		{
+
+			enemyScript = target.GetComponent<Enemy>();
 		}
 
 		if (enemyScript != null)
@@ -150,6 +152,12 @@ public class ShellEnemy : Enemy
 			collisions.rightCollider = null;
 			collisions.right = false;
 			Instantiate(effect, transform.position, Quaternion.identity);
+
+			if (enemyScript.state == State.launched)
+			{
+				Kill();
+			}
+
 			enemyScript.Kill();
 		}
 	}
@@ -190,7 +198,7 @@ public class ShellEnemy : Enemy
 	private void LaunchMonster(Collider2D targetCollider)
 	{
 		state = State.launched;
-		gameObject.layer = LayerMask.NameToLayer("MovingShells");
+		//gameObject.layer = LayerMask.NameToLayer("MovingShells");
 		enemiesMask |= (1 << LayerMask.NameToLayer("Enemies"));
 		StopCoroutine(stunCoroutine);
 
@@ -209,7 +217,7 @@ public class ShellEnemy : Enemy
 	private void StopMonster()
 	{
 		state = State.stun;
-		gameObject.layer = LayerMask.NameToLayer("Enemies");
+		//gameObject.layer = LayerMask.NameToLayer("Enemies");
 		enemiesMask &= ~(1 << LayerMask.NameToLayer("Enemies"));
 		speed = 0f;
 		stunCoroutine = StunTimer();
@@ -223,12 +231,5 @@ public class ShellEnemy : Enemy
 		spriteRenderer.sprite = baseSprite;
 		animator.enabled = true;
 		speed = walkSpeed;
-	}
-
-	enum State
-	{
-		walking,
-		stun,
-		launched
 	}
 }

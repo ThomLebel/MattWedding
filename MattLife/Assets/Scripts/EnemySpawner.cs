@@ -78,7 +78,7 @@ public class EnemySpawner : MonoBehaviour
 		spawning = true;
 		GameObject monster = Instantiate(monsterToSpawn, spawn.position, Quaternion.identity);
 		//monster.GetComponent<EnemyScript>().spawner = this;
-		monster.GetComponent<Enemy>().SetEnemySpwaner(this);
+		monster.GetComponent<Enemy>().SetEnemySpawner(this);
 		monsterList.Add(monster);
 		monsterSpawned++;
 		Instantiate(effect, spawn.position, Quaternion.identity);
