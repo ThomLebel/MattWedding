@@ -690,6 +690,7 @@
     <Compile Include="Assets\Scripts\FallingEnemy.cs" />
     <Compile Include="Assets\Scripts\GalerieScript.cs" />
     <Compile Include="Assets\Scripts\GameMaster.cs" />
+    <Compile Include="Assets\Scripts\MainMenu.cs" />
     <Compile Include="Assets\Scripts\MenuPause.cs" />
     <Compile Include="Assets\Scripts\Parallaxing.cs" />
     <Compile Include="Assets\Scripts\PhotoBlock.cs" />

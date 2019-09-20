@@ -22,16 +22,24 @@ public class StreamSouvenir : MonoBehaviour
 	[SerializeField]
 	private float timeBetweenSlide = 0.5f;
 
-	private Player player;
+	//private Player player;
 
 	private void Start()
 	{
-		player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
+		//try
+		//{
+		//	player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
+		//}
+		//finally
+		//{
+		//	player = null;
+		//}
+		
 	}
 
 	private void Update()
 	{
-		if (GameMaster.Instance.state != GameMaster.States.souvenirs || slider == null)
+		if ((GameMaster.Instance && GameMaster.Instance.state != GameMaster.States.souvenirs) || slider == null)
 		{
 			return;
 		}
@@ -89,12 +97,12 @@ public class StreamSouvenir : MonoBehaviour
 	{
 		sliderOn = true;
 		Time.timeScale = 0;
-		player.StopMovement();
+		//player.StopMovement();
 	}
 
 	public void StartVideoStream(Souvenir souvenir, Vector3 blockPosition)
 	{
-		player.StopMovement();
+		//player.StopMovement();
 		Time.timeScale = 0;
 
 		AudioManager.instance.FadeToMusic(GameMaster.Instance.musicName, 1);
@@ -106,7 +114,8 @@ public class StreamSouvenir : MonoBehaviour
 		AnimateSouvenirStream(blockPosition);
 
 		StartCoroutine(PlayVideo());
-		GameMaster.Instance.state = GameMaster.States.souvenirs;
+		if (GameMaster.Instance)
+			GameMaster.Instance.state = GameMaster.States.souvenirs;
 	}
 
 	public void StartPhotoStream(Souvenir[] souvenirs, Vector3 blockPosition)
@@ -114,7 +123,7 @@ public class StreamSouvenir : MonoBehaviour
 		Sound m = Array.Find(AudioManager.instance.musics, music => music.name == GameMaster.Instance.musicName);
 		AudioManager.instance.FadeToMusic(m.name, 1, m.gamePausedVolume);
 
-		player.StopMovement();
+		//player.StopMovement();
 		Time.timeScale = 0;
 		slider = souvenirs;
 		photoProjector.sprite = slider[currentSlide].photo;
@@ -126,12 +135,13 @@ public class StreamSouvenir : MonoBehaviour
 
 		AnimateSouvenirStream(blockPosition);
 
-		GameMaster.Instance.state = GameMaster.States.souvenirs;
+		if (GameMaster.Instance)
+			GameMaster.Instance.state = GameMaster.States.souvenirs;
 	}
 
 	public void StartPhotoStream(Souvenir souvenir, Vector3 blockPosition)
 	{
-		player.StopMovement();
+		//player.StopMovement();
 		Time.timeScale = 0;
 		photoProjector.sprite = souvenir.photo;
 		photoProjector.preserveAspect = true;
@@ -140,7 +150,8 @@ public class StreamSouvenir : MonoBehaviour
 
 		AnimateSouvenirStream(blockPosition);
 
-		GameMaster.Instance.state = GameMaster.States.souvenirs;
+		if(GameMaster.Instance)
+			GameMaster.Instance.state = GameMaster.States.souvenirs;
 	}
 
 	public void Slide(int dir)
@@ -198,19 +209,22 @@ public class StreamSouvenir : MonoBehaviour
 		leftButton.gameObject.SetActive(false);
 		rightButton.gameObject.SetActive(false);
 
-		Sound m = Array.Find(AudioManager.instance.musics, music => music.name == GameMaster.Instance.musicName);
-		AudioManager.instance.ResumeMusic(m.name);
+		if (GameMaster.Instance)
+		{
+			Sound m = Array.Find(AudioManager.instance.musics, music => music.name == GameMaster.Instance.musicName);
+			AudioManager.instance.ResumeMusic(m.name);
 
-		if (GameMaster.Instance.galerie.activeSelf)
-		{
-			AudioManager.instance.FadeToMusic(m.name, 1f, m.gamePausedVolume);
-			GameMaster.Instance.state = GameMaster.States.galerie;
-		}
-		else
-		{
-			AudioManager.instance.FadeToMusic(m.name, 1f, m.volume);
-			GameMaster.Instance.state = GameMaster.States.game;
-			Time.timeScale = 1;
-		}
+			if (GameMaster.Instance.galerie.activeSelf)
+			{
+				AudioManager.instance.FadeToMusic(m.name, 1f, m.gamePausedVolume);
+				GameMaster.Instance.state = GameMaster.States.galerie;
+			}
+			else
+			{
+				AudioManager.instance.FadeToMusic(m.name, 1f, m.volume);
+				GameMaster.Instance.state = GameMaster.States.game;
+				Time.timeScale = 1;
+			}
+		}		
 	}
 }
