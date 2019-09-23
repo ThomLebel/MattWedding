@@ -15,4 +15,4 @@ MonoBehaviour:
   id: 6
   photo: {fileID: 21300000, guid: 1b9d20f8b6c1afc45907a841472c103b, type: 3}
   video: {fileID: 32900000, guid: a416118ff3733f242ad6c9f235174a91, type: 3}
-  revealed: 1
+  revealed: 0

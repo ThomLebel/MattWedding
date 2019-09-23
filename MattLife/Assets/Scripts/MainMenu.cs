@@ -1,12 +1,16 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class MainMenu : MonoBehaviour
 {
 	public GameObject player;
 	public GameObject galerie;
+	public GameObject blackScreen;
+
+	public string firstLevel;
 
 	public State state;
 
@@ -64,6 +68,17 @@ public class MainMenu : MonoBehaviour
 	public void LaunchGame()
 	{
 		Debug.Log("Launch the game !");
+
+		blackScreen.SetActive(true);
+		StartCoroutine("LoadLevel");
+	}
+
+	IEnumerator LoadLevel()
+	{
+		yield return new WaitForSecondsRealtime(1.5f);
+
+		Instantiate(player, Vector2.zero, Quaternion.identity);
+		SceneManager.LoadScene(firstLevel);
 	}
 
 	public void DisplayGalerie()

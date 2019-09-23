@@ -16,7 +16,7 @@ public class PlayerInput : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-		if (GameMaster.Instance.state != GameMaster.States.game)
+		if (!GameMaster.Instance || GameMaster.Instance.state != GameMaster.States.game)
 		{
 			return;
 		}

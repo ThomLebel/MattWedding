@@ -14,10 +14,10 @@ public class SouvenirsHolder : MonoBehaviour
 	private void Awake()
 	{
 		DontDestroyOnLoad(gameObject);
-		/*foreach (Souvenir souvenir in souvenirsList)
+		foreach (Souvenir souvenir in souvenirsList)
 		{
 			souvenir.revealed = false;
-		}*/
+		}
 	}
 
 	// Start is called before the first frame update
