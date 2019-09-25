@@ -689,6 +689,7 @@
     <Compile Include="Assets\Scripts\EnemySpawner.cs" />
     <Compile Include="Assets\Scripts\FallingEnemy.cs" />
     <Compile Include="Assets\Scripts\GalerieScript.cs" />
+    <Compile Include="Assets\Scripts\GameData.cs" />
     <Compile Include="Assets\Scripts\GameMaster.cs" />
     <Compile Include="Assets\Scripts\MainMenu.cs" />
     <Compile Include="Assets\Scripts\MenuPause.cs" />
@@ -700,6 +701,7 @@
     <Compile Include="Assets\Scripts\PlayerInput.cs" />
     <Compile Include="Assets\Scripts\RaycastController.cs" />
     <Compile Include="Assets\Scripts\ResetTrigger.cs" />
+    <Compile Include="Assets\Scripts\SaveSystem.cs" />
     <Compile Include="Assets\Scripts\ShellEnemy.cs" />
     <Compile Include="Assets\Scripts\SlamingEnemy.cs" />
     <Compile Include="Assets\Scripts\Sound.cs" />

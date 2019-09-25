@@ -186,7 +186,9 @@ public class GameMaster : MonoBehaviour
 
 	public void QuitGame()
 	{
-		Application.Quit();
+		SouvenirsHolder souvenirsHolder = GameObject.FindGameObjectWithTag("SouvenirsHolder").GetComponent<SouvenirsHolder>();
+		SaveSystem.SaveGame(playerScript, souvenirsHolder);
+		SceneManager.LoadSceneAsync("MainMenu");
 	}
 
 	public enum States

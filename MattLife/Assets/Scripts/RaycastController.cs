@@ -8,7 +8,7 @@ public class RaycastController : MonoBehaviour
 	public LayerMask collisionMask;
 
 	[SerializeField]
-	protected const float skinWidth = 0.015f;
+	protected const float skinWidth = 0.025f;
 	[SerializeField]
 	protected const float distBetweenRays = 0.25f;
 
