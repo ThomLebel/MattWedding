@@ -41,6 +41,7 @@ public class GameMaster : MonoBehaviour
 
 		screenRevealAnimator = GameObject.FindGameObjectWithTag("ScreenReveal").GetComponent<Animator>();
 		//screenRevealAnimator.SetTrigger("End");
+		screenRevealAnimator.Play("revealStart", -1, 0f);
 		StartCoroutine("OnCompleteScreenReavealEndAnimation");
 
 		player = GameObject.FindGameObjectWithTag("Player");
@@ -49,9 +50,15 @@ public class GameMaster : MonoBehaviour
 		player.transform.position = playerSpawnPosition;
 
 		lifeText.text = playerScript.playerLife.ToString();
-		
+		goldText.text = playerScript.playerGold.ToString();
+		scoreText.text = playerScript.playerScore.ToString();
+
 		AudioManager.instance.PlayMusic(musicName);
 		AudioManager.instance.FadeFromMusic(musicName, 1.5f);
+
+		state = States.game;
+
+		Debug.Log("time "+ screenRevealAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime);
 	}
 
     // Update is called once per frame
@@ -114,7 +121,7 @@ public class GameMaster : MonoBehaviour
 
 	public void PauseGame()
 	{
-		Sound m = Array.Find(AudioManager.instance.musics, music => music.name == GameMaster.Instance.musicName);
+		Sound m = Array.Find(AudioManager.instance.musics, music => music.name == musicName);
 		AudioManager.instance.FadeToMusic(m.name, 1f, m.gamePausedVolume);
 		menuPause.SetActive(true);
 		Time.timeScale = 0;
@@ -123,7 +130,7 @@ public class GameMaster : MonoBehaviour
 
 	public void ResumeGame()
 	{
-		Sound m = Array.Find(AudioManager.instance.musics, music => music.name == GameMaster.Instance.musicName);
+		Sound m = Array.Find(AudioManager.instance.musics, music => music.name == musicName);
 		AudioManager.instance.FadeToMusic(m.name, 1f, m.volume);
 		menuPause.SetActive(false);
 		Time.timeScale = 1;
@@ -188,6 +195,21 @@ public class GameMaster : MonoBehaviour
 	{
 		SouvenirsHolder souvenirsHolder = GameObject.FindGameObjectWithTag("SouvenirsHolder").GetComponent<SouvenirsHolder>();
 		SaveSystem.SaveGame(playerScript, souvenirsHolder);
+
+		Destroy(GameObject.FindGameObjectWithTag("SouvenirsHolder"));
+		Destroy(player);
+		
+		AudioManager.instance.FadeToMusic(musicName, 1f);
+		screenRevealAnimator.SetTrigger("End");
+		Time.timeScale = 1;
+
+		StartCoroutine("LoadMainMenu");
+	}
+
+	IEnumerator LoadMainMenu()
+	{
+		yield return new WaitForSecondsRealtime(1f);
+
 		SceneManager.LoadSceneAsync("MainMenu");
 	}
 

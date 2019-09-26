@@ -6,13 +6,18 @@ using UnityEngine.UI;
 
 public class MainMenu : MonoBehaviour
 {
-	public GameObject player;
+	public GameObject playerPrefab;
 	public GameObject galerie;
 	public GameObject blackScreen;
+	public GameObject gameLauncher;
 
 	public string firstLevel;
+	public string musicName;
 
 	public State state;
+
+	private GameObject player;
+	private string levelToLoad;
 
 	[SerializeField]
 	private float timeToMouseFadeOut = 2f;
@@ -20,6 +25,8 @@ public class MainMenu : MonoBehaviour
 	private bool mouseInvisible = false;
 
 	private MenuPause menuPauseScript;
+	private GameData gameData;
+	private SouvenirsHolder souvenirsHolder;
 
 	private void Awake()
 	{
@@ -30,7 +37,22 @@ public class MainMenu : MonoBehaviour
 	void Start()
     {
 		state = State.menu;
-    }
+		souvenirsHolder = GameObject.FindGameObjectWithTag("SouvenirsHolder").GetComponent<SouvenirsHolder>();
+		gameData = SaveSystem.LoadGame();
+
+		if (gameData != null)
+		{
+			for (int i = 0; i < souvenirsHolder.souvenirsList.Count; i++)
+			{
+				souvenirsHolder.souvenirsList[i].revealed = gameData.souvenirsRevealed[i];
+			}
+		}
+
+		levelToLoad = firstLevel;
+
+		AudioManager.instance.PlayMusic(musicName);
+		AudioManager.instance.FadeFromMusic(musicName, 1.5f);
+	}
 
     // Update is called once per frame
     void Update()
@@ -65,20 +87,67 @@ public class MainMenu : MonoBehaviour
 		}
 	}
 
-	public void LaunchGame()
+	public void GameLauncher()
 	{
-		Debug.Log("Launch the game !");
+		if (gameData != null)
+		{
+			gameLauncher.SetActive(true);
+			menuPauseScript.enabled = false;
+			state = State.gameLauncher;
+		}
+		else
+		{
+			NewGame();
+		}
+	}
 
+	public void ContinueSavedGame()
+	{
+		player = Instantiate(playerPrefab, Vector2.zero, Quaternion.identity);
+		Player playerScript = player.GetComponent<Player>();
+		if (gameData != null)
+		{
+			playerScript.playerLife = gameData.lives;
+			playerScript.playerGold = gameData.gold;
+			playerScript.playerScore = gameData.score;
+			levelToLoad = gameData.currentLevel;
+		}
+		player.SetActive(false);
+
+		StartGame();
+	}
+
+	public void NewGame()
+	{
+		player = Instantiate(playerPrefab, Vector2.zero, Quaternion.identity);
+		player.SetActive(false);
+
+		StartGame();
+	}
+
+	public void CloseGameLauncher()
+	{
+		gameLauncher.SetActive(false);
+		menuPauseScript.enabled = true;
+		state = State.menu;
+	}
+
+	private void StartGame()
+	{
 		blackScreen.SetActive(true);
+		blackScreen.GetComponent<Animator>().Play("BlackScreen", -1, 0f);
+
 		StartCoroutine("LoadLevel");
+		AudioManager.instance.FadeToMusic(musicName, 1.5f);
 	}
 
 	IEnumerator LoadLevel()
 	{
 		yield return new WaitForSecondsRealtime(1.5f);
 
-		Instantiate(player, Vector2.zero, Quaternion.identity);
-		SceneManager.LoadScene(firstLevel);
+		player.SetActive(true);
+
+		SceneManager.LoadScene(levelToLoad);
 	}
 
 	public void DisplayGalerie()
@@ -97,6 +166,7 @@ public class MainMenu : MonoBehaviour
 
 	public void QuitGame()
 	{
+		Debug.Log("quit game");
 		Application.Quit();
 	}
 
@@ -104,6 +174,7 @@ public class MainMenu : MonoBehaviour
 	{
 		menu,
 		galerie,
+		gameLauncher,
 		stream
 	}
 }

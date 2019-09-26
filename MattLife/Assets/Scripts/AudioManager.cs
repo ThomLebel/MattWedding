@@ -51,11 +51,6 @@ public class AudioManager : MonoBehaviour
 		}
 	}
 
-	private void Start()
-	{
-		
-	}
-
 	public void PlaySound(string name)
 	{
 
@@ -201,9 +196,11 @@ public class AudioManager : MonoBehaviour
 
 	private void FadeTo(AudioSource source, float time, float volume)
 	{
-		Hashtable paramHashtable = new Hashtable();
-		paramHashtable.Add("source", source);
-		paramHashtable.Add("volume", volume);
+		Hashtable paramHashtable = new Hashtable
+		{
+			{ "source", source },
+			{ "volume", volume }
+		};
 
 		iTween.AudioTo(gameObject, iTween.Hash(
 			"audiosource", source,

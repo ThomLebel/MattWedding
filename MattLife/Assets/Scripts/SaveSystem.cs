@@ -14,9 +14,11 @@ public static class SaveSystem
 
 		formatter.Serialize(stream, data);
 		stream.Close();
+
+		Debug.Log("Game saved");
 	}
 
-	public static GameData LoadPlayer()
+	public static GameData LoadGame()
 	{
 		string path = Application.persistentDataPath + "/game.wedding";
 		if (File.Exists(path))

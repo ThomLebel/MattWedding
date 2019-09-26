@@ -549,7 +549,7 @@ PrefabInstance:
         type: 3}
       propertyPath: monsterToSpawn
       value: 
-      objectReference: {fileID: 841231317549359145, guid: 1d442ae81b30c314e9ff656661a0c9d7,
+      objectReference: {fileID: 841231317549359145, guid: 813e6396c0ea8ba459bfe039d46e0bdf,
         type: 3}
     - target: {fileID: 5823163377981265298, guid: cad924558ab9d484ab8baf22aaa7a95e,
         type: 3}
@@ -2177,6 +2177,12 @@ PrefabInstance:
       propertyPath: delayBetweenSpawn
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 5823163377981265298, guid: cad924558ab9d484ab8baf22aaa7a95e,
+        type: 3}
+      propertyPath: monsterToSpawn
+      value: 
+      objectReference: {fileID: 4250086510925361500, guid: f2668fe48c2e6c342b08410f62221a5f,
+        type: 3}
     - target: {fileID: 5582310621963803223, guid: cad924558ab9d484ab8baf22aaa7a95e,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -6403,6 +6409,12 @@ PrefabInstance:
       propertyPath: delayBetweenSpawn
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 5823163377981265298, guid: cad924558ab9d484ab8baf22aaa7a95e,
+        type: 3}
+      propertyPath: monsterToSpawn
+      value: 
+      objectReference: {fileID: 4250086510925361500, guid: f2668fe48c2e6c342b08410f62221a5f,
+        type: 3}
     - target: {fileID: 5582310621963803223, guid: cad924558ab9d484ab8baf22aaa7a95e,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -8540,6 +8552,10 @@ MonoBehaviour:
   collisionMask:
     serializedVersion: 2
     m_Bits: 2048
+  horizontalRayCount: 4
+  verticalRayCount: 4
+  horizontalRaySpacing: 0
+  verticalRaySpacing: 0
   boxCollider: {fileID: 0}
   passengerMask:
     serializedVersion: 2
@@ -9111,6 +9127,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c0649c870263a6d45b7926aa10b98561, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  moneyLimit: 30
   menuPause: {fileID: 1108300303}
   galerie: {fileID: 1566365986}
   gameUI: {fileID: 1435496039}
@@ -9120,7 +9137,6 @@ MonoBehaviour:
   state: 0
   musicName: musicLevel2
   playerSpawnPosition: {x: 10, y: 4, z: 0}
-  gamePaused: 0
   timeToMouseFadeOut: 2
 --- !u!4 &1679420216 stripped
 Transform:
@@ -9821,7 +9837,7 @@ PrefabInstance:
         type: 3}
       propertyPath: monsterToSpawn
       value: 
-      objectReference: {fileID: 841231317549359145, guid: 1d442ae81b30c314e9ff656661a0c9d7,
+      objectReference: {fileID: 841231317549359145, guid: 813e6396c0ea8ba459bfe039d46e0bdf,
         type: 3}
     - target: {fileID: 5582310621963803223, guid: cad924558ab9d484ab8baf22aaa7a95e,
         type: 3}
@@ -20726,6 +20742,12 @@ PrefabInstance:
       propertyPath: nbrToSpawn
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 5823163377981265298, guid: cad924558ab9d484ab8baf22aaa7a95e,
+        type: 3}
+      propertyPath: monsterToSpawn
+      value: 
+      objectReference: {fileID: 4250086510925361500, guid: f2668fe48c2e6c342b08410f62221a5f,
+        type: 3}
     - target: {fileID: 5582310621963803223, guid: cad924558ab9d484ab8baf22aaa7a95e,
         type: 3}
       propertyPath: m_LocalPosition.x
