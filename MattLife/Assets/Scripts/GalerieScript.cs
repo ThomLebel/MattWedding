@@ -144,4 +144,15 @@ public class GalerieScript : MonoBehaviour
 	{
 		Debug.Log("You haven't revealed this souvenir yet");
 	}
+
+	public void OnPointerEnter(GameObject button)
+	{
+		currentSouvenirSelected = souvenirsList.IndexOf(button);
+
+		RectTransform souvenirParent = souvenirsList[currentSouvenirSelected].transform.parent.GetComponent<RectTransform>();
+		selector.anchoredPosition = new Vector2(souvenirsList[currentSouvenirSelected].GetComponent<RectTransform>().anchoredPosition.x, souvenirParent.anchoredPosition.y);
+
+		float lineIndex = 1 - (Mathf.Floor(currentSouvenirSelected / 5) / 6);
+		scrollBar.value = lineIndex;
+	}
 }

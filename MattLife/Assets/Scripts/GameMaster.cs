@@ -40,7 +40,6 @@ public class GameMaster : MonoBehaviour
 		Instance = this;
 
 		screenRevealAnimator = GameObject.FindGameObjectWithTag("ScreenReveal").GetComponent<Animator>();
-		//screenRevealAnimator.SetTrigger("End");
 		screenRevealAnimator.Play("revealStart", -1, 0f);
 		StartCoroutine("OnCompleteScreenReavealEndAnimation");
 
@@ -57,8 +56,6 @@ public class GameMaster : MonoBehaviour
 		AudioManager.instance.FadeFromMusic(musicName, 1.5f);
 
 		state = States.game;
-
-		Debug.Log("time "+ screenRevealAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime);
 	}
 
     // Update is called once per frame

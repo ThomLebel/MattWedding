@@ -13,6 +13,7 @@ TagManager:
   - SouvenirBlock
   - ScreenReveal
   - Obstacle
+  - GameUI
   layers:
   - Default
   - TransparentFX

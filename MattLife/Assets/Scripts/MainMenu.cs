@@ -24,13 +24,13 @@ public class MainMenu : MonoBehaviour
 	private float timeBeforeMouseFadeOut;
 	private bool mouseInvisible = false;
 
-	private MenuPause menuPauseScript;
+	private MenuSelector menuPauseScript;
 	private GameData gameData;
 	private SouvenirsHolder souvenirsHolder;
 
 	private void Awake()
 	{
-		menuPauseScript = gameObject.GetComponent<MenuPause>();
+		menuPauseScript = gameObject.GetComponent<MenuSelector>();
 	}
 
 	// Start is called before the first frame update
