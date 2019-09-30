@@ -29,7 +29,6 @@ public class SlamingEnemy : PlatformController
 	protected override void Awake()
 	{
 		base.Awake();
-		cam = Camera.main;
 		rb2d = GetComponent<Rigidbody2D>();
 		animator = GetComponent<Animator>();
 	}
@@ -39,6 +38,7 @@ public class SlamingEnemy : PlatformController
     {
 		base.Start();
 
+		cam = Camera.main;
 		camHorizontalExtend = cam.orthographicSize * Screen.width / Screen.height;
 		state = State.hasSlamed;
 	}
@@ -162,7 +162,7 @@ public class SlamingEnemy : PlatformController
 
 	private void OnTriggerEnter2D(Collider2D collision)
 	{
-		if (state != State.slaming || collision.tag != "Player")
+		if (state != State.slaming || !collision.CompareTag("Player"))
 		{
 			return;
 		}

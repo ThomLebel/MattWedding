@@ -1,4 +1,12 @@
-﻿using System.Collections;
+﻿/*
+ 
+NOT USED ANYMORE !
+
+ */
+
+
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -26,11 +34,14 @@ public class CameraFollow : MonoBehaviour
 	private float camHorizontalExtend;
 	private float camVerticalExtend;
 
+	protected Camera cam;
+
 	void Start()
 	{
+		cam = Camera.main;
 		focusArea = new FocusArea(target.boxCollider.bounds, focusAreaSize);
-		camHorizontalExtend = Camera.main.orthographicSize * Screen.width / Screen.height;
-		camVerticalExtend = Camera.main.orthographicSize;
+		camHorizontalExtend = cam.orthographicSize * Screen.width / Screen.height;
+		camVerticalExtend = cam.orthographicSize;
 	}
 
 	private void LateUpdate()

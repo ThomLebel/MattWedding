@@ -12,14 +12,11 @@ public class Parallaxing : MonoBehaviour
 	private Vector3 previousCamPosition;    // Store the position of the camera in the previous frame
 
 
-	private void Awake()
-	{
-		cam = Camera.main.transform;
-	}
-
 	// Start is called before the first frame update
 	void Start()
     {
+		cam = Camera.main.transform;
+
 		previousCamPosition = cam.position;
 
 		parallaxScales = new float[backgrounds.Length];

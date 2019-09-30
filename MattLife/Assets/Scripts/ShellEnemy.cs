@@ -45,18 +45,18 @@ public class ShellEnemy : Enemy
 		bool attack = false;
 		bool beingAttacked = false;
 
-		if (collisions.below && collisions.belowCollider.tag == "Player")
+		if (collisions.below && collisions.belowCollider.CompareTag("Player"))
 		{
 			targetCollider = collisions.belowCollider;
 			if(state != State.stun)
 				attack = true;
 		}
-		else if (collisions.above && collisions.aboveCollider.tag == "Player")
+		else if (collisions.above && collisions.aboveCollider.CompareTag("Player"))
 		{
 			targetCollider = collisions.aboveCollider;
 			beingAttacked = true;
 		}
-		else if (collisions.left && collisions.leftCollider.tag == "Player")
+		else if (collisions.left && collisions.leftCollider.CompareTag("Player"))
 		{
 			targetCollider = collisions.leftCollider;
 			if (state != State.stun)
@@ -64,7 +64,7 @@ public class ShellEnemy : Enemy
 			else
 				beingAttacked = true;
 		}
-		else if (collisions.right && collisions.rightCollider.tag == "Player")
+		else if (collisions.right && collisions.rightCollider.CompareTag("Player"))
 		{
 			targetCollider = collisions.rightCollider;
 			if (state != State.stun)
@@ -124,19 +124,19 @@ public class ShellEnemy : Enemy
 		Enemy enemyScript = null;
 		Collider2D target = null;
 
-		if (collisions.below && collisions.belowCollider.tag == "Enemy")
+		if (collisions.below && (collisions.belowCollider.CompareTag("Enemy") || collisions.belowCollider.CompareTag("DivingEnemy")))
 		{
 			target = collisions.belowCollider;
 		}
-		else if (collisions.above && collisions.aboveCollider.tag == "Enemy")
+		else if (collisions.above && (collisions.aboveCollider.CompareTag("Enemy") || collisions.aboveCollider.CompareTag("DivingEnemy")))
 		{
 			target = collisions.aboveCollider;
 		}
-		else if (collisions.left && collisions.leftCollider.tag == "Enemy")
+		else if (collisions.left && (collisions.leftCollider.CompareTag("Enemy") || collisions.leftCollider.CompareTag("DivingEnemy")))
 		{
 			target = collisions.leftCollider;
 		}
-		else if (collisions.right && collisions.rightCollider.tag == "Enemy")
+		else if (collisions.right && (collisions.rightCollider.CompareTag("Enemy") || collisions.rightCollider.CompareTag("DivingEnemy")))
 		{
 			target = collisions.rightCollider;
 		}
@@ -151,7 +151,7 @@ public class ShellEnemy : Enemy
 		{
 			collisions.rightCollider = null;
 			collisions.right = false;
-			Instantiate(effect, transform.position, Quaternion.identity);
+			Instantiate(deathEffect, transform.position, Quaternion.identity);
 
 			if (enemyScript.state == State.launched)
 			{
@@ -165,7 +165,7 @@ public class ShellEnemy : Enemy
 	private void UnderAttack(Collider2D targetCollider)
 	{
 		AudioManager.instance.PlaySound(hitSound);
-		Instantiate(effect, transform.position, Quaternion.identity);
+		Instantiate(deathEffect, transform.position, Quaternion.identity);
 		switch (state)
 		{
 			case State.launched:
@@ -198,7 +198,6 @@ public class ShellEnemy : Enemy
 	private void LaunchMonster(Collider2D targetCollider)
 	{
 		state = State.launched;
-		//gameObject.layer = LayerMask.NameToLayer("MovingShells");
 		enemiesMask |= (1 << LayerMask.NameToLayer("Enemies"));
 		StopCoroutine(stunCoroutine);
 
@@ -217,7 +216,6 @@ public class ShellEnemy : Enemy
 	private void StopMonster()
 	{
 		state = State.stun;
-		//gameObject.layer = LayerMask.NameToLayer("Enemies");
 		enemiesMask &= ~(1 << LayerMask.NameToLayer("Enemies"));
 		speed = 0f;
 		stunCoroutine = StunTimer();

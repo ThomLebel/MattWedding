@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 4343572553380009993}
   - component: {fileID: 3767082773909946764}
   m_Layer: 14
-  m_Name: snail
+  m_Name: Snail
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -32,8 +32,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 3.75, y: -2.259, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 6515573805107804294}
+  m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -215,9 +214,10 @@ MonoBehaviour:
     aboveCollider: {fileID: 0}
     belowCollider: {fileID: 0}
   score: 50
-  effect: {fileID: 7165646687091236009, guid: e112502734c77ce43b0ac4d9d0c4ac2c, type: 3}
+  deathEffect: {fileID: 7165646687091236009, guid: e112502734c77ce43b0ac4d9d0c4ac2c,
+    type: 3}
   hitSound: SnailHit
-  wallCheck: {fileID: 6515573805107804294}
+  state: 0
   walkSpeed: 2
   maxJumpHeight: 5
   minJumpHeight: 1
@@ -233,37 +233,6 @@ MonoBehaviour:
     type: 3}
   stunSprite: {fileID: -832924604068296951, guid: 853d7a2ed202c7a42b8c40b9cfc1794d,
     type: 3}
-  state: 0
   scoreGained: 0
   stunTime: 3
   timeBetweenPlayerCollisions: 0.05
---- !u!1 &5268509368180129010
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 6515573805107804294}
-  m_Layer: 14
-  m_Name: wallCheck
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &6515573805107804294
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5268509368180129010}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.542, y: 0.261, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 5579941279990915664}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

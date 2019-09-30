@@ -25,14 +25,10 @@ public class EnemySpawner : MonoBehaviour
 
 	private IEnumerator spawnCoroutine;
 
-	private void Awake()
-	{
-		cam = Camera.main;
-	}
-
 	// Start is called before the first frame update
 	void Start()
 	{
+		cam = Camera.main;
 		monsterList = new List<GameObject>();
 		camHorizontalExtend = cam.orthographicSize * Screen.width / Screen.height;
 	}
@@ -55,7 +51,7 @@ public class EnemySpawner : MonoBehaviour
 
 	private void OnTriggerExit2D(Collider2D collision)
 	{
-		if (collision.tag != "Player")
+		if (!collision.CompareTag("Player"))
 		{
 			return;
 		}

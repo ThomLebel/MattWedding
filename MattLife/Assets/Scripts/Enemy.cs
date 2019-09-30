@@ -8,7 +8,7 @@ public class Enemy : MonoBehaviour
 	public LayerMask enemiesMask;
 	public Collisions collisions;
 	public int score;
-	public GameObject effect;
+	public GameObject deathEffect;
 	public string hitSound;
 
 	public State state;
@@ -48,7 +48,6 @@ public class Enemy : MonoBehaviour
 
 	private void Awake()
 	{
-		cam = Camera.main;
 		controller = GetComponent<Controller2D>();
 		animator = GetComponent<Animator>();
 		spriteRenderer = GetComponent<SpriteRenderer>();
@@ -57,6 +56,7 @@ public class Enemy : MonoBehaviour
 	// Start is called before the first frame update
 	protected virtual void Start()
     {
+		cam = Camera.main;
 		gravity = -(2 * maxJumpHeight) / Mathf.Pow(timeToJumpApex, 2);
 		maxJumpVelocity = Mathf.Abs(gravity) * timeToJumpApex;
 		minJumpVelocity = Mathf.Sqrt(2 * Mathf.Abs(gravity) * minJumpHeight);
@@ -307,7 +307,7 @@ public class Enemy : MonoBehaviour
 		//AudioManager.instance.PlaySound("PlayerJump");
 	}
 
-	void CalculateVelocity()
+	protected void CalculateVelocity()
 	{
 		float targetVelocityX = directionalInput.x * speed;
 		velocity.x = Mathf.SmoothDamp(velocity.x, targetVelocityX, ref velocityXSmoothing, (controller.collisions.below) ? accelerationTimeGrounded : accelerationTimeAirborne);
@@ -317,7 +317,7 @@ public class Enemy : MonoBehaviour
 	public void Kill()
 	{
 		Debug.Log("monster killed");
-		Instantiate(effect, transform.position, Quaternion.identity);
+		Instantiate(deathEffect, transform.position, Quaternion.identity);
 		AudioManager.instance.PlaySound(hitSound);
 		GameMaster.Instance.UpdateScore(score);
 		DeleteMonster();

@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 355869425406194985}
   - component: {fileID: 296421728177730998}
   m_Layer: 0
-  m_Name: coinsParticles
+  m_Name: CoinsParticles
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1538,7 +1538,7 @@ ParticleSystem:
     uvChannelMask: -1
     rowMode: 1
     sprites:
-    - sprite: {fileID: 246200477909967752, guid: b869b5671d158c54db394309ae186067,
+    - sprite: {fileID: -3061825246436108031, guid: 1dd385fa5b6362f4f8e04073bc5988fb,
         type: 3}
     flipU: 0
     flipV: 0

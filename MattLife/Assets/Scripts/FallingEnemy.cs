@@ -1,4 +1,12 @@
-﻿using System.Collections;
+﻿/*
+ 
+NOT USED ANYMORE !
+
+ */
+
+
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -21,25 +29,22 @@ public class FallingEnemy : MonoBehaviour
 	private float camHorizontalExtend;
 	private Vector3 velocity;
 
-	[SerializeField]
-	private float ascendWaitTime = 2f;
-	[SerializeField]
-	private float fallWaitTime = 4f;
-	private float timeBeforeNextMove;
-
-	private Rigidbody2D rb2d;
+	[SerializeField] private float ascendWaitTime = 2f;
+	[SerializeField] private float fallWaitTime = 4f;
+	[SerializeField] private float timeBeforeNextMove;
+	
 	private Animator animator;
 
 	void Awake()
 	{
-		cam = Camera.main;
-		rb2d = GetComponent<Rigidbody2D>();
 		animator = GetComponent<Animator>();
 	}
 
 	// Start is called before the first frame update
 	void Start()
     {
+		cam = Camera.main;
+
 		camHorizontalExtend = cam.orthographicSize * Screen.width / Screen.height;
 
 		globalWaypoints = new Vector3[localWaypoints.Length];

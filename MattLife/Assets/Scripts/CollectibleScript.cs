@@ -9,7 +9,7 @@ public class CollectibleScript : MonoBehaviour
 
 	private void OnTriggerEnter2D(Collider2D collision)
 	{
-		if (collision.tag == "Player")
+		if (collision.CompareTag("Player"))
 		{
 			AudioManager.instance.PlaySound("CoinSound");
 			Instantiate(effect, transform.position, Quaternion.identity);

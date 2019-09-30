@@ -7,8 +7,6 @@ public class Tutorial : MonoBehaviour
 	public GameObject tutorial;
 	public float yOffset = 2f;
 
-	private bool isRevealed;
-
 	private GameObject tutorialOnScreen;
 	private RectTransform tutorialTransform;
 	[SerializeField]
@@ -29,23 +27,21 @@ public class Tutorial : MonoBehaviour
 
 	private void OnTriggerEnter2D(Collider2D collision)
 	{
-		if (collision.tag != "Player")
+		if (!collision.CompareTag("Player"))
 		{
 			return;
 		}
 
-		isRevealed = true;
 		tutorialOnScreen.GetComponent<Animator>().SetTrigger("reveal");
 	}
 
 	private void OnTriggerExit2D(Collider2D collision)
 	{
-		if (collision.tag != "Player")
+		if (!collision.CompareTag("Player"))
 		{
 			return;
 		}
-
-		isRevealed = false;
+		
 		tutorialOnScreen.GetComponent<Animator>().SetTrigger("hide");
 	}
 }

@@ -11,15 +11,21 @@ public class Block : MonoBehaviour
 	protected bool open = false;
 
 	private Animator animator;
+	protected Camera cam;
 
 	protected virtual void Awake()
 	{
 		animator = GetComponent<Animator>();
 	}
 
+	private void Start()
+	{
+		cam = Camera.main;
+	}
+
 	public virtual void OnTriggerEnter2D(Collider2D collision)
 	{
-		if (collision.tag == "Player" && !open)
+		if (collision.CompareTag("Player") && !open)
 		{
 			open = true;
 			animator.SetTrigger("BlockOpen");

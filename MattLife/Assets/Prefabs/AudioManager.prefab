@@ -108,10 +108,34 @@ MonoBehaviour:
     loop: 0
     playOnAwake: 0
     source: {fileID: 0}
+  - name: BeeHit
+    clip: {fileID: 8300000, guid: 6e8772b49f34d402a90016ed445d8a2f, type: 3}
+    volume: 0.5
+    pitch: 1
+    gamePausedVolume: 0.15
+    loop: 0
+    playOnAwake: 0
+    source: {fileID: 0}
+  - name: FishHit
+    clip: {fileID: 8300000, guid: ffb159a21c8a04135a5616979c828fab, type: 3}
+    volume: 0.5
+    pitch: 1
+    gamePausedVolume: 0.15
+    loop: 0
+    playOnAwake: 0
+    source: {fileID: 0}
   musics:
+  - name: mainMenuMusic
+    clip: {fileID: 8300000, guid: 5b15bab64451e0d4c9bfc209df648e64, type: 3}
+    volume: 1
+    pitch: 1
+    gamePausedVolume: 0.15
+    loop: 1
+    playOnAwake: 1
+    source: {fileID: 0}
   - name: musicLevel1
     clip: {fileID: 8300000, guid: 3a38e77e6d314e24285f569c2cee6621, type: 3}
-    volume: 0
+    volume: 0.25
     pitch: 1
     gamePausedVolume: 0.15
     loop: 1
