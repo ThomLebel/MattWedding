@@ -228,6 +228,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f13ea49afb6bec648983a9ff5efbe0fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentLevel: 
   playerLife: 5
   playerScore: 0
   playerGold: 0
@@ -235,8 +236,8 @@ MonoBehaviour:
   maxJumpHeight: 5
   minJumpHeight: 1
   timeToJumpApex: 0.4
-  accelerationTimeAirborne: 0.2
-  accelerationTimeGrounded: 0.1
+  accelerationTimeAirborne: 0.5
+  accelerationTimeGrounded: 0.2
   wallSlideSpeedMax: 5
   wallStickTime: 0.25
   bounceTakeOff: 7
@@ -271,10 +272,11 @@ MonoBehaviour:
   collisionMask:
     serializedVersion: 2
     m_Bits: 59136
+  horizontalRayCount: 4
+  verticalRayCount: 4
+  horizontalRaySpacing: 0
+  verticalRaySpacing: 0
   boxCollider: {fileID: 0}
-  enemiesMask:
-    serializedVersion: 2
-    m_Bits: 0
   maxSlopeAngle: 50
   collisions:
     above: 0
@@ -290,10 +292,6 @@ MonoBehaviour:
     moveAmountOld: {x: 0, y: 0}
     faceDir: 0
     ignoredCollider: {fileID: 0}
-    horizontalCollider: {fileID: 0}
-    verticalCollider: {fileID: 0}
-    reverseHorizontalCollider: {fileID: 0}
-    reverseVerticalCollider: {fileID: 0}
   playerInput: {x: 0, y: 0}
 --- !u!114 &2778404664396844214
 MonoBehaviour:

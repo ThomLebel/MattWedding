@@ -7,11 +7,13 @@ using UnityEngine.UI;
 
 public class GameMaster : MonoBehaviour
 {
-	public int moneyLimit = 30;
+	public int goldLimit = 30;
+	public int baseLife = 5;
 
 	public GameObject menuPause;
 	public GameObject galerie;
 	public GameObject gameUI;
+	public GameObject gameOverUI;
 	public Text lifeText;
 	public Text goldText;
 	public Text scoreText;
@@ -48,6 +50,10 @@ public class GameMaster : MonoBehaviour
 
 		player.transform.position = playerSpawnPosition;
 
+		if (playerScript.playerLife <= 0)
+		{
+			playerScript.playerLife = baseLife;
+		}
 		lifeText.text = playerScript.playerLife.ToString();
 		goldText.text = playerScript.playerGold.ToString();
 		scoreText.text = playerScript.playerScore.ToString();
@@ -149,7 +155,7 @@ public class GameMaster : MonoBehaviour
 	public void UpdateGold()
 	{
 		playerScript.playerGold++;
-		if (playerScript.playerGold >= moneyLimit)
+		if (playerScript.playerGold >= goldLimit)
 		{
 			playerScript.playerGold = 0;
 			UpdateLife(1);
@@ -183,6 +189,18 @@ public class GameMaster : MonoBehaviour
 	}
 
 	public void GameOver()
+	{
+		state = States.gameOver;
+		Time.timeScale = 0f;
+		Sound m = Array.Find(AudioManager.instance.musics, music => music.name == musicName);
+		AudioManager.instance.FadeToMusic(m.name, 1f, m.gamePausedVolume);
+		AudioManager.instance.PlaySound("GameOver");
+
+		gameOverUI.SetActive(true);
+		gameOverUI.GetComponent<Animator>().SetTrigger("reveal");
+	}
+
+	public void RestartLevel()
 	{
 		Scene scene = SceneManager.GetActiveScene();
 		SceneManager.LoadSceneAsync(scene.name);

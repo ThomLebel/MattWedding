@@ -137,13 +137,13 @@ public class MainMenu : MonoBehaviour
 		blackScreen.SetActive(true);
 		blackScreen.GetComponent<Animator>().Play("BlackScreen", -1, 0f);
 
-		StartCoroutine("LoadLevel");
 		AudioManager.instance.FadeToMusic(musicName, 1.5f);
+		StartCoroutine("LoadLevel");
 	}
 
 	IEnumerator LoadLevel()
 	{
-		yield return new WaitForSecondsRealtime(1.5f);
+		yield return new WaitForSecondsRealtime(1.8f);
 
 		player.SetActive(true);
 

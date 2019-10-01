@@ -126,28 +126,52 @@ MonoBehaviour:
     source: {fileID: 0}
   musics:
   - name: mainMenuMusic
-    clip: {fileID: 8300000, guid: 5b15bab64451e0d4c9bfc209df648e64, type: 3}
-    volume: 1
+    clip: {fileID: 8300000, guid: 7fca0249ddb41914b9d6751954f2cca4, type: 3}
+    volume: 0.25
     pitch: 1
     gamePausedVolume: 0.15
     loop: 1
-    playOnAwake: 1
+    playOnAwake: 0
     source: {fileID: 0}
   - name: musicLevel1
-    clip: {fileID: 8300000, guid: 3a38e77e6d314e24285f569c2cee6621, type: 3}
+    clip: {fileID: 8300000, guid: ebe259abd1fdad74a81b842700cb134d, type: 3}
     volume: 0.25
     pitch: 1
-    gamePausedVolume: 0.15
+    gamePausedVolume: 0.05
     loop: 1
-    playOnAwake: 1
+    playOnAwake: 0
     source: {fileID: 0}
   - name: musicLevel2
-    clip: {fileID: 8300000, guid: 7b2de5e54f1e98b45b681d78c36dad21, type: 3}
+    clip: {fileID: 8300000, guid: 1fb147bfbc8445449b7376ce0455aea0, type: 3}
+    volume: 0.25
+    pitch: 1
+    gamePausedVolume: 0.05
+    loop: 1
+    playOnAwake: 0
+    source: {fileID: 0}
+  - name: musicLevel3
+    clip: {fileID: 8300000, guid: acc04092c9512ed4f83cc9e45829548e, type: 3}
+    volume: 0.25
+    pitch: 1
+    gamePausedVolume: 0.05
+    loop: 1
+    playOnAwake: 0
+    source: {fileID: 0}
+  - name: musicLevel4
+    clip: {fileID: 8300000, guid: 235ecb75c5a44284c936bb63645af16d, type: 3}
+    volume: 0.25
+    pitch: 1
+    gamePausedVolume: 0.05
+    loop: 1
+    playOnAwake: 0
+    source: {fileID: 0}
+  - name: endMusic
+    clip: {fileID: 8300000, guid: de026935b70e28849afd673fb695cad0, type: 3}
     volume: 0.25
     pitch: 1
     gamePausedVolume: 0.15
     loop: 1
-    playOnAwake: 1
+    playOnAwake: 0
     source: {fileID: 0}
   soundsMuted: 0
   musicsMuted: 0

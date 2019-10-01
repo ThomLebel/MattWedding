@@ -207,9 +207,8 @@ public class AudioManager : MonoBehaviour
 			"volume", volume,
 			"time", time,
 			"ignoretimescale", true,
-			"oncomplete", "onFadeEnd",
-			"oncompleteparams", paramHashtable,
-			"oncompletetarget", gameObject
+			"oncomplete", "OnFadeEnd",
+			"oncompleteparams", paramHashtable
 		));
 	}
 
@@ -217,6 +216,7 @@ public class AudioManager : MonoBehaviour
 	{
 		if ((float)tweenParam["volume"] == 0f)
 		{
+			Debug.Log("pause");
 			Pause((AudioSource)tweenParam["source"]);
 		}
 	}

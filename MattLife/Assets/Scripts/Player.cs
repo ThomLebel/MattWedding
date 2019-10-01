@@ -143,7 +143,7 @@ public class Player : MonoBehaviour
 
 	public void OnJumpInputDown()
 	{
-		Vector2 jumpVelocity = Vector2.zero;
+		Vector2 jumpVelocity = velocity;
 
 		if (wallSliding)
 		{

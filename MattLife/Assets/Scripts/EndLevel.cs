@@ -30,7 +30,7 @@ public class EndLevel : MonoBehaviour
 
 	IEnumerator OnCompleteScreenReavealStartAnimation()
 	{
-		yield return new WaitForSeconds(transitionTime);
+		yield return new WaitForSeconds(transitionTime + 0.2f);
 
 		// TODO: Do something when animation did complete
 		LoadNextLevel();
