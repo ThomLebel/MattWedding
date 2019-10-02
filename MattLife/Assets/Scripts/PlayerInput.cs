@@ -31,5 +31,14 @@ public class PlayerInput : MonoBehaviour
 		{
 			player.OnJumpInputUp();
 		}
+
+		if (Input.GetButtonDown("Fire1"))
+		{
+			player.OnFireInputDown();
+		}
+		if (Input.GetButtonUp("Fire1"))
+		{
+			player.OnFireInputUp();
+		}
 	}
 }

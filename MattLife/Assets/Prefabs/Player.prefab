@@ -80,36 +80,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!1 &2285168291325908485
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2285168291325908484}
-  m_Layer: 11
-  m_Name: GroundCheck
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &2285168291325908484
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2285168291325908485}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 2285168291886181774}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2285168291886181775
 GameObject:
   m_ObjectHideFlags: 0
@@ -125,6 +95,7 @@ GameObject:
   - component: {fileID: 1504857911}
   - component: {fileID: 1504857912}
   - component: {fileID: 2778404664396844214}
+  - component: {fileID: 6814241914820988555}
   m_Layer: 11
   m_Name: Player
   m_TagString: Player
@@ -144,7 +115,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 2285168290902084112}
-  - {fileID: 2285168291325908484}
   - {fileID: 9153640718284358623}
   - {fileID: 2064863854647819626}
   m_Father: {fileID: 0}
@@ -195,7 +165,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.67292136, y: 1.0028524}
+  m_Size: {x: 0.65, y: 1}
   m_EdgeRadius: 0
 --- !u!95 &3821676407196577880
 Animator:
@@ -244,17 +214,24 @@ MonoBehaviour:
   wallJumpClimb: {x: 7.5, y: 16}
   wallJumpOff: {x: 8.5, y: 7}
   wallLeap: {x: 18, y: 17}
+  doubleJumpPower: 0
+  shootPower: 0
   isInvulnerable: 0
   isFalling: 0
   jumpParticlePosition: {fileID: 2064863854647819626}
+  projectilePosition: {fileID: 9153640718284358623}
   lifeLostParticle: {fileID: 7165646687091236009, guid: 550f710bf1017fc4f949265886360f01,
     type: 3}
   jumpParticle: {fileID: 5965558650816100861, guid: 021a606d3b94b6d40b399286f9845e9e,
+    type: 3}
+  projectile: {fileID: 518989792192819229, guid: cf2a41e915137c74e915a0d2bc420ab2,
     type: 3}
   fallingGravity: 3.5
   inAir: 0
   canBounce: 0
   bouncing: 0
+  canDoubleJump: 0
+  hasDoubleJumped: 0
   bounceTimerWindow: 0.1
   invulnerabilityTime: 2
 --- !u!114 &1504857912
@@ -305,6 +282,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 693319ca06503654daf3286804fd298f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!210 &6814241914820988555
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2285168291886181775}
+  m_Enabled: 1
+  m_SortingLayerID: -291169713
+  m_SortingLayer: 1
+  m_SortingOrder: 0
 --- !u!1 &4249939920132364877
 GameObject:
   m_ObjectHideFlags: 0
@@ -315,7 +303,7 @@ GameObject:
   m_Component:
   - component: {fileID: 9153640718284358623}
   m_Layer: 11
-  m_Name: CeilingCheck
+  m_Name: projectileSpawn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -329,11 +317,11 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4249939920132364877}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: 0}
+  m_LocalPosition: {x: 0.281, y: 0.22, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2285168291886181774}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8551031903725001366
 GameObject:
@@ -363,5 +351,5 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2285168291886181774}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(SpriteRenderer))]
-
 public class Tiling : MonoBehaviour
 {
 	public int offsetX = 2;					//The offset so that we don't get any errors

@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 6546925153964367957}
   - component: {fileID: 6914096519313384918}
   - component: {fileID: 8571101424990767514}
+  - component: {fileID: 529419655434127839}
   m_Layer: 14
   m_Name: Mouse
   m_TagString: Enemy
@@ -228,3 +229,14 @@ MonoBehaviour:
   collisionsRayLength: 0.1
   inAir: 0
   deletingDistance: 10
+--- !u!210 &529419655434127839
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4250086510925361500}
+  m_Enabled: 1
+  m_SortingLayerID: -291169713
+  m_SortingLayer: 1
+  m_SortingOrder: -5

@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 5459956748373257113}
   - component: {fileID: 4343572553380009993}
   - component: {fileID: 3767082773909946764}
+  - component: {fileID: -5354344645239219515}
   m_Layer: 14
   m_Name: Snail
   m_TagString: Enemy
@@ -236,3 +237,14 @@ MonoBehaviour:
   scoreGained: 0
   stunTime: 3
   timeBetweenPlayerCollisions: 0.05
+--- !u!210 &-5354344645239219515
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 841231317549359145}
+  m_Enabled: 1
+  m_SortingLayerID: -291169713
+  m_SortingLayer: 1
+  m_SortingOrder: -5

@@ -5,7 +5,6 @@ using UnityEngine;
 
 public class Block : MonoBehaviour
 {
-
 	public string type;
 	[SerializeField]
 	protected bool open = false;

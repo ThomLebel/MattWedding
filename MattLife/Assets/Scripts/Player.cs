@@ -25,12 +25,21 @@ public class Player : MonoBehaviour
 	public Vector2 wallJumpOff;
 	public Vector2 wallLeap;
 
+	public bool doubleJumpPower = false;
+	public bool shootPower = false;
+
 	public bool isInvulnerable = false;
 	public bool isFalling = false;
 
 	public Transform jumpParticlePosition;
+	public Transform projectilePosition;
 	public GameObject lifeLostParticle;
 	public GameObject jumpParticle;
+	public GameObject projectile;
+
+	[SerializeField]
+	private float fireRate = 1f;
+	private float timeBeforeNextShot;
 
 	private float gravity;
 	[SerializeField]
@@ -45,11 +54,17 @@ public class Player : MonoBehaviour
 	private bool facingRight = true;
 
 	[SerializeField]
+	private bool shooting = false;
+	[SerializeField]
 	private bool inAir = false;
 	[SerializeField]
 	private bool canBounce = false;
 	[SerializeField]
 	private bool bouncing = false;
+	[SerializeField]
+	private bool canDoubleJump = false;
+	[SerializeField]
+	private bool hasDoubleJumped = false;
 	[SerializeField]
 	private float bounceTimerWindow = 0.2f;
 	private IEnumerator bounceOnMonster;
@@ -98,6 +113,7 @@ public class Player : MonoBehaviour
 			{
 				velocity.y = 0;
 			}
+			canDoubleJump = false;
 		}
 		if (velocity.y <= 0 && bouncing)
 		{
@@ -118,12 +134,39 @@ public class Player : MonoBehaviour
 		if (!controller.collisions.below)
 		{
 			inAir = true;
+			if (!canDoubleJump && !hasDoubleJumped)
+			{
+				canDoubleJump = true;
+			}
 		}
 		if (controller.collisions.below && inAir)
 		{
 			inAir = false;
+			hasDoubleJumped = false;
 			Instantiate(jumpParticle, jumpParticlePosition.position, Quaternion.identity);
 			AudioManager.instance.PlaySound("PlayerLand");
+		}
+
+		if (timeBeforeNextShot <= 0)
+		{
+			if (shooting)
+			{
+				GameObject shot = Instantiate(projectile, projectilePosition.position, Quaternion.identity);
+
+				Projectile pScript = shot.GetComponent<Projectile>();
+
+				if (facingRight)
+					pScript.direction = new Vector2(1f, 0.5f);
+				else
+					pScript.direction = new Vector2(-1f, 0.5f);
+
+
+				timeBeforeNextShot = fireRate;
+			}
+		}
+		else
+		{
+			timeBeforeNextShot -= Time.deltaTime;
 		}
 
 		if (!facingRight && directionalInput.x > 0)
@@ -178,6 +221,11 @@ public class Player : MonoBehaviour
 				jumpVelocity.y = maxJumpVelocity;
 			}
 		}
+		if (doubleJumpPower && canDoubleJump && !hasDoubleJumped)
+		{
+			hasDoubleJumped = true;
+			jumpVelocity.y = maxJumpVelocity;
+		}
 		if (canBounce)
 		{
 			bouncing = true;
@@ -185,19 +233,19 @@ public class Player : MonoBehaviour
 			jumpVelocity.y = maxJumpVelocity;
 		}
 
-		if (jumpVelocity != Vector2.zero)
+		if (jumpVelocity != (Vector2)velocity)
 		{
 			Jump(jumpVelocity);
 		}
 	}
 
-	public void Jump(Vector2 jumpVelocity)
+	private void Jump(Vector2 jumpVelocity)
 	{
 		velocity = jumpVelocity;
 		JumpEffect();
 	}
 
-	public void JumpEffect()
+	private void JumpEffect()
 	{
 		Instantiate(jumpParticle, jumpParticlePosition.position, Quaternion.identity);
 		AudioManager.instance.PlaySound("PlayerJump");
@@ -209,6 +257,29 @@ public class Player : MonoBehaviour
 		{
 			velocity.y = minJumpVelocity;
 		}
+		if (!canDoubleJump)
+		{
+			canDoubleJump = true;
+		}
+		else
+		{
+			canDoubleJump = false;
+		}
+	}
+
+	public void OnFireInputDown()
+	{
+		if (!shootPower)
+		{
+			return;
+		}
+
+		shooting = true;
+	}
+
+	public void OnFireInputUp()
+	{
+		shooting = false;
 	}
 
 	public void StopMovement()

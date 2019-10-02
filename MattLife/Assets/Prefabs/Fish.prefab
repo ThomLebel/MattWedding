@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 626205770184470943}
   - component: {fileID: 626205770184470928}
   - component: {fileID: 626205770184470940}
+  - component: {fileID: 3927857017238767885}
   m_Layer: 14
   m_Name: Fish
   m_TagString: DivingEnemy
@@ -180,3 +181,14 @@ MonoBehaviour:
   timeBeforeNextMove: 0
   collisionsRayLength: 0.1
   activatingDistance: 10
+--- !u!210 &3927857017238767885
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 626205770184470929}
+  m_Enabled: 1
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: -5

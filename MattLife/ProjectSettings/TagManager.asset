@@ -32,7 +32,7 @@ TagManager:
   - Blocks
   - Enemies
   - MovingShells
-  - 
+  - Projectiles
   - 
   - 
   - 
@@ -55,7 +55,7 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
-  - name: Player
+  - name: Characters
     uniqueID: 4003797583
     locked: 0
   - name: Foreground

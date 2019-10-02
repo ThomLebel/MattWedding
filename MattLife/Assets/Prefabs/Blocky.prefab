@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 6594218909062534786}
   - component: {fileID: 791240959}
   - component: {fileID: 2324713608135687878}
+  - component: {fileID: -6667920346158574589}
   m_Layer: 14
   m_Name: Blocky
   m_TagString: Enemy
@@ -184,6 +185,10 @@ MonoBehaviour:
   collisionMask:
     serializedVersion: 2
     m_Bits: 2048
+  horizontalRayCount: 4
+  verticalRayCount: 4
+  horizontalRaySpacing: 0
+  verticalRaySpacing: 0
   boxCollider: {fileID: 0}
   passengerMask:
     serializedVersion: 2
@@ -300,3 +305,14 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!210 &-6667920346158574589
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7051381856146899112}
+  m_Enabled: 1
+  m_SortingLayerID: -291169713
+  m_SortingLayer: 1
+  m_SortingOrder: 5

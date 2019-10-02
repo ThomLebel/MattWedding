@@ -700,6 +700,8 @@
     <None Include="Assets\8 Bit Retro Rampage Free\Readme.txt" />
     <None Include="Assets\Kenney\Particle samples\License.txt" />
     <None Include="Assets\Plugins\Pixelplacement\iTween\ReadMe!\ReadMe!.txt" />
+    <None Include="Assets\Resources\Sprites\Background\foliagePack_default.xml" />
+    <None Include="Assets\Resources\Sprites\Background\spritesheet_default.xml" />
     <None Include="Assets\Standard Assets\CrossPlatformInput\CrossPlatformInputGuidelines.txt" />
     <None Include="Assets\TextMesh Pro\Fonts\LiberationSans - OFL.txt" />
     <None Include="Assets\TextMesh Pro\Resources\LineBreaking Following Characters.txt" />

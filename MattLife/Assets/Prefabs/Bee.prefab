@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 518667432233726997}
   - component: {fileID: 518667432233727002}
   - component: {fileID: 518667432233726992}
+  - component: {fileID: 4110469940842736481}
   m_Layer: 0
   m_Name: Bee
   m_TagString: Untagged
@@ -228,3 +229,14 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!210 &4110469940842736481
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 518667432233727003}
+  m_Enabled: 1
+  m_SortingLayerID: -291169713
+  m_SortingLayer: 1
+  m_SortingOrder: -5
