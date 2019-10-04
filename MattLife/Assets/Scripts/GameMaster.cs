@@ -22,6 +22,8 @@ public class GameMaster : MonoBehaviour
 	public States state;
 	public string musicName;
 	public Vector3 playerSpawnPosition = Vector3.zero;
+	public bool doubleJumpActive = false;
+	public bool shootingActive = false;
 
 	//[SerializeField]
 	//private bool gamePaused = false;
@@ -33,6 +35,7 @@ public class GameMaster : MonoBehaviour
 	private bool mouseInvisible = false;
 
 	private Animator screenRevealAnimator;
+	private StreamSouvenir streamSouvenir;
 
 	static public GameMaster Instance;
 
@@ -41,12 +44,17 @@ public class GameMaster : MonoBehaviour
     {
 		Instance = this;
 
+		streamSouvenir = GetComponent<StreamSouvenir>();
+
 		screenRevealAnimator = GameObject.FindGameObjectWithTag("ScreenReveal").GetComponent<Animator>();
 		screenRevealAnimator.Play("revealStart", -1, 0f);
 		StartCoroutine("OnCompleteScreenReavealEndAnimation");
 
 		player = GameObject.FindGameObjectWithTag("Player");
 		playerScript = player.GetComponent<Player>();
+
+		playerScript.doubleJumpPower = doubleJumpActive;
+		playerScript.shootPower = shootingActive;
 
 		player.transform.position = playerSpawnPosition;
 
@@ -92,7 +100,7 @@ public class GameMaster : MonoBehaviour
 			}
 			else if (state == States.souvenirs)
 			{
-				gameObject.GetComponent<StreamSouvenir>().StopStream();
+				streamSouvenir.StopStream();
 			}
 			else if (state == States.galerie)
 			{
@@ -104,7 +112,14 @@ public class GameMaster : MonoBehaviour
 		}
 		if (Input.GetButtonDown("Jump") && state == States.souvenirs)
 		{
-			gameObject.GetComponent<StreamSouvenir>().StopStream();
+			if (streamSouvenir.showTutorial)
+			{
+				streamSouvenir.HideTutorial();
+			}
+			else
+			{
+				streamSouvenir.StopStream();
+			}
 		}
     }
 

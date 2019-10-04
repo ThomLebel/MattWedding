@@ -226,7 +226,9 @@ MonoBehaviour:
     type: 3}
   projectile: {fileID: 518989792192819229, guid: cf2a41e915137c74e915a0d2bc420ab2,
     type: 3}
+  fireRate: 1
   fallingGravity: 3.5
+  shooting: 0
   inAir: 0
   canBounce: 0
   bouncing: 0
@@ -317,7 +319,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4249939920132364877}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.281, y: 0.22, z: 0}
+  m_LocalPosition: {x: 0.312, y: 0.583, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2285168291886181774}

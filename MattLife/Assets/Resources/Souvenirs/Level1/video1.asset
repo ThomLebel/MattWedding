@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6fdb78b4c08742c4b9c4ee4430d27918, type: 3}
   m_Name: video1
   m_EditorClassIdentifier: 
-  id: 6
-  photo: {fileID: 21300000, guid: 1b9d20f8b6c1afc45907a841472c103b, type: 3}
-  video: {fileID: 32900000, guid: a416118ff3733f242ad6c9f235174a91, type: 3}
+  id: 9
+  photo: {fileID: 21300000, guid: 531c9bfc49381334081e1ea0a7703f3d, type: 3}
+  video: {fileID: 32900000, guid: 729151c729faedc42b141b80e7538334, type: 3}
   revealed: 0

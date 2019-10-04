@@ -156,9 +156,9 @@ public class Player : MonoBehaviour
 				Projectile pScript = shot.GetComponent<Projectile>();
 
 				if (facingRight)
-					pScript.direction = new Vector2(1f, 0.5f);
+					pScript.direction = Vector2.right;
 				else
-					pScript.direction = new Vector2(-1f, 0.5f);
+					pScript.direction = Vector2.left;
 
 
 				timeBeforeNextShot = fireRate;

@@ -14,6 +14,9 @@ public class StreamSouvenir : MonoBehaviour
 	public GameObject souvenirProjector;
 	public Button leftButton;
 	public Button rightButton;
+	public GameObject tutorial;
+
+	public bool showTutorial = false;
 
 	private bool sliderOn;
 	private Souvenir[] slider;
@@ -174,6 +177,12 @@ public class StreamSouvenir : MonoBehaviour
 	void EndReached(UnityEngine.Video.VideoPlayer vp)
 	{
 		StopStream();
+	}
+
+	public void HideTutorial()
+	{
+		showTutorial = false;
+		tutorial.SetActive(false);
 	}
 
 	public void StopStream()

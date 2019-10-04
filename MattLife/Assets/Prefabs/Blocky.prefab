@@ -19,7 +19,7 @@ GameObject:
   - component: {fileID: -6667920346158574589}
   m_Layer: 14
   m_Name: Blocky
-  m_TagString: Enemy
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
