@@ -13460,6 +13460,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c0649c870263a6d45b7926aa10b98561, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  levelIndex: 3
   goldLimit: 30
   baseLife: 5
   menuPause: {fileID: 1108300303}

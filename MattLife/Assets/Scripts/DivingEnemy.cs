@@ -75,14 +75,11 @@ public class DivingEnemy : RaycastController
 			return;
 		}
 
-		if (state != State.resting)
-		{
-			UpdateRaycastOrigins();
-			collisions.Reset();
-			HorizontalCollisions();
-			VerticalCollisions();
-		}
-		
+		UpdateRaycastOrigins();
+		collisions.Reset();
+		HorizontalCollisions();
+		VerticalCollisions();
+		CollideWithPlayer();
 
 		if (timeBeforeNextMove <= 0)
 		{

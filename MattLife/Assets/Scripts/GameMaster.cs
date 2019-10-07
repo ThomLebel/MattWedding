@@ -7,6 +7,7 @@ using UnityEngine.UI;
 
 public class GameMaster : MonoBehaviour
 {
+	public int levelIndex;
 	public int goldLimit = 30;
 	public int baseLife = 5;
 
@@ -17,6 +18,7 @@ public class GameMaster : MonoBehaviour
 	public Text lifeText;
 	public Text goldText;
 	public Text scoreText;
+	public GameObject levelTitle;
 
 	//public string state = "";
 	public States state;
@@ -53,6 +55,7 @@ public class GameMaster : MonoBehaviour
 		player = GameObject.FindGameObjectWithTag("Player");
 		playerScript = player.GetComponent<Player>();
 
+		playerScript.SwapBody(levelIndex);
 		playerScript.doubleJumpPower = doubleJumpActive;
 		playerScript.shootPower = shootingActive;
 
@@ -219,6 +222,7 @@ public class GameMaster : MonoBehaviour
 	{
 		Scene scene = SceneManager.GetActiveScene();
 		SceneManager.LoadSceneAsync(scene.name);
+		Time.timeScale = 1f;
 	}
 
 	public void QuitGame()

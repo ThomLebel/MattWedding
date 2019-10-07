@@ -42,7 +42,7 @@ public class MainMenu : MonoBehaviour
 
 		if (gameData != null)
 		{
-			for (int i = 0; i < souvenirsHolder.souvenirsList.Count; i++)
+			for (int i = 0; i < gameData.souvenirsRevealed.Length; i++)
 			{
 				souvenirsHolder.souvenirsList[i].revealed = gameData.souvenirsRevealed[i];
 			}

@@ -37,6 +37,9 @@ public class Player : MonoBehaviour
 	public GameObject jumpParticle;
 	public GameObject projectile;
 
+	public RuntimeAnimatorController[] bodiesControllers;
+	public GameObject[] bodies;
+
 	[SerializeField]
 	private float fireRate = 1f;
 	private float timeBeforeNextShot;
@@ -52,6 +55,7 @@ public class Player : MonoBehaviour
 	private bool wallSliding;
 	private int wallDirX;
 	private bool facingRight = true;
+	private int previousIndex = 0;
 
 	[SerializeField]
 	private bool shooting = false;
@@ -134,6 +138,7 @@ public class Player : MonoBehaviour
 		if (!controller.collisions.below)
 		{
 			inAir = true;
+			animator.SetBool("isJumping", true);
 			if (!canDoubleJump && !hasDoubleJumped)
 			{
 				canDoubleJump = true;
@@ -143,6 +148,7 @@ public class Player : MonoBehaviour
 		{
 			inAir = false;
 			hasDoubleJumped = false;
+			animator.SetBool("isJumping", false);
 			Instantiate(jumpParticle, jumpParticlePosition.position, Quaternion.identity);
 			AudioManager.instance.PlaySound("PlayerLand");
 		}
@@ -167,6 +173,15 @@ public class Player : MonoBehaviour
 		else
 		{
 			timeBeforeNextShot -= Time.deltaTime;
+		}
+
+		if (directionalInput == Vector2.zero)
+		{
+			animator.SetBool("isMoving", false);
+		}
+		else
+		{
+			animator.SetBool("isMoving", true);
 		}
 
 		if (!facingRight && directionalInput.x > 0)
@@ -247,6 +262,7 @@ public class Player : MonoBehaviour
 
 	private void JumpEffect()
 	{
+		animator.SetTrigger("takeOff");
 		Instantiate(jumpParticle, jumpParticlePosition.position, Quaternion.identity);
 		AudioManager.instance.PlaySound("PlayerJump");
 	}
@@ -393,6 +409,20 @@ public class Player : MonoBehaviour
 	{
 		isFalling = true;
 		transform.position = new Vector3(transform.position.x, 10f, transform.position.z);
+	}
+
+	public void SwapBody(int index)
+	{
+		if (index == previousIndex)
+		{
+			return;
+		}
+
+		bodies[previousIndex].SetActive(false);
+		bodies[index].SetActive(true);
+		animator.runtimeAnimatorController = bodiesControllers[index] as RuntimeAnimatorController;
+
+		previousIndex = index;
 	}
 
 	private IEnumerator BounceOnMonster(float time)
