@@ -124,6 +124,38 @@ MonoBehaviour:
     loop: 0
     playOnAwake: 0
     source: {fileID: 0}
+  - name: GameOver
+    clip: {fileID: 8300000, guid: 36d3677fcccbfb745a06daece19458db, type: 3}
+    volume: 0.5
+    pitch: 1
+    gamePausedVolume: 0.15
+    loop: 0
+    playOnAwake: 0
+    source: {fileID: 0}
+  - name: PlayerWalk
+    clip: {fileID: 8300000, guid: 948e1febaa44a534080927ddeab6836f, type: 3}
+    volume: 0.05
+    pitch: 1.5
+    gamePausedVolume: 0.15
+    loop: 0
+    playOnAwake: 0
+    source: {fileID: 0}
+  - name: PlayerTransform
+    clip: {fileID: 8300000, guid: e04a8ef9c5242e24f8f309abf1d5ec69, type: 3}
+    volume: 0.25
+    pitch: 1.5
+    gamePausedVolume: 0.15
+    loop: 0
+    playOnAwake: 0
+    source: {fileID: 0}
+  - name: PlayerShoot
+    clip: {fileID: 8300000, guid: fe0b1f9aeb45b41b089175aeeabd5d95, type: 3}
+    volume: 0.15
+    pitch: 1.5
+    gamePausedVolume: 0.15
+    loop: 0
+    playOnAwake: 0
+    source: {fileID: 0}
   musics:
   - name: mainMenuMusic
     clip: {fileID: 8300000, guid: 7fca0249ddb41914b9d6751954f2cca4, type: 3}

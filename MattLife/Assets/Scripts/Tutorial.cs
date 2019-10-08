@@ -42,8 +42,7 @@ public class Tutorial : MonoBehaviour
 			return;
 		}
 
-		tutorialOnScreen.GetComponent<Animator>().SetTrigger("reveal");
-		isTriggered = true;
+		DisplayMessage();
 	}
 
 	private void OnTriggerExit2D(Collider2D collision)
@@ -52,7 +51,18 @@ public class Tutorial : MonoBehaviour
 		{
 			return;
 		}
-		
+
+		HideMessage();
+	}
+
+	public void DisplayMessage()
+	{
+		tutorialOnScreen.GetComponent<Animator>().SetTrigger("reveal");
+		isTriggered = true;
+	}
+
+	public void HideMessage()
+	{
 		tutorialOnScreen.GetComponent<Animator>().SetTrigger("hide");
 		isTriggered = false;
 	}

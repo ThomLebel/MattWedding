@@ -18,7 +18,6 @@ public class GameMaster : MonoBehaviour
 	public Text lifeText;
 	public Text goldText;
 	public Text scoreText;
-	public GameObject levelTitle;
 
 	//public string state = "";
 	public States state;
@@ -54,6 +53,7 @@ public class GameMaster : MonoBehaviour
 
 		player = GameObject.FindGameObjectWithTag("Player");
 		playerScript = player.GetComponent<Player>();
+		player.GetComponent<PlayerInput>().enabled = true;
 
 		playerScript.SwapBody(levelIndex);
 		playerScript.doubleJumpPower = doubleJumpActive;

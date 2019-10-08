@@ -47,7 +47,7 @@ public class Player : MonoBehaviour
 	private float gravity;
 	[SerializeField]
 	private float fallingGravity = 0.5f;
-	private float maxJumpVelocity;
+	public float maxJumpVelocity;
 	private float minJumpVelocity;
 	private float timeToWallUnstick;
 	private Vector3 velocity;
@@ -157,15 +157,7 @@ public class Player : MonoBehaviour
 		{
 			if (shooting)
 			{
-				GameObject shot = Instantiate(projectile, projectilePosition.position, Quaternion.identity);
-
-				Projectile pScript = shot.GetComponent<Projectile>();
-
-				if (facingRight)
-					pScript.direction = Vector2.right;
-				else
-					pScript.direction = Vector2.left;
-
+				Shoot();
 
 				timeBeforeNextShot = fireRate;
 			}
@@ -254,7 +246,7 @@ public class Player : MonoBehaviour
 		}
 	}
 
-	private void Jump(Vector2 jumpVelocity)
+	public void Jump(Vector2 jumpVelocity)
 	{
 		velocity = jumpVelocity;
 		JumpEffect();
@@ -296,6 +288,21 @@ public class Player : MonoBehaviour
 	public void OnFireInputUp()
 	{
 		shooting = false;
+	}
+
+	public void Shoot()
+	{
+		animator.SetTrigger("shoot");
+		AudioManager.instance.PlaySound("PlayerShoot");
+
+		GameObject shot = Instantiate(projectile, projectilePosition.position, Quaternion.identity);
+
+		Projectile pScript = shot.GetComponent<Projectile>();
+
+		if (facingRight)
+			pScript.direction = Vector2.right;
+		else
+			pScript.direction = Vector2.left;
 	}
 
 	public void StopMovement()
@@ -423,6 +430,11 @@ public class Player : MonoBehaviour
 		animator.runtimeAnimatorController = bodiesControllers[index] as RuntimeAnimatorController;
 
 		previousIndex = index;
+	}
+
+	public void PlayWalkSound()
+	{
+		AudioManager.instance.PlaySound("PlayerWalk");
 	}
 
 	private IEnumerator BounceOnMonster(float time)

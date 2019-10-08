@@ -709,6 +709,7 @@
     <Compile Include="Assets\Scripts\DivingEnemy.cs" />
     <Compile Include="Assets\Scripts\Easing.cs" />
     <Compile Include="Assets\Scripts\EndLevel.cs" />
+    <Compile Include="Assets\Scripts\EndLevelAnimation.cs" />
     <Compile Include="Assets\Scripts\Enemy.cs" />
     <Compile Include="Assets\Scripts\EnemyScript.cs" />
     <Compile Include="Assets\Scripts\EnemySpawner.cs" />

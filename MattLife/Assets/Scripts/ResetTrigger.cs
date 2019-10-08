@@ -31,7 +31,7 @@ public class ResetTrigger : MonoBehaviour
 		}
 		
 
-		Instantiate(splashEffect, splashPosition, Quaternion.identity);
+		Instantiate(splashEffect, collision.transform.position, Quaternion.identity);
 		source.clip = inSound;
 		source.Play();
 	}

@@ -216,7 +216,6 @@ public class AudioManager : MonoBehaviour
 	{
 		if ((float)tweenParam["volume"] == 0f)
 		{
-			Debug.Log("pause");
 			Pause((AudioSource)tweenParam["source"]);
 		}
 	}
